@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReToy - 3D Custom Scene Builder</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4A90E2',
+                        secondary: '#8CC1FF',
+                        accent: '#357ABD',
+                        dark: '#2A3B4C',
+                        light: '#F0F7FF'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        display: ['Poppins', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Utilities -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .draggable-item {
+                cursor: grab;
+                transition: all 0.2s ease;
+            }
+            .draggable-item:active {
+                cursor: grabbing;
+                transform: scale(1.05);
+            }
+            .drop-zone {
+                transition: all 0.3s ease;
+            }
+            .drop-zone.highlight {
+                background-color: rgba(74, 144, 226, 0.1);
+                border-color: #4A90E2;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-sans text-dark min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                    <i class="fa fa-paint-brush text-white text-xl"></i>
+                </div>
+                <span class="text-xl font-display font-bold text-primary">ReToy</span>
+            </a>
+            
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#" class="font-medium text-primary border-b-2 border-primary pb-1">3D Custom Builder</a>
+                <a href="#" class="font-medium hover:text-primary transition-colors">Shop</a>
+                <a href="#" class="font-medium hover:text-primary transition-colors">Community</a>
+                <a href="#" class="font-medium hover:text-primary transition-colors">About</a>
+            </div>
+            
+            <!-- User Actions -->
+            <div class="flex items-center space-x-4">
+                <button class="relative w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
+                    <i class="fa fa-shopping-cart text-gray-600"></i>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">0</span>
+                </button>
+                <button class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors">
+                    <i class="fa fa-user text-gray-600"></i>
+                </button>
+                <button class="md:hidden w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center" id="mobileMenuToggle">
+                    <i class="fa fa-bars text-gray-600"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8 flex flex-col md:flex-row gap-8">
+        <!-- Left Sidebar - Accessories -->
+        <div class="w-full md:w-1/4 bg-white rounded-xl shadow-md overflow-hidden">
+            <div class="p-4 bg-primary text-white">
+                <h2 class="text-xl font-bold">3D Scene Builder</h2>
+                <p class="text-sm opacity-90">Drag items to add to your 3D scene</p>
+            </div>
+            
+            <!-- Category Tabs -->
+            <div class="flex border-b overflow-x-auto">
+                <button class="category-tab px-4 py-2 font-medium text-primary border-b-2 border-primary whitespace-nowrap">All Items</button>
+                <button class="category-tab px-4 py-2 font-medium text-gray-500 hover:text-primary whitespace-nowrap">Dolls</button>
+                <button class="category-tab px-4 py-2 font-medium text-gray-500 hover:text-primary whitespace-nowrap">Clothing</button>
+                <button class="category-tab px-4 py-2 font-medium text-gray-500 hover:text-primary whitespace-nowrap">Furniture</button>
+                <button class="category-tab px-4 py-2 font-medium text-gray-500 hover:text-primary whitespace-nowrap">Props</button>
+            </div>
+            
+            <!-- Accessories Grid -->
+            <div class="p-4 grid grid-cols-2 gap-4 overflow-y-auto max-h-[calc(100vh-250px)]">
+                <!-- Accessory Item 1 -->
+                <div class="bg-gray-50 rounded-lg p-3 text-center draggable-item" draggable="true" data-id="1" data-name="Miniature Doll" data-price="29.99" data-category="dolls" data-type="doll">
+                    <img src="https://picsum.photos/id/1062/200/200" alt="Miniature Doll" class="w-full h-24 object-cover rounded mb-2">
+                    <h3 class="font-medium text-sm">Miniature Doll</h3>
+                    <p class="text-primary font-bold">$29.99</p>
+                </div>
+                
+                <!-- Accessory Item 2 -->
+                <div class="bg-gray-50 rounded-lg p-3 text-center draggable-item" draggable="true" data-id="2" data-name="Vintage Dress" data-price="15.99" data-category="clothing" data-type="clothing">
+                    <img src="https://picsum.photos/id/1082/200/200" alt="Vintage Dress" class="w-full h-24 object-cover rounded mb-2">
+                    <h3 class="font-medium text-sm">Vintage Dress</h3>
+                    <p class="text-primary font-bold">$15.99</p>
+                </div>
+                
+                <!-- Accessory Item 3 -->
+                <div class="bg-gray-50 rounded-lg p-3 text-center draggable-item" draggable="true" data-id="3" data-name="Wooden Chair" data-price="12.99" data-category="furniture" data-type="chair">
+                    <img src="https://picsum.photos/id/1033/200/200" alt="Wooden Chair" class="w-full h-24 object-cover rounded mb-2">
+                    <h3 class="font-medium text-sm">Wooden Chair</h3>
+                    <p class="text-primary font-bold">$12.99</p>
+                </div>
+                
+                <!-- Accessory Item 4 -->
+                <div class="bg-gray-50 rounded-lg p-3 text-center draggable-item" draggable="true" data-id="4" data-name="Coffee Table" data-price="18.99" data-category="furniture" data-type="table">
+                    <img src="https://picsum.photos/id/1048/200/200" alt="Coffee Table" class="w-full h-24 object-cover rounded mb-2">
+                    <h3 class="font-medium text-sm">Coffee Table</h3>
+                    <p class="text-primary font-bold">$18.99</p>
+                </div>
+                
+                <!-- Accessory Item 5 -->
+                <div class="bg-gray-50 rounded-lg p-3 text-center draggable-item" draggable="true" data-id="5" data-name="Bookshelf" data-price="24.99" data-category="furniture" data-type="bookshelf">
+                    <img src="https://picsum.photos/id/1074/200/200" alt="Bookshelf" class="w-full h-24 object-cover rounded mb-2">
+                    <h3 class="font-medium text-sm">Bookshelf</h3>
+                    <p class="text-primary font-bold">$24.99</p>
+                </div>
+                
+                <!-- Accessory Item 6 -->
+                <div class="bg-gray-50 rounded-lg p-3 text-center draggable-item" draggable="true" data-id="6" data-name="Lamp" data-price="9.99" data-category="props" data-type="lamp">
+                    <img src="https://picsum.photos/id/1059/200/200" alt="Lamp" class="w-full h-24 object-cover rounded mb-2">
+                    <h3 class="font-medium text-sm">Lamp</h3>
+                    <p class="text-primary font-bold">$9.99</p>
+                </div>
+                
+                <!-- Accessory Item 7 -->
+                <div class="bg-gray-50 rounded-lg p-3 text-center draggable-item" draggable="true" data-id="7" data-name="Painting" data-price="14.99" data-category="props" data-type="painting">
+                    <img src="https://picsum.photos/id/1040/200/200" alt="Painting" class="w-full h-24 object-cover rounded mb-2">
+                    <h3 class="font-medium text-sm">Painting</h3>
+                    <p class="text-primary font-bold">$14.99</p>
+                </div>
+                
+                <!-- Accessory Item 8 -->
+                <div class="bg-gray-50 rounded-lg p-3 text-center draggable-item" draggable="true" data-id="8" data-name="Hat" data-price="7.99" data-category="clothing" data-type="hat">
+                    <img src="https://picsum.photos/id/1080/200/200" alt="Hat" class="w-full h-24 object-cover rounded mb-2">
+                    <h3 class="font-medium text-sm">Hat</h3>
+                    <p class="text-primary font-bold">$7.99</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Side - 3D Preview Area -->
+        <div class="w-full md:w-3/4 flex flex-col gap-8">
+            <!-- 3D Scene Preview -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden flex-grow">
+                <div class="p-4 bg-gray-100 border-b flex justify-between items-center">
+                    <h2 class="text-xl font-bold">3D Scene Preview</h2>
+                    <div class="flex space-x-2">
+                        <button id="rotateView" class="px-3 py-1 bg-white rounded-md shadow-sm hover:bg-gray-50 transition-colors">
+                            <i class="fa fa-refresh text-gray-600 mr-1"></i> Rotate View
+                        </button>
+                        <button id="resetScene" class="px-3 py-1 bg-white rounded-md shadow-sm hover:bg-gray-50 transition-colors">
+                            <i class="fa fa-trash text-gray-600 mr-1"></i> Clear Scene
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 3D Canvas Container -->
+                <div id="sceneContainer" class="drop-zone relative min-h-[500px] bg-gray-50">
+                    <!-- Three.js canvas will be added here -->
+                    <div id="loadingIndicator" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
+                        <div class="text-center">
+                            <div class="inline-block w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+                            <p class="text-gray-600">Loading 3D scene...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Instructions overlay -->
+                    <div id="instructions" class="absolute inset-0 flex items-center justify-center z-5">
+                        <div class="bg-white bg-opacity-80 backdrop-blur-sm p-6 rounded-lg text-center max-w-md">
+                            <i class="fa fa-arrow-left text-4xl text-primary mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">Drag & Drop Items</h3>
+                            <p class="text-gray-600 mb-4">Drag items from the left panel to add them to your 3D scene</p>
+                            <p class="text-gray-600">Use mouse to orbit, pan and zoom the 3D view</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 3D Controls Info -->
+                <div class="p-3 bg-gray-50 border-t flex justify-between items-center text-sm text-gray-600">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center">
+                            <i class="fa fa-mouse-pointer mr-1"></i>
+                            <span>Orbit: Left Click</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fa fa-hand-paper-o mr-1"></i>
+                            <span>Pan: Right Click</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fa fa-search mr-1"></i>
+                            <span>Zoom: Mouse Wheel</span>
+                        </div>
+                    </div>
+                    <div id="itemCount" class="font-medium">Items in scene: 0</div>
+                </div>
+            </div>
+            
+            <!-- Shopping Cart / Checkout -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="p-4 bg-gray-100 border-b">
+                    <h2 class="text-xl font-bold">Your Selection</h2>
+                </div>
+                
+                <div class="p-4">
+                    <div id="selectedItems" class="space-y-3 mb-6 max-h-[200px] overflow-y-auto">
+                        <div class="text-center text-gray-500 py-6">
+                            <p>No items selected yet</p>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t pt-4 flex justify-between items-center">
+                        <div>
+                            <p class="text-lg font-medium">Total:</p>
+                            <p id="totalPrice" class="text-2xl font-bold text-primary">$0.00</p>
+                        </div>
+                        <button id="checkoutBtn" class="px-6 py-2 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Checkout <i class="fa fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand Info -->
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center">
+                            <i class="fa fa-paint-brush text-primary text-xl"></i>
+                        </div>
+                        <span class="text-xl font-display font-bold">ReToy</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Create custom doll scenes with our interactive 3D builder. Mix and match accessories to design your perfect miniature world.</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-medium mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Shop</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">3D Builder</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Community</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Help & Support -->
+                <div>
+                    <h4 class="text-lg font-medium mb-4">Help & Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Shipping Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Return Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h4 class="text-lg font-medium mb-4">Stay Updated</h4>
+                    <p class="text-gray-400 mb-4">Subscribe to our newsletter for new products and exclusive offers.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg flex-grow text-dark focus:outline-none">
+                        <button class="bg-primary hover:bg-primary/90 transition-colors px-4 py-2 rounded-r-lg">
+                            <i class="fa fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 ReToy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Global variables for 3D scene
+        let scene, camera, renderer, controls, itemsInScene = [];
+        
+        // Shopping cart functionality
+        const cart = {
+            items: [],
+            total: 0,
+            
+            addItem(item) {
+                // Check if item already exists
+                const existingItem = this.items.find(i => i.id === item.id);
+                
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    this.items.push({ ...item, quantity: 1 });
+                }
+                
+                this.calculateTotal();
+                this.updateUI();
+            },
+            
+            removeItem(itemId) {
+                const index = this.items.findIndex(item => item.id === itemId);
+                
+                if (index !== -1) {
+                    if (this.items[index].quantity > 1) {
+                        this.items[index].quantity--;
+                    } else {
+                        this.items.splice(index, 1);
+                    }
+                    
+                    this.calculateTotal();
+                    this.updateUI();
+                }
+            },
+            
+            calculateTotal() {
+                this.total = this.items.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+            },
+            
+            updateUI() {
+                const cartCount = document.getElementById('cartCount');
+                const totalPrice = document.getElementById('totalPrice');
+                const selectedItems = document.getElementById('selectedItems');
+                const checkoutBtn = document.getElementById('checkoutBtn');
+                const itemCount = document.getElementById('itemCount');
+                
+                // Update cart count
+                const count = this.items.reduce((count, item) => count + item.quantity, 0);
+                cartCount.textContent = count;
+                itemCount.textContent = `Items in scene: ${count}`;
+                
+                // Update total price
+                totalPrice.textContent = `$${this.total.toFixed(2)}`;
+                
+                // Update selected items list
+                if (this.items.length === 0) {
+                    selectedItems.innerHTML = `
+                        <div class="text-center text-gray-500 py-6">
+                            <p>No items selected yet</p>
+                        </div>
+                    `;
+                    checkoutBtn.disabled = true;
+                } else {
+                    selectedItems.innerHTML = '';
+                    this.items.forEach(item => {
+                        const itemElement = document.createElement('div');
+                        itemElement.className = 'flex justify-between items-center p-3 bg-gray-50 rounded-lg';
+                        itemElement.innerHTML = `
+                            <div class="flex items-center">
+                                <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded mr-3">
+                                <div>
+                                    <h4 class="font-medium">${item.name}</h4>
+                                    <p class="text-sm text-gray-500">x${item.quantity}</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <p class="font-medium mr-4">$${(parseFloat(item.price) * item.quantity).toFixed(2)}</p>
+                                <button class="remove-item text-gray-400 hover:text-red-500" data-id="${item.id}">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        `;
+                        selectedItems.appendChild(itemElement);
+                    });
+                    
+                    // Add event listeners to remove buttons
+                    document.querySelectorAll('.remove-item').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const itemId = e.currentTarget.dataset.id;
+                            cart.removeItem(itemId);
+                            removeSceneItem(itemId);
+                        });
+                    });
+                    
+                    checkoutBtn.disabled = false;
+                }
+            },
+            
+            clearCart() {
+                this.items = [];
+                this.calculateTotal();
+                this.updateUI();
+            }
+        };
+
+        // Initialize 3D scene
+        function init3DScene() {
+            // Create scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf0f7ff);
+            scene.fog = new THREE.Fog(0xf0f7ff, 20, 50);
+            
+            // Create camera
+            camera = new THREE.PerspectiveCamera(60, document.getElementById('sceneContainer').clientWidth / document.getElementById('sceneContainer').clientHeight, 0.1, 1000);
+            camera.position.set(0, 5, 10);
+            
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(document.getElementById('sceneContainer').clientWidth, document.getElementById('sceneContainer').clientHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            
+            // Add renderer to DOM
+            document.getElementById('sceneContainer').appendChild(renderer.domElement);
+            
+            // Add controls
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.screenSpacePanning = false;
+            controls.minDistance = 5;
+            controls.maxDistance = 30;
+            controls.maxPolarAngle = Math.PI / 2;
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 15, 10);
+            directionalLight.castShadow = true;
+            directionalLight.shadow.mapSize.width = 2048;
+            directionalLight.shadow.mapSize.height = 2048;
+            scene.add(directionalLight);
+            
+            // Add ground plane
+            const groundGeometry = new THREE.PlaneGeometry(50, 50);
+            const groundMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0xcccccc,
+                roughness: 0.8,
+                metalness: 0.2
+            });
+            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.y = -2;
+            ground.receiveShadow = true;
+            scene.add(ground);
+            
+            // Add grid helper
+            const gridHelper = new THREE.GridHelper(50, 25, 0x000000, 0x00000011);
+            gridHelper.position.y = -1.99;
+            scene.add(gridHelper);
+            
+            // Hide loading indicator
+            document.getElementById('loadingIndicator').style.display = 'none';
+            
+            // Start animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                controls.update();
+                renderer.render(scene, camera);
+            }
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = document.getElementById('sceneContainer').clientWidth / document.getElementById('sceneContainer').clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(document.getElementById('sceneContainer').clientWidth, document.getElementById('sceneContainer').clientHeight);
+            });
+        }
+
+        // Create 3D object based on item type
+        function create3DObject(itemData) {
+            let geometry, material, mesh;
+            
+            switch(itemData.type) {
+                case 'doll':
+                    // Create a simple doll representation
+                    const group = new THREE.Group();
+                    
+                    // Body
+                    geometry = new THREE.CylinderGeometry(0.3, 0.3, 1.5, 32);
+                    material = new THREE.MeshStandardMaterial({ color: 0xffdbac });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.y = 0.75;
+                    mesh.castShadow = true;
+                    group.add(mesh);
+                    
+                    // Head
+                    geometry = new THREE.SphereGeometry(0.5, 32, 32);
+                    material = new THREE.MeshStandardMaterial({ color: 0xffdbac });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.y = 2;
+                    mesh.castShadow = true;
+                    group.add(mesh);
+                    
+                    return group;
+                    
+                case 'chair':
+                    // Create a simple chair
+                    const chairGroup = new THREE.Group();
+                    
+                    // Seat
+                    geometry = new THREE.BoxGeometry(1, 0.1, 1);
+                    material = new THREE.MeshStandardMaterial({ color: 0x8b4513 });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.y = 0.55;
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+                    chairGroup.add(mesh);
+                    
+                    // Backrest
+                    geometry = new THREE.BoxGeometry(1, 1, 0.1);
+                    material = new THREE.MeshStandardMaterial({ color: 0x8b4513 });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(0, 1.3, -0.45);
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+                    chairGroup.add(mesh);
+                    
+                    // Legs (4)
+                    geometry = new THREE.CylinderGeometry(0.05, 0.05, 0.5, 16);
+                    material = new THREE.MeshStandardMaterial({ color: 0x8b4513 });
+                    
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(0.45, 0.25, 0.45);
+                    mesh.castShadow = true;
+                    chairGroup.add(mesh);
+                    
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(-0.45, 0.25, 0.45);
+                    mesh.castShadow = true;
+                    chairGroup.add(mesh);
+                    
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(0.45, 0.25, -0.45);
+                    mesh.castShadow = true;
+                    chairGroup.add(mesh);
+                    
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(-0.45, 0.25, -0.45);
+                    mesh.castShadow = true;
+                    chairGroup.add(mesh);
+                    
+                    return chairGroup;
+                    
+                case 'table':
+                    // Create a simple table
+                    const tableGroup = new THREE.Group();
+                    
+                    // Tabletop
+                    geometry = new THREE.CircleGeometry(1.5, 32);
+                    material = new THREE.MeshStandardMaterial({ color: 0x8b4513 });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.rotation.x = -Math.PI / 2;
+                    mesh.position.y = 1;
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+                    tableGroup.add(mesh);
+                    
+                    // Table legs (4)
+                    geometry = new THREE.CylinderGeometry(0.08, 0.08, 1, 16);
+                    material = new THREE.MeshStandardMaterial({ color: 0x8b4513 });
+                    
+                    const angleStep = Math.PI / 2;
+                    for (let i = 0; i < 4; i++) {
+                        const angle = i * angleStep;
+                        mesh = new THREE.Mesh(geometry, material);
+                        mesh.position.set(
+                            Math.cos(angle) * 1.2,
+                            0.5,
+                            Math.sin(angle) * 1.2
+                        );
+                        mesh.castShadow = true;
+                        tableGroup.add(mesh);
+                    }
+                    
+                    return tableGroup;
+                    
+                case 'lamp':
+                    // Create a simple lamp
+                    const lampGroup = new THREE.Group();
+                    
+                    // Base
+                    geometry = new THREE.CylinderGeometry(0.3, 0.3, 0.2, 32);
+                    material = new THREE.MeshStandardMaterial({ color: 0xaaaaaa });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.y = 0.1;
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+                    lampGroup.add(mesh);
+                    
+                    // Stand
+                    geometry = new THREE.CylinderGeometry(0.05, 0.05, 1.5, 16);
+                    material = new THREE.MeshStandardMaterial({ color: 0xaaaaaa });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.y = 0.95;
+                    mesh.castShadow = true;
+                    lampGroup.add(mesh);
+                    
+                    // Shade
+                    geometry = new THREE.ConeGeometry(0.5, 0.8, 32);
+                    material = new THREE.MeshStandardMaterial({ color: 0xffffee });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.y = 2;
+                    mesh.rotation.x = Math.PI;
+                    mesh.castShadow = true;
+                    lampGroup.add(mesh);
+                    
+                    // Add a light source
+                    const pointLight = new THREE.PointLight(0xffffdd, 1, 10);
+                    pointLight.position.y = 1.8;
+                    lampGroup.add(pointLight);
+                    
+                    return lampGroup;
+                    
+                case 'bookshelf':
+                    // Create a simple bookshelf
+                    const shelfGroup = new THREE.Group();
+                    
+                    // Main structure
+                    geometry = new THREE.BoxGeometry(2, 2, 0.3);
+                    material = new THREE.MeshStandardMaterial({ color: 0x8b4513 });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.y = 1;
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+                    shelfGroup.add(mesh);
+                    
+                    // Shelves (3)
+                    geometry = new THREE.BoxGeometry(1.9, 0.05, 0.28);
+                    material = new THREE.MeshStandardMaterial({ color: 0x8b4513 });
+                    
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(0, 0.6, 0);
+                    mesh.receiveShadow = true;
+                    shelfGroup.add(mesh);
+                    
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(0, 1.2, 0);
+                    mesh.receiveShadow = true;
+                    shelfGroup.add(mesh);
+                    
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.set(0, 1.8, 0);
+                    mesh.receiveShadow = true;
+                    shelfGroup.add(mesh);
+                    
+                    // Books (simple representation)
+                    geometry = new THREE.BoxGeometry(0.2, 0.4, 0.05);
+                    const bookColors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00, 0xff00ff, 0x00ffff];
+                    
+                    for (let i = 0; i < 3; i++) {
+                        for (let j = 0; j < 5; j++) {
+                            material = new THREE.MeshStandardMaterial({ 
+                                color: bookColors[(i * 5 + j) % bookColors.length]
+                            });
+                            mesh = new THREE.Mesh(geometry, material);
+                            mesh.position.set(-0.8 + j * 0.4, 0.3 + i * 0.6, 0.1);
+                            mesh.castShadow = true;
+                            shelfGroup.add(mesh);
+                        }
+                    }
+                    
+                    return shelfGroup;
+                    
+                case 'painting':
+                    // Create a painting on wall
+                    const paintingGroup = new THREE.Group();
+                    
+                    // Frame
+                    geometry = new THREE.BoxGeometry(1.2, 0.8, 0.05);
+                    material = new THREE.MeshStandardMaterial({ color: 0x8b4513 });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.position.z = -0.025;
+                    mesh.castShadow = true;
+                    paintingGroup.add(mesh);
+                    
+                    // Painting
+                    geometry = new THREE.PlaneGeometry(1.1, 0.7);
+                    material = new THREE.MeshStandardMaterial({ 
+                        color: 0xcccccc,
+                        side: THREE.DoubleSide
+                    });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.castShadow = true;
+                    paintingGroup.add(mesh);
+                    
+                    // Make it face the camera
+                    paintingGroup.lookAt(camera.position);
+                    paintingGroup.rotation.y += Math.PI;
+                    
+                    return paintingGroup;
+                    
+                default:
+                    // Default shape for clothing and other items
+                    geometry = new THREE.BoxGeometry(1, 1, 1);
+                    material = new THREE.MeshStandardMaterial({ 
+                        color: Math.random() * 0xffffff
+                    });
+                    mesh = new THREE.Mesh(geometry, material);
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+                    return mesh;
+            }
+        }
+
+        // Add item to 3D scene
+        function addItemToScene(itemData) {
+            // Create 3D object
+            const object = create3DObject(itemData);
+            
+            // Position randomly in the scene
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 2 + Math.random() * 3;
+            object.position.set(
+                Math.cos(angle) * radius,
+                0,
+                Math.sin(angle) * radius
+            );
+            
+            // Random rotation
+            object.rotation.y = Math.random() * Math.PI * 2;
+            
+            // Store item data with the object
+            object.userData = {
+                id: itemData.id,
+                name: itemData.name,
+                price: itemData.price,
+                image: itemData.image,
+                type: itemData.type
+            };
+            
+            // Add to scene
+            scene.add(object);
+            itemsInScene.push(object);
+            
+            // Hide instructions after first item is added
+            document.getElementById('instructions').style.display = 'none';
+            
+            return object;
+        }
+
+        // Remove item from 3D scene
+        function removeSceneItem(itemId) {
+            for (let i = 0; i < itemsInScene.length; i++) {
+                if (itemsInScene[i].userData.id === itemId) {
+                    scene.remove(itemsInScene[i]);
+                    itemsInScene.splice(i, 1);
+                    break;
+                }
+            }
+            
+            // Show instructions if no items left
+            if (itemsInScene.length === 0) {
+                document.getElementById('instructions').style.display = 'flex';
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize 3D scene
+            init3DScene();
+            
+            // Drag and drop functionality
+            const draggableItems = document.querySelectorAll('.draggable-item');
+            const dropZone = document.getElementById('sceneContainer');
+            
+            // Add drag start event to draggable items
+            draggableItems.forEach(item => {
+                item.addEventListener('dragstart', (e) => {
+                    const itemData = {
+                        id: item.dataset.id,
+                        name: item.dataset.name,
+                        price: item.dataset.price,
+                        image: item.querySelector('img').src,
+                        type: item.dataset.type,
+                        category: item.dataset.category
+                    };
+                    
+                    e.dataTransfer.setData('text/plain', JSON.stringify(itemData));
+                    setTimeout(() => {
+                        item.classList.add('opacity-50');
+                    }, 0);
+                });
+                
+                item.addEventListener('dragend', () => {
+                    item.classList.remove('opacity-50');
+                });
+            });
+            
+            // Add drop zone events
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('highlight');
+            });
+            
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('highlight');
+            });
+            
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('highlight');
+                
+                const itemData = JSON.parse(e.dataTransfer.getData('text/plain'));
+                
+                // Add item to scene and cart
+                addItemToScene(itemData);
+                cart.addItem(itemData);
+            });
+            
+            // Rotate view button
+            document.getElementById('rotateView').addEventListener('click', () => {
+                // Animation to rotate the camera around the scene
+                const startAngle = camera.position.angleTo(new THREE.Vector3(0, camera.position.y, 0));
+                const endAngle = startAngle + Math.PI * 2;
+                const duration = 3000; // 3 seconds
+                const startTime = Date.now();
+                
+                function animateRotation() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const angle = startAngle + (endAngle - startAngle) * progress;
+                    
+                    const radius = camera.position.distanceTo(new THREE.Vector3(0, camera.position.y, 0));
+                    camera.position.x = Math.cos(angle) * radius;
+                    camera.position.z = Math.sin(angle) * radius;
+                    camera.lookAt(0, 1, 0);
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animateRotation);
+                    }
+                }
+                
+                animateRotation();
+            });
+            
+            // Reset scene button
+            document.getElementById('resetScene').addEventListener('click', () => {
+                // Remove all items from scene
+                itemsInScene.forEach(item => {
+                    scene.remove(item);
+                });
+                itemsInScene = [];
+                
+                // Clear cart
+                cart.clearCart();
+                
+                // Show instructions
+                document.getElementById('instructions').style.display = 'flex';
+            });
+            
+            // Checkout button
+            document.getElementById('checkoutBtn').addEventListener('click', () => {
+                alert('Proceeding to checkout! Total: ' + cart.total.toFixed(2));
+                // Here you would typically redirect to a checkout page
+            });
+            
+            // Mobile menu toggle
+            document.getElementById('mobileMenuToggle').addEventListener('click', () => {
+                // Implement mobile menu functionality here
+                alert('Mobile menu would open here');
+            });
+        });
+    </script>
+</body>
+</html>
