@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReToy - Community</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="community.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="container">
+            <a href="#" class="logo">ReToy</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="shop.html">Shop</a></li>
+                    <li><a href="#" class="active">Community</a></li>
+                    <li><a href="create.html">Create</a></li>  <!-- 指向Create页面 -->
+                    <li><a href="#">Home</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <a href="#" class="btn btn-outline">Log in</a>
+                <a href="#" class="btn btn-primary">Sign up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Community Header -->
+    <section class="community-header">
+        <div class="container">
+            <h1>Community Showcase</h1>
+            <p>Share your creations, discover inspiring ideas, and connect with fellow toy enthusiasts</p>
+            <button class="btn btn-primary btn-large" id="uploadBtn">
+                <i class="fas fa-upload"></i> Share Your Creation
+            </button>
+        </div>
+    </section>
+
+    <!-- Filter & Sort -->
+    <section class="filters">
+        <div class="container">
+            <div class="filter-options">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Scenes</button>
+                <button class="filter-btn">Accessories</button>
+                <button class="filter-btn">DIY Tutorials</button>
+            </div>
+            <div class="sort-options">
+                <label for="sort">Sort by:</label>
+                <select id="sort">
+                    <option value="latest">Latest</option>
+                    <option value="popular">Most Popular</option>
+                    <option value="trending">Trending</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Grid -->
+    <section class="community-grid">
+        <div class="container">
+            <div class="posts-grid">
+                <!-- Post Card 1 -->
+                <div class="post-card" data-category="scenes">
+                    <div class="post-image">
+                        <img src="https://picsum.photos/seed/dollscene1/600/400" alt="Vintage dollhouse scene">
+                        <div class="post-category">Scene</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/seed/user1/100/100" alt="User avatar" class="user-avatar">
+                            <span class="user-name">EmmaCrafts</span>
+                        </div>
+                        <h3 class="post-title">Vintage Tea Party Setup</h3>
+                        <p class="post-description">Handcrafted miniature tea set with lace tablecloth for 12" dolls</p>
+                        <div class="post-actions">
+                            <button class="like-btn"><i class="far fa-heart"></i> 42</button>
+                            <button class="comment-btn"><i class="far fa-comment"></i> 8</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post Card 2 -->
+                <div class="post-card" data-category="accessories">
+                    <div class="post-image">
+                        <img src="https://picsum.photos/seed/dollacc1/600/400" alt="Doll accessories">
+                        <div class="post-category">Accessory</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/seed/user2/100/100" alt="User avatar" class="user-avatar">
+                            <span class="user-name">MiniMaker</span>
+                        </div>
+                        <h3 class="post-title">Handstitched Outfit Set</h3>
+                        <p class="post-description">3-piece winter outfit with detachable accessories</p>
+                        <div class="post-actions">
+                            <button class="like-btn"><i class="far fa-heart"></i> 78</button>
+                            <button class="comment-btn"><i class="far fa-comment"></i> 12</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post Card 3 -->
+                <div class="post-card" data-category="tutorials">
+                    <div class="post-image">
+                        <img src="https://picsum.photos/seed/dolltut1/600/400" alt="DIY tutorial">
+                        <div class="post-category">Tutorial</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/seed/user3/100/100" alt="User avatar" class="user-avatar">
+                            <span class="user-name">CraftyGuide</span>
+                        </div>
+                        <h3 class="post-title">How to Make Miniature Books</h3>
+                        <p class="post-description">Step-by-step guide to creating realistic tiny books for dollhouses</p>
+                        <div class="post-actions">
+                            <button class="like-btn"><i class="far fa-heart"></i> 124</button>
+                            <button class="comment-btn"><i class="far fa-comment"></i> 23</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post Card 4 -->
+                <div class="post-card" data-category="scenes">
+                    <div class="post-image">
+                        <img src="https://picsum.photos/seed/dollscene2/600/400" alt="Doll scene">
+                        <div class="post-category">Scene</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/seed/user4/100/100" alt="User avatar" class="user-avatar">
+                            <span class="user-name">MiniWorld</span>
+                        </div>
+                        <h3 class="post-title">Futuristic Bedroom Setup</h3>
+                        <p class="post-description">LED-lit modern bedroom with custom furniture</p>
+                        <div class="post-actions">
+                            <button class="like-btn"><i class="far fa-heart"></i> 93</button>
+                            <button class="comment-btn"><i class="far fa-comment"></i> 15</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post Card 5 -->
+                <div class="post-card" data-category="accessories">
+                    <div class="post-image">
+                        <img src="https://picsum.photos/seed/dollacc2/600/400" alt="Doll accessories">
+                        <div class="post-category">Accessory</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/seed/user5/100/100" alt="User avatar" class="user-avatar">
+                            <span class="user-name">BeadMaster</span>
+                        </div>
+                        <h3 class="post-title">Custom Jewelry Collection</h3>
+                        <p class="post-description">Handmade beaded necklaces, bracelets and earrings</p>
+                        <div class="post-actions">
+                            <button class="like-btn"><i class="far fa-heart"></i> 65</button>
+                            <button class="comment-btn"><i class="far fa-comment"></i> 9</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Post Card 6 -->
+                <div class="post-card" data-category="tutorials">
+                    <div class="post-image">
+                        <img src="https://picsum.photos/seed/dolltut2/600/400" alt="DIY tutorial">
+                        <div class="post-category">Tutorial</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="user-info">
+                            <img src="https://picsum.photos/seed/user6/100/100" alt="User avatar" class="user-avatar">
+                            <span class="user-name">SewingNinja</span>
+                        </div>
+                        <h3 class="post-title">Beginner Sewing for Doll Clothes</h3>
+                        <p class="post-description">Easy techniques for creating your first doll outfit</p>
+                        <div class="post-actions">
+                            <button class="like-btn"><i class="far fa-heart"></i> 156</button>
+                            <button class="comment-btn"><i class="far fa-comment"></i> 31</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Load More Button -->
+            <div class="load-more">
+                <button class="btn btn-outline">Load More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Modal (Hidden by default) -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Share Your Creation</h2>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form class="upload-form">
+                <div class="form-group">
+                    <label for="creationTitle">Title</label>
+                    <input type="text" id="creationTitle" placeholder="Give your creation a name">
+                </div>
+                <div class="form-group">
+                    <label for="creationCategory">Category</label>
+                    <select id="creationCategory">
+                        <option value="">Select a category</option>
+                        <option value="scenes">Scene</option>
+                        <option value="accessories">Accessory</option>
+                        <option value="tutorials">DIY Tutorial</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="creationDescription">Description</label>
+                    <textarea id="creationDescription" rows="4" placeholder="Tell us about your creation"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Upload Images</label>
+                    <div class="image-upload">
+                        <div class="upload-area">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag & drop images here or click to browse</p>
+                            <input type="file" id="imageUpload" multiple accept="image/*">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" id="cancelUpload">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Share Creation</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="community.js"></script>
+</body>
+</html>
