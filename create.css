@@ -87,6 +87,9 @@ body {
     color: var(--dark);
     text-decoration: none;
     letter-spacing: -0.5px;
+    margin-right: 660px;
+    color: #e67000;
+
 }
 
 .logo:hover {
@@ -740,4 +743,5 @@ select {
     .accessory-grid {
         grid-template-columns: 1fr;
     }
+
 }

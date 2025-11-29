@@ -3,18 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ReToy - Community</title>
+    <title>BowerBit - Community</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="community.css">
+    <style>
+        /* 新增标签样式（可迁移至community.css） */
+        .creator-tag {
+            background: #e67000;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            margin-left: 0.5rem;
+        }
+        .top-voted {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #8B5CF6;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        .subsidy-tag {
+            display: inline-block;
+            background: #10B981;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin: 0.3rem 0;
+        }
+        .shop-btn {
+            display: inline-block;
+            background: #f3f4f6;
+            color: #1F2937;
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+        .shop-btn:hover {
+            background: #e5e7eb;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
     <header class="navbar">
         <div class="container">
-            <a href="#" class="logo">ReToy</a>
+            <img src="/img/Logo.png" alt="BowerBit Logo" class="logo-img" width="40px">
+            <a href="#" class="logo">BowerBit</a>
             <nav class="main-nav">
                 <ul>
                     <li><a href="shop.html">Shop</a></li>
@@ -68,13 +113,13 @@
                 <!-- Post Card 1 -->
                 <div class="post-card" data-category="scenes">
                     <div class="post-image">
-                        <img src="https://picsum.photos/seed/dollscene1/600/400" alt="Vintage dollhouse scene">
+                        <img src="./img/20.png" alt="Vintage dollhouse scene">
                         <div class="post-category">Scene</div>
                     </div>
                     <div class="post-content">
                         <div class="user-info">
                             <img src="https://picsum.photos/seed/user1/100/100" alt="User avatar" class="user-avatar">
-                            <span class="user-name">EmmaCrafts</span>
+                            <span class="user-name">EmmaCrafts <span class="creator-tag">Creator Program Member</span></span>
                         </div>
                         <h3 class="post-title">Vintage Tea Party Setup</h3>
                         <p class="post-description">Handcrafted miniature tea set with lace tablecloth for 12" dolls</p>
@@ -82,19 +127,23 @@
                             <button class="like-btn"><i class="far fa-heart"></i> 42</button>
                             <button class="comment-btn"><i class="far fa-comment"></i> 8</button>
                         </div>
+                        <!-- 社区-交易闭环：新增购物按钮 -->
+                        <a href="shop.html?items=lace-tablecloth,mini-tea-set" class="shop-btn">
+                            <i class="fas fa-shopping-bag"></i> Shop These Pieces
+                        </a>
                     </div>
                 </div>
 
                 <!-- Post Card 2 -->
                 <div class="post-card" data-category="accessories">
                     <div class="post-image">
-                        <img src="https://picsum.photos/seed/dollacc1/600/400" alt="Doll accessories">
+                        <img src="./img/18.png" alt="Doll accessories">
                         <div class="post-category">Accessory</div>
                     </div>
                     <div class="post-content">
                         <div class="user-info">
                             <img src="https://picsum.photos/seed/user2/100/100" alt="User avatar" class="user-avatar">
-                            <span class="user-name">MiniMaker</span>
+                            <span class="user-name">MiniMaker <span class="creator-tag">Creator Program Member</span></span>
                         </div>
                         <h3 class="post-title">Handstitched Outfit Set</h3>
                         <p class="post-description">3-piece winter outfit with detachable accessories</p>
@@ -102,26 +151,38 @@
                             <button class="like-btn"><i class="far fa-heart"></i> 78</button>
                             <button class="comment-btn"><i class="far fa-comment"></i> 12</button>
                         </div>
+                        <!-- 社区-交易闭环：新增购物按钮 -->
+                        <a href="shop.html?items=winter-outfit,detachable-scarf" class="shop-btn">
+                            <i class="fas fa-shopping-bag"></i> Shop These Pieces
+                        </a>
                     </div>
                 </div>
 
                 <!-- Post Card 3 -->
                 <div class="post-card" data-category="tutorials">
                     <div class="post-image">
-                        <img src="https://picsum.photos/seed/dolltut1/600/400" alt="DIY tutorial">
+                        <img src="./img/21.png" alt="DIY tutorial">
                         <div class="post-category">Tutorial</div>
+                        <!-- 高互动作品：新增选品标签 -->
+                        <span class="top-voted">Top Voted (Eligible for Production)</span>
                     </div>
                     <div class="post-content">
                         <div class="user-info">
                             <img src="https://picsum.photos/seed/user3/100/100" alt="User avatar" class="user-avatar">
-                            <span class="user-name">CraftyGuide</span>
+                            <span class="user-name">CraftyGuide <span class="creator-tag">Creator Program Member</span></span>
                         </div>
                         <h3 class="post-title">How to Make Miniature Books</h3>
                         <p class="post-description">Step-by-step guide to creating realistic tiny books for dollhouses</p>
+                        <!-- 创作者激励：教程类内容添加补贴标签 -->
+                        <span class="subsidy-tag">Creator Subsidy Eligible</span>
                         <div class="post-actions">
                             <button class="like-btn"><i class="far fa-heart"></i> 124</button>
                             <button class="comment-btn"><i class="far fa-comment"></i> 23</button>
                         </div>
+                        <!-- 社区-交易闭环：新增购物按钮 -->
+                        <a href="shop.html?items=mini-paper,book-binding-tools" class="shop-btn">
+                            <i class="fas fa-shopping-bag"></i> Shop These Pieces
+                        </a>
                     </div>
                 </div>
 
@@ -134,7 +195,7 @@
                     <div class="post-content">
                         <div class="user-info">
                             <img src="https://picsum.photos/seed/user4/100/100" alt="User avatar" class="user-avatar">
-                            <span class="user-name">MiniWorld</span>
+                            <span class="user-name">MiniWorld <span class="creator-tag">Creator Program Member</span></span>
                         </div>
                         <h3 class="post-title">Futuristic Bedroom Setup</h3>
                         <p class="post-description">LED-lit modern bedroom with custom furniture</p>
@@ -142,6 +203,10 @@
                             <button class="like-btn"><i class="far fa-heart"></i> 93</button>
                             <button class="comment-btn"><i class="far fa-comment"></i> 15</button>
                         </div>
+                        <!-- 社区-交易闭环：新增购物按钮 -->
+                        <a href="shop.html?items=led-mini-lights,futuristic-furniture" class="shop-btn">
+                            <i class="fas fa-shopping-bag"></i> Shop These Pieces
+                        </a>
                     </div>
                 </div>
 
@@ -154,7 +219,7 @@
                     <div class="post-content">
                         <div class="user-info">
                             <img src="https://picsum.photos/seed/user5/100/100" alt="User avatar" class="user-avatar">
-                            <span class="user-name">BeadMaster</span>
+                            <span class="user-name">BeadMaster <span class="creator-tag">Creator Program Member</span></span>
                         </div>
                         <h3 class="post-title">Custom Jewelry Collection</h3>
                         <p class="post-description">Handmade beaded necklaces, bracelets and earrings</p>
@@ -162,6 +227,10 @@
                             <button class="like-btn"><i class="far fa-heart"></i> 65</button>
                             <button class="comment-btn"><i class="far fa-comment"></i> 9</button>
                         </div>
+                        <!-- 社区-交易闭环：新增购物按钮 -->
+                        <a href="shop.html?items=mini-beads,clasp-set" class="shop-btn">
+                            <i class="fas fa-shopping-bag"></i> Shop These Pieces
+                        </a>
                     </div>
                 </div>
 
@@ -170,18 +239,26 @@
                     <div class="post-image">
                         <img src="https://picsum.photos/seed/dolltut2/600/400" alt="DIY tutorial">
                         <div class="post-category">Tutorial</div>
+                        <!-- 高互动作品：新增选品标签 -->
+                        <span class="top-voted">Top Voted (Eligible for Production)</span>
                     </div>
                     <div class="post-content">
                         <div class="user-info">
                             <img src="https://picsum.photos/seed/user6/100/100" alt="User avatar" class="user-avatar">
-                            <span class="user-name">SewingNinja</span>
+                            <span class="user-name">SewingNinja <span class="creator-tag">Creator Program Member</span></span>
                         </div>
                         <h3 class="post-title">Beginner Sewing for Doll Clothes</h3>
                         <p class="post-description">Easy techniques for creating your first doll outfit</p>
+                        <!-- 创作者激励：教程类内容添加补贴标签 -->
+                        <span class="subsidy-tag">Creator Subsidy Eligible</span>
                         <div class="post-actions">
                             <button class="like-btn"><i class="far fa-heart"></i> 156</button>
                             <button class="comment-btn"><i class="far fa-comment"></i> 31</button>
                         </div>
+                        <!-- 社区-交易闭环：新增购物按钮 -->
+                        <a href="shop.html?items=mini-sewing-kit,doll-fabric" class="shop-btn">
+                            <i class="fas fa-shopping-bag"></i> Shop These Pieces
+                        </a>
                     </div>
                 </div>
             </div>
