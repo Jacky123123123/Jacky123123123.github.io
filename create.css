@@ -743,5 +743,76 @@ select {
     .accessory-grid {
         grid-template-columns: 1fr;
     }
+/* 步骤操作按钮容器 - 适配保存+结算按钮布局 */
+.step-actions {
+    display: flex;
+    gap: 10px;
+}
 
+/* 结算按钮样式 */
+#checkout-btn {
+    background-color: #2E7D32; /* 绿色主色调 */
+}
+
+#checkout-btn:hover {
+    background-color: #246429;
+    box-shadow: 0 4px 8px rgba(46, 125, 50, 0.2);
+}
+
+/* 拖拽提示层样式 */
+#drag-instructions {
+    display: flex;
+    transition: all 0.3s ease;
+}
+
+/* 购物车总价汇总样式 */
+.cart-summary {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: var(--border);
+}
+
+#total-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* 适配响应式布局 - 小屏幕下按钮换行 */
+@media (max-width: 480px) {
+    .step-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    #checkout-btn {
+        margin-left: 0 !important;
+    }
+    
+    #drag-instructions .bg-white {
+        padding: 4px;
+        max-width: 90%;
+    }
+    
+    #drag-instructions h3 {
+        font-size: 16px;
+    }
+    
+    #drag-instructions p {
+        font-size: 14px;
+    }
+}
+
+/* 确保提示层在画布占位符之上 */
+.canvas-container {
+    position: relative;
+}
+
+.canvas-placeholder {
+    z-index: 5;
+}
+
+#drag-instructions {
+    z-index: 10;
+}
 }

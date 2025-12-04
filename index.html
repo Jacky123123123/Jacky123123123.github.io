@@ -232,8 +232,14 @@
                 <!-- Step Navigation Buttons -->
                 <div class="step-navigation">
                     <button class="btn btn-outline" id="prev-btn" style="display: none;">Previous</button>
-                    <button class="btn btn-primary" id="next-btn">Next Step</button>
-                    <button class="btn btn-primary" id="save-btn" style="display: none;">Save Design</button>
+                    <div class="step-actions">
+                        <button class="btn btn-primary" id="next-btn">Next Step</button>
+                        <button class="btn btn-primary" id="save-btn" style="display: none;">Save Design</button>
+                        <!-- 添加购物车结算按钮 -->
+                        <button class="btn btn-primary bg-green-600 hover:bg-green-700" id="checkout-btn" style="display: none; margin-left: 10px;">
+                            <i class="fas fa-shopping-cart mr-1"></i> Checkout
+                        </button>
+                    </div>
                 </div>
             </div>
             
@@ -265,6 +271,15 @@
                         <p>Your 3D scene will appear here</p>
                         <p class="hint">Start by selecting your base in the left panel</p>
                     </div>
+                    <!-- 添加拖拽提示层 -->
+                    <div id="drag-instructions" class="absolute inset-0 flex items-center justify-center z-10">
+                        <div class="bg-white bg-opacity-80 backdrop-blur-sm p-6 rounded-lg text-center max-w-md shadow-lg">
+                            <i class="fa fa-arrow-left text-4xl text-[#FF7E00] mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">Drag & Drop Items</h3>
+                            <p class="text-gray-600 mb-4">Drag items from the left panel to add them to your 3D scene</p>
+                            <p class="text-gray-600">Use mouse to orbit, pan and zoom the 3D view</p>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- Added Items List -->
@@ -273,6 +288,13 @@
                     <ul id="items-list">
                         <li class="empty-state">No items added yet</li>
                     </ul>
+                    <!-- 新增购物车总价展示 -->
+                    <div class="cart-summary mt-4 pt-4 border-t">
+                        <div class="flex justify-between items-center">
+                            <p class="font-medium">Total:</p>
+                            <p id="total-price" class="text-xl font-bold text-[#FF7E00]">$0.00</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 // 等待DOM加载完成
 document.addEventListener('DOMContentLoaded', function() {
     // --------------------------
-    // 全局变量与初始化
+    // 全局变量与初始化（新增购物车相关）
     // --------------------------
     let currentStep = 1;
     const totalSteps = 3;
@@ -11,14 +11,73 @@ document.addEventListener('DOMContentLoaded', function() {
     let addedItems = []; // 存储已添加的物品信息
     let isRotating = false;
 
+    // 新增：物品价格配置（可根据实际需求调整）
+    const itemPrices = {
+        // 角色价格
+        char1: 29.99,
+        char2: 34.99,
+        char3: 24.99,
+        char4: 39.99,
+        // 配饰价格
+        furn1: 12.99,
+        furn2: 18.99,
+        furn3: 24.99,
+        dec1: 8.99,
+        dec2: 14.99,
+        prop1: 4.99,
+        prop2: 3.99,
+        cloth1: 9.99,
+        cloth2: 7.99
+    };
 
+    // 新增：购物车对象
+    const cart = {
+        items: [],
+        total: 0,
+
+        // 添加物品到购物车
+        addItem(itemId) {
+            const price = itemPrices[itemId] || 0;
+            this.items.push({ id: itemId, price: price });
+            this.calculateTotal();
+            this.updateTotalUI();
+        },
+
+        // 从购物车移除物品
+        removeItem(itemId) {
+            this.items = this.items.filter(item => item.id !== itemId);
+            this.calculateTotal();
+            this.updateTotalUI();
+        },
+
+        // 计算总价
+        calculateTotal() {
+            this.total = this.items.reduce((sum, item) => sum + item.price, 0);
+        },
+
+        // 更新总价UI
+        updateTotalUI() {
+            const totalPriceEl = document.getElementById('total-price');
+            if (totalPriceEl) {
+                totalPriceEl.textContent = `$${this.total.toFixed(2)}`;
+            }
+        },
+
+        // 清空购物车
+        clearCart() {
+            this.items = [];
+            this.total = 0;
+            this.updateTotalUI();
+        }
+    };
 
     // --------------------------
-    // 元素获取
+    // 元素获取（新增/修改）
     // --------------------------
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     const saveBtn = document.getElementById('save-btn');
+    const checkoutBtn = document.getElementById('checkout-btn'); // 新增结算按钮
     const progressSteps = document.querySelectorAll('.progress-step');
     const stepContents = document.querySelectorAll('.step-content');
     const addPanelsToggle = document.getElementById('add-panels');
@@ -36,10 +95,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const zoomIn = document.getElementById('zoom-out'); // 注意：Three.js中zoom值越小视图越大
     const zoomOut = document.getElementById('zoom-in');
     const resetView = document.getElementById('reset-view');
+    const dragInstructions = document.getElementById('drag-instructions'); // 新增拖拽提示层
+    const totalPriceEl = document.getElementById('total-price'); // 新增总价元素
+
     // 初始化3D场景
     initThreeJS();
+
     // --------------------------
-    // 步骤控制
+    // 步骤控制（修改：同步结算按钮显示）
     // --------------------------
     // 下一步按钮
     nextBtn.addEventListener('click', function() {
@@ -68,7 +131,17 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Your design has been saved successfully!');
     });
 
-    // 更新步骤UI
+    // 新增：结算按钮点击事件
+    checkoutBtn.addEventListener('click', function() {
+        if (cart.total === 0) {
+            alert('Your cart is empty! Add some items to checkout.');
+            return;
+        }
+        alert(`Proceeding to checkout! Total amount: $${cart.total.toFixed(2)}`);
+        // 实际项目中可跳转结算页面
+    });
+
+    // 更新步骤UI（修改：控制结算按钮显示）
     function updateStepUI() {
         // 更新进度指示器
         progressSteps.forEach(step => {
@@ -85,6 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
         prevBtn.style.display = currentStep > 1 ? 'block' : 'none';
         nextBtn.style.display = currentStep < totalSteps ? 'block' : 'none';
         saveBtn.style.display = currentStep === totalSteps ? 'block' : 'none';
+        checkoutBtn.style.display = currentStep === totalSteps ? 'block' : 'none'; // 新增：同步结算按钮显示
 
         // 步骤1进入步骤2时，确保3D场景已初始化
         if (currentStep === 2 && !scene) {
@@ -93,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --------------------------
-    // 底盘设置逻辑
+    // 底盘设置逻辑（无修改）
     // --------------------------
     // 切换是否添加立面
     addPanelsToggle.addEventListener('change', function() {
@@ -231,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --------------------------
-    // 3D场景初始化（Three.js）
+    // 3D场景初始化（Three.js）（无修改）
     // --------------------------
     function initThreeJS() {
         // 创建场景
@@ -247,6 +321,8 @@ document.addEventListener('DOMContentLoaded', function() {
         renderer.setSize(previewCanvas.clientWidth, previewCanvas.clientHeight);
         renderer.shadowMap.enabled = true;
         previewCanvas.innerHTML = ''; // 清除占位符
+        // 重新添加拖拽提示层（因为innerHTML清空了canvas容器）
+        previewCanvas.appendChild(dragInstructions);
         previewCanvas.appendChild(renderer.domElement);
 
         // 添加灯光
@@ -291,7 +367,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --------------------------
-    // 拖拽功能实现
+    // 拖拽功能实现（修改：添加购物车逻辑+隐藏提示层）
     // --------------------------
     // 为可拖拽元素添加事件
     draggableItems.forEach(item => {
@@ -310,14 +386,22 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
     });
 
-    // 处理拖放
+    // 处理拖放（修改：添加购物车逻辑）
     previewCanvas.addEventListener('drop', function(e) {
         e.preventDefault();
         const data = JSON.parse(e.dataTransfer.getData('text/plain'));
         addItemToScene(data);
+        
+        // 隐藏拖拽提示层
+        if (dragInstructions) {
+            dragInstructions.style.display = 'none';
+        }
+        
+        // 添加到购物车
+        cart.addItem(data.id);
     });
 
-    // 添加物品到场景
+    // 添加物品到场景（无核心修改，仅保留）
     function addItemToScene(itemData) {
         // 创建简单3D模型（实际项目中可替换为加载的模型）
         let geometry, material, mesh;
@@ -371,6 +455,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 记录物品信息
         const itemId = `item-${Date.now()}`;
         mesh.userData.id = itemId;
+        mesh.userData.itemDataId = itemData.id; // 关联物品价格ID
         addedItems.push({
             id: itemId,
             mesh: mesh,
@@ -381,13 +466,17 @@ document.addEventListener('DOMContentLoaded', function() {
         updateItemsList();
     }
 
-    // 更新已添加物品列表
+    // 更新已添加物品列表（修改：移除物品时同步购物车）
     function updateItemsList() {
         // 清空列表（保留空状态）
         itemsList.innerHTML = '';
         
         if (addedItems.length === 0) {
             itemsList.innerHTML = '<li class="empty-state">No items added yet</li>';
+            // 显示拖拽提示层
+            if (dragInstructions) {
+                dragInstructions.style.display = 'flex';
+            }
             return;
         }
         
@@ -396,23 +485,37 @@ document.addEventListener('DOMContentLoaded', function() {
             const li = document.createElement('li');
             li.innerHTML = `
                 <span>${item.data.name}</span>
-                <button class="remove-item" data-id="${item.id}">
-                    <i class="fas fa-trash"></i>
-                </button>
+                <div class="item-actions">
+                    <span class="item-price text-sm text-gray-500 mr-2">$${itemPrices[item.data.id]?.toFixed(2) || '0.00'}</span>
+                    <button class="remove-item" data-id="${item.id}" data-item-data-id="${item.data.id}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
             `;
             itemsList.appendChild(li);
         });
         
-        // 添加删除事件
+        // 添加删除事件（修改：同步购物车移除）
         document.querySelectorAll('.remove-item').forEach(btn => {
             btn.addEventListener('click', function() {
                 const itemId = this.dataset.id;
+                const itemDataId = this.dataset.itemDataId;
+                
+                // 从购物车移除
+                cart.removeItem(itemDataId);
+                
+                // 从场景中移除
                 removeItem(itemId);
+                
+                // 如果没有物品了，显示拖拽提示层
+                if (addedItems.length === 0 && dragInstructions) {
+                    dragInstructions.style.display = 'flex';
+                }
             });
         });
     }
 
-    // 从场景中移除物品
+    // 从场景中移除物品（无核心修改）
     function removeItem(itemId) {
         const index = addedItems.findIndex(item => item.id === itemId);
         if (index !== -1) {
@@ -426,7 +529,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // --------------------------
-    // 预览控制功能
+    // 预览控制功能（无修改）
     // --------------------------
     // 切换自动旋转
     rotateToggle.addEventListener('click', function() {
@@ -463,7 +566,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // --------------------------
-    // 初始化默认状态
+    // 初始化默认状态（无修改）
     // --------------------------
     // 默认选中中等大小底盘
     setTimeout(() => {
