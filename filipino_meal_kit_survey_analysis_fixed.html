@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filipino Meal Kit Survey Analysis</title>
+    <!-- 引入 ECharts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <!-- 基础样式 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        .chart-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        .chart-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .chart-card h2 {
+            color: #444;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            border-left: 4px solid #0078ff;
+            padding-left: 10px;
+        }
+        .chart {
+            width: 100%;
+            height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                grid-template-columns: 1fr;
+            }
+            .chart {
+                height: 300px;
+            }
+        }
+    </style>
+    <!-- 网站图标（可选，解决404） -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='90' font-size='90'>📊</text></svg>" type="image/svg+xml">
+</head>
+<body>
+    <h1>Filipino Meal Kit Survey - Key Insights</h1>
+
+    <div class="chart-container">
+        <!-- 1. 年龄分布饼图 -->
+        <div class="chart-card">
+            <h2>1. Respondent Age Distribution</h2>
+            <div id="ageChart" class="chart"></div>
+        </div>
+
+        <!-- 2. 家庭结构柱状图 -->
+        <div class="chart-card">
+            <h2>2. Household Structure</h2>
+            <div id="familyChart" class="chart"></div>
+        </div>
+
+        <!-- 3. 菲律宾食物烹饪频率 -->
+        <div class="chart-card">
+            <h2>3. Frequency of Cooking Filipino Food</h2>
+            <div id="cookingFreqChart" class="chart"></div>
+        </div>
+
+        <!-- 4. 餐包选择关键因素评分 -->
+        <div class="chart-card">
+            <h2>4. Key Factors for Meal Kit Selection (1-5 Scale, 5=Most Important)</h2>
+            <div id="factorsChart" class="chart"></div>
+        </div>
+
+        <!-- 5. 菲律宾特色餐包尝试意愿 -->
+        <div class="chart-card">
+            <h2>5. Willingness to Try Filipino-Specific Meal Kits (1=No, 5=Yes)</h2>
+            <div id="willingnessChart" class="chart"></div>
+        </div>
+    </div>
+
+    <script>
+        // 等待DOM加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            // ---------------------- 1. 年龄分布图表 ----------------------
+            const ageChart = echarts.init(document.getElementById('ageChart'));
+            const ageData = {
+                labels: ['18-24', '25-34', '35-44', '45-54', '55+'],
+                values: [3, 12, 12, 5, 3], // 样本数：35人
+                colors: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7']
+            };
+            ageChart.setOption({
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{b}: {c} respondents ({d}%)'
+                },
+                legend: {
+                    orient: 'vertical',
+                    right: 10,
+                    top: 'center'
+                },
+                series: [{
+                    name: 'Age Group',
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    data: ageData.labels.map((label, i) => ({
+                        name: label,
+                        value: ageData.values[i]
+                    })),
+                    itemStyle: {
+                        color: function(params) {
+                            return ageData.colors[params.dataIndex];
+                        }
+                    },
+                    label: {
+                        show: true,
+                        formatter: '{b}: {d}%'
+                    }
+                }]
+            });
+
+            // ---------------------- 2. 家庭结构图表 ----------------------
+            const familyChart = echarts.init(document.getElementById('familyChart'));
+            // 修复：定义 family_labels 和 family_values 变量
+            const family_labels = ['Couple with children', 'Couple without children', 'Single with children', 'Single', 'Extended family'];
+            const family_values = [23, 5, 3, 3, 1]; // 核心家庭占65.7%
+            familyChart.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: '{b}: {c} respondents'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: family_labels,
+                    axisLabel: {
+                        rotate: 15,
+                        fontSize: 11
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 0,
+                    interval: 5
+                },
+                series: [{
+                    name: 'Number of Respondents',
+                    type: 'bar',
+                    data: family_values,
+                    itemStyle: {
+                        color: '#0078ff'
+                    },
+                    label: {
+                        show: true,
+                        position: 'top'
+                    }
+                }]
+            });
+
+            // ---------------------- 3. 烹饪频率图表 ----------------------
+            const cookingFreqChart = echarts.init(document.getElementById('cookingFreqChart'));
+            const cookingLabels = ['Every day', '3-5 times/week', '1-2 times/week', 'Occasionally', 'Rarely/Never'];
+            const cookingValues = [9, 14, 7, 4, 1]; // 65.7% 每周≥3次
+            cookingFreqChart.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: '{b}: {c} respondents'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: cookingLabels,
+                    axisLabel: {
+                        rotate: 15,
+                        fontSize: 11
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 0,
+                    interval: 3
+                },
+                series: [{
+                    name: 'Number of Respondents',
+                    type: 'bar',
+                    data: cookingValues,
+                    itemStyle: {
+                        color: '#28a745'
+                    },
+                    label: {
+                        show: true,
+                        position: 'top'
+                    }
+                }]
+            });
+
+            // ---------------------- 4. 餐包选择因素图表 ----------------------
+            const factorsChart = echarts.init(document.getElementById('factorsChart'));
+            const factorLabels = [
+                'Price Reasonableness', 
+                'Appropriate Portion Size', 
+                'Convenience', 
+                'Authentic Flavors', 
+                'Ingredient Quality', 
+                'Subscription Flexibility'
+            ];
+            const factorScores = [4.51, 4.46, 4.34, 4.31, 4.14, 4.23]; // 1-5分，越高越重要
+            factorsChart.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: '{b}: {c} / 5'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: factorLabels,
+                    axisLabel: {
+                        rotate: 20,
+                        fontSize: 10
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 3,
+                    max: 5,
+                    interval: 0.2
+                },
+                series: [{
+                    name: 'Importance Score (5=Highest)',
+                    type: 'bar',
+                    data: factorScores,
+                    itemStyle: {
+                        color: function(params) {
+                            const colorList = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD'];
+                            return colorList[params.dataIndex];
+                        }
+                    },
+                    label: {
+                        show: true,
+                        position: 'top',
+                        formatter: '{c}'
+                    }
+                }]
+            });
+
+            // ---------------------- 5. 尝试意愿图表 ----------------------
+            const willingnessChart = echarts.init(document.getElementById('willingnessChart'));
+            const willingnessLabels = ['1 (Not willing)', '2', '3', '4', '5 (Very willing)'];
+            const willingnessValues = [1, 2, 6, 8, 18]; // 51.4% 选择5分（非常愿意）
+            willingnessChart.setOption({
+                tooltip: {
+                    trigger: 'axis',
+                    formatter: '{b}: {c} respondents'
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: willingnessLabels,
+                    axisLabel: {
+                        fontSize: 12
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    min: 0,
+                    interval: 4
+                },
+                series: [{
+                    name: 'Number of Respondents',
+                    type: 'bar',
+                    data: willingnessValues,
+                    itemStyle: {
+                        color: function(params) {
+                            // 分数越高颜色越绿
+                            const colorList = ['#dc3545', '#fd7e14', '#ffc107', '#28a745', '#198754'];
+                            return colorList[params.dataIndex];
+                        }
+                    },
+                    label: {
+                        show: true,
+                        position: 'top'
+                    }
+                }]
+            });
+
+            // 响应窗口大小变化
+            window.addEventListener('resize', function() {
+                ageChart.resize();
+                familyChart.resize();
+                cookingFreqChart.resize();
+                factorsChart.resize();
+                willingnessChart.resize();
+            });
+        });
+    </script>
+</body>
+</html>
