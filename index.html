@@ -559,23 +559,30 @@
     <div class="fixed inset-0 noise-bg pointer-events-none z-0"></div>
 
     <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-100">
-      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="#" id="nav-logo-link" class="flex items-center">
-          <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="BowerBit Logo" class="h-10" onerror="this.onerror=null;this.src='https://placehold.co/600x40/1a1a1a/888?text=Image';">
-        </a>
-        <div class="hidden md:flex items-center space-x-10 text-sm font-medium">
-          <a href="#community" id="nav-community-link" class="hover:text-[#FF7E00] transition-colors">Community</a>
-          <a href="#shop" id="nav-shop-link" class="hover:text-[#FF7E00] transition-colors">Shop</a>
-          <a href="#tool" id="nav-tool-link" class="hover:text-[#FF7E00] transition-colors">Create Tool</a>
-          <a href="#about" id="nav-about-link" class="hover:text-[#FF7E00] transition-colors">Our Vision</a>
-        </div>
-        <div class="flex items-center space-x-4">
-          <button id="nav-login-btn" class="text-sm font-medium px-4 py-2 hover:bg-orange-50 rounded-full transition-custom">Log In</button>
-          <button id="nav-cta-btn" class="bg-[#FF7E00] text-white text-sm font-bold px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-orange-200 transition-custom transform hover:-translate-y-0.5">Start Creating</button>
-        </div>
-      </div>
-    </nav>
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-100">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="BowerBit Logo" class="h-10 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x40/1a1a1a/888?text=Image';">
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                              <a id="nav-explore-link" href="index.html" class="font-medium hover:text-[#FF7E00] transition-colors">Explore</a>
+                <a id="nav-home-link" href="community2.html" class="font-medium hover:text-[#FF7E00] transition-colors">Community</a>
+                <a id="nav-shop-link" href="shop2.html" class="font-medium hover:text-[#FF7E00] transition-colors">Shop</a>
+                <a id="nav-create-link" href="#tool" class="font-medium hover:text-[#FF7E00] transition-colors">Create Tool</a>
+                <a id="nav-community-link" href="#about" class="font-medium hover:text-[#FF7E00] transition-colors">About</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="search-btn" class="p-2 rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:search" class="text-xl"></iconify-icon>
+                </button><button id="cart-btn" class="p-2 relative rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:shopping-cart" class="text-xl"></iconify-icon>
+                    <span id="cart-badge-count" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+                </button>
+                <div class="h-6 w-px bg-orange-100 mx-2"></div>
+                <button id="login-btn" class="hidden sm:block text-sm font-bold text-gray-700 hover:text-[#FF7E00] transition-colors">Login</button>
+    <button id="join-btn" class="bg-[#FF7E00] text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-[#E67200] transition-all transform hover:scale-105 active:scale-95">Join BowerBit</button>
+</div></div>
+</nav>
 
     <!-- Section 1: Hero / Top Posts -->
     <section id="community" class="relative py-20 px-6 overflow-hidden">
@@ -845,10 +852,10 @@
             <h2 class="text-5xl font-extrabold text-zinc-900">Top Items This Week</h2>
             <p class="text-zinc-500 max-w-lg">The most popular building materials, terrain modules, and lighting kits selected by our professional creators.</p>
           </div>
-          <a href="#" id="shop-all-link" class="flex items-center space-x-2 text-[#4A6FA5] font-bold hover:text-[#FF7E00] transition-colors group">
-            <span>Browse Full Catalog</span>
-            <iconify-icon icon="lucide:arrow-right" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
-          </a>
+<a href="shop2.html" id="shop-all-link" class="flex items-center space-x-2 text-[#4A6FA5] font-bold hover:text-[#FF7E00] transition-colors group">
+    <span>Browse Full Catalog</span>
+    <iconify-icon icon="lucide:arrow-right" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+</a>
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
@@ -1163,7 +1170,7 @@
       }
     }
 
-    document.getElementById('scroll-next-artists')?.addEventListener('click', () => {
+    document.getElementById('scroll-next-artists')?.addEventListener('clifck', () => {
       const slider = document.getElementById('artists-slider');
       slider.scrollBy({ left: 320, behavior: 'smooth' });
     });

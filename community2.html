@@ -2,10 +2,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Showcase | BowerBit</title>
+    <meta name="view-transition" content="same-origin">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <style>
         @import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&f[]=satoshi@700,500,400&display=swap');
+
+        @view-transition { navigation: auto; }
 
         :root {
             --brand-orange: #FF7E00;
@@ -18,6 +21,7 @@
             font-family: 'Satoshi', sans-serif;
             background-color: var(--brand-cream);
             color: var(--brand-dark);
+            margin: 0;
         }
 
         .font-display {
@@ -94,6 +98,10 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--brand-blue);
         }
+
+        .hidden-card {
+            display: none !important;
+        }
     </style>
     <script>
         tailwind.config = {
@@ -110,7 +118,7 @@
     </script>
 
 <meta name="preview-version" content="27473055-4da8-443d-b5f2-02883fa3e1bc">
-<meta name="preview-timestamp" content="2026-02-04T09:52:30.922Z">
+<meta name="preview-timestamp" content="2026-02-05T12:29:45.827Z">
 
 <style>
           /* Hide scrollbar for Chrome, Safari and Opera */
@@ -145,7 +153,7 @@
           // Set up communication with parent frame if needed
           window.__SUPERDESIGN_PREVIEW__ = {
             versionId: '27473055-4da8-443d-b5f2-02883fa3e1bc',
-            timestamp: '2026-02-04T09:52:30.922Z',
+            timestamp: '2026-02-05T12:29:45.827Z',
             _modernScreenshotModule: null, // Lazy-loaded module cache
             // Add methods for communication
             sendMessage: function(type, data) {
@@ -611,9 +619,9 @@
             window.addEventListener('load', onPageFullyLoaded);
           }
         </script>
-<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.left-10{left:2.5rem}.top-40{top:10rem}.right-20{right:5rem}.top-80{top:20rem}.bottom-40{bottom:10rem}.left-20{left:5rem}.top-0{top:0px}.left-4{left:1rem}.right-4{right:1rem}.top-4{top:1rem}.right-1{right:0.25rem}.top-1{top:0.25rem}.z-\[100\]{z-index:100}.col-span-1{grid-column:span 1 / span 1}.mx-auto{margin-left:auto;margin-right:auto}.mb-10{margin-bottom:2.5rem}.mb-6{margin-bottom:1.5rem}.mb-12{margin-bottom:3rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mt-auto{margin-top:auto}.mt-20{margin-top:5rem}.mb-16{margin-bottom:4rem}.mt-16{margin-top:4rem}.mt-6{margin-top:1.5rem}.mt-4{margin-top:1rem}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[4\/3\]{aspect-ratio:4/3}.h-10{height:2.5rem}.h-20{height:5rem}.h-full{height:100%}.h-8{height:2rem}.min-h-screen{min-height:100vh}.w-full{width:100%}.w-10{width:2.5rem}.max-w-2xl{max-width:42rem}.max-w-4xl{max-width:56rem}.max-w-7xl{max-width:80rem}.flex-shrink-0{flex-shrink:0}.flex-grow{flex-grow:1}.rotate-12{--tw-rotate:12deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-rotate-12{--tw-rotate:-12deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-45{--tw-rotate:45deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-1{gap:0.25rem}.gap-8{gap:2rem}.gap-3{gap:0.75rem}.gap-6{gap:1.5rem}.space-x-8 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2rem * var(--tw-space-x-reverse));margin-left:calc(2rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-hidden{overflow-x:hidden}.scroll-smooth{scroll-behavior:smooth}.rounded-full{border-radius:9999px}.rounded-3xl{border-radius:1.5rem}.rounded{border-radius:0.25rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-orange-500\/20{border-color:rgb(255 126 0 / 0.2)}.border-blue-500\/20{border-color:rgb(59 130 246 / 0.2)}.border-emerald-500\/20{border-color:rgb(16 185 129 / 0.2)}.border-purple-500\/20{border-color:rgb(168 85 247 / 0.2)}.border-orange-500{--tw-border-opacity:1;border-color:rgb(255 126 0 / var(--tw-border-opacity, 1))}.bg-cream\/80{background-color:rgb(255 251 245 / 0.8)}.bg-orange-500{--tw-bg-opacity:1;background-color:rgb(255 126 0 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(74 111 165 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.object-cover{object-fit:cover}.p-6{padding:1.5rem}.p-2{padding:0.5rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-4{padding-top:1rem;padding-bottom:1rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.px-10{padding-left:2.5rem;padding-right:2.5rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.pb-16{padding-bottom:4rem}.pt-20{padding-top:5rem}.pb-24{padding-bottom:6rem}.pb-10{padding-bottom:2.5rem}.pt-16{padding-top:4rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-6xl{font-size:3.75rem;line-height:1}.text-5xl{font-size:3rem;line-height:1}.text-7xl{font-size:4.5rem;line-height:1}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-2xl{font-size:1.5rem;line-height:2rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[10px\]{font-size:10px}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-orange-500{--tw-text-opacity:1;color:rgb(255 126 0 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(74 111 165 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.opacity-20{opacity:0.2}.opacity-50{opacity:0.5}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-orange-500\/20{--tw-shadow-color:rgb(255 126 0 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-orange-500\/25{--tw-shadow-color:rgb(255 126 0 / 0.25);--tw-shadow:var(--tw-shadow-colored)}.grayscale{--tw-grayscale:grayscale(100%);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-700{transition-duration:700ms}.hover\:bg-orange-600:hover{--tw-bg-opacity:1;background-color:rgb(234 88 12 / var(--tw-bg-opacity, 1))}.hover\:bg-orange-500:hover{--tw-bg-opacity:1;background-color:rgb(255 126 0 / var(--tw-bg-opacity, 1))}.hover\:text-orange-500:hover{--tw-text-opacity:1;color:rgb(255 126 0 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:text-gray-600:hover{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:grayscale-0:hover{--tw-grayscale:grayscale(0);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-orange-500\/20:focus{--tw-ring-color:rgb(255 126 0 / 0.2)}@media (min-width: 640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}@media (min-width: 768px){.md\:col-span-1{grid-column:span 1 / span 1}.md\:mt-0{margin-top:0px}.md\:flex{display:flex}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:gap-16{gap:4rem}.md\:space-x-12 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(3rem * var(--tw-space-x-reverse));margin-left:calc(3rem * calc(1 - var(--tw-space-x-reverse)))}.md\:text-7xl{font-size:4.5rem;line-height:1}.md\:text-xl{font-size:1.25rem;line-height:1.75rem}.md\:text-base{font-size:1rem;line-height:1.5rem}}@media (min-width: 1024px){.lg\:block{display:block}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style></head>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.left-10{left:2.5rem}.top-40{top:10rem}.right-20{right:5rem}.top-80{top:20rem}.bottom-40{bottom:10rem}.left-20{left:5rem}.top-0{top:0px}.left-4{left:1rem}.right-4{right:1rem}.top-4{top:1rem}.right-1{right:0.25rem}.top-1{top:0.25rem}.z-\[100\]{z-index:100}.col-span-1{grid-column:span 1 / span 1}.mx-auto{margin-left:auto;margin-right:auto}.mb-10{margin-bottom:2.5rem}.mb-6{margin-bottom:1.5rem}.mb-12{margin-bottom:3rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mt-auto{margin-top:auto}.mt-20{margin-top:5rem}.mb-16{margin-bottom:4rem}.mt-16{margin-top:4rem}.mt-6{margin-top:1.5rem}.mt-4{margin-top:1rem}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[4\/3\]{aspect-ratio:4/3}.h-10{height:2.5rem}.h-20{height:5rem}.h-full{height:100%}.h-8{height:2rem}.min-h-screen{min-height:100vh}.w-full{width:100%}.w-10{width:2.5rem}.max-w-2xl{max-width:42rem}.max-w-4xl{max-width:56rem}.max-w-7xl{max-width:80rem}.flex-shrink-0{flex-shrink:0}.flex-grow{flex-grow:1}.rotate-12{--tw-rotate:12deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-rotate-12{--tw-rotate:-12deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-45{--tw-rotate:45deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes spin{to{transform:rotate(360deg)}}.animate-spin{animation:spin 1s linear infinite}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-12{gap:3rem}.gap-2{gap:0.5rem}.gap-4{gap:1rem}.gap-1{gap:0.25rem}.gap-8{gap:2rem}.gap-3{gap:0.75rem}.gap-6{gap:1.5rem}.space-x-8 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2rem * var(--tw-space-x-reverse));margin-left:calc(2rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-hidden{overflow-x:hidden}.scroll-smooth{scroll-behavior:smooth}.rounded-full{border-radius:9999px}.rounded-3xl{border-radius:1.5rem}.rounded{border-radius:0.25rem}.border{border-width:1px}.border-2{border-width:2px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-orange-500\/20{border-color:rgb(255 126 0 / 0.2)}.border-blue-500\/20{border-color:rgb(59 130 246 / 0.2)}.border-emerald-500\/20{border-color:rgb(16 185 129 / 0.2)}.border-purple-500\/20{border-color:rgb(168 85 247 / 0.2)}.border-orange-500{--tw-border-opacity:1;border-color:rgb(255 126 0 / var(--tw-border-opacity, 1))}.bg-cream\/80{background-color:rgb(255 251 245 / 0.8)}.bg-orange-500{--tw-bg-opacity:1;background-color:rgb(255 126 0 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-orange-50\/50{background-color:rgb(255 247 237 / 0.5)}.object-cover{object-fit:cover}.p-6{padding:1.5rem}.p-2{padding:0.5rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-4{padding-top:1rem;padding-bottom:1rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.px-1\.5{padding-left:0.375rem;padding-right:0.375rem}.py-0\.5{padding-top:0.125rem;padding-bottom:0.125rem}.px-10{padding-left:2.5rem;padding-right:2.5rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.pb-16{padding-bottom:4rem}.pt-20{padding-top:5rem}.pb-24{padding-bottom:6rem}.pb-10{padding-bottom:2.5rem}.pt-16{padding-top:4rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-6xl{font-size:3.75rem;line-height:1}.text-5xl{font-size:3rem;line-height:1}.text-7xl{font-size:4.5rem;line-height:1}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-2xl{font-size:1.5rem;line-height:2rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[10px\]{font-size:10px}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-orange-500{--tw-text-opacity:1;color:rgb(255 126 0 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(74 111 165 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.opacity-20{opacity:0.2}.opacity-50{opacity:0.5}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-orange-500\/20{--tw-shadow-color:rgb(255 126 0 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-orange-500\/25{--tw-shadow-color:rgb(255 126 0 / 0.25);--tw-shadow:var(--tw-shadow-colored)}.grayscale{--tw-grayscale:grayscale(100%);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-700{transition-duration:700ms}.hover\:bg-orange-600:hover{--tw-bg-opacity:1;background-color:rgb(234 88 12 / var(--tw-bg-opacity, 1))}.hover\:bg-orange-500:hover{--tw-bg-opacity:1;background-color:rgb(255 126 0 / var(--tw-bg-opacity, 1))}.hover\:text-orange-500:hover{--tw-text-opacity:1;color:rgb(255 126 0 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:text-gray-600:hover{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.hover\:underline:hover{-webkit-text-decoration-line:underline;text-decoration-line:underline}.hover\:grayscale-0:hover{--tw-grayscale:grayscale(0);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-orange-500\/20:focus{--tw-ring-color:rgb(255 126 0 / 0.2)}.group:hover .group-hover\:translate-y-1{--tw-translate-y:0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width: 640px){.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}}@media (min-width: 768px){.md\:col-span-1{grid-column:span 1 / span 1}.md\:mt-0{margin-top:0px}.md\:flex{display:flex}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:gap-16{gap:4rem}.md\:space-x-12 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(3rem * var(--tw-space-x-reverse));margin-left:calc(3rem * calc(1 - var(--tw-space-x-reverse)))}.md\:text-7xl{font-size:4.5rem;line-height:1}.md\:text-xl{font-size:1.25rem;line-height:1.75rem}.md\:text-base{font-size:1rem;line-height:1.5rem}}@media (min-width: 1024px){.lg\:block{display:block}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:px-8{padding-left:2rem;padding-right:2rem}}</style></head>
 <body>
-    <div class="min-h-screen grain-bg relative overflow-x-hidden">
+    <div class="min-h-screen grain-bg relative">
         <!-- Floating Elements -->
         <div class="absolute top-40 left-10 opacity-20 floating-toy hidden lg:block" style="animation-delay: 0s">
             <iconify-icon icon="lucide:toy-brick" class="text-6xl text-orange-500 rotate-12"></iconify-icon>
@@ -625,24 +633,31 @@
             <iconify-icon icon="lucide:puzzle" class="text-7xl text-orange-500 rotate-45"></iconify-icon>
         </div>
 
-    <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-100">
-      <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <a href="#" id="nav-logo-link" class="flex items-center">
-          <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="BowerBit Logo" class="h-10" onerror="this.onerror=null;this.src='https://placehold.co/600x40/1a1a1a/888?text=Image';">
-        </a>
-        <div class="hidden md:flex items-center space-x-10 text-sm font-medium">
-          <a href="#community" id="nav-community-link" class="hover:text-[#FF7E00] transition-colors">Community</a>
-          <a href="#shop" id="nav-shop-link" class="hover:text-[#FF7E00] transition-colors">Shop</a>
-          <a href="#tool" id="nav-tool-link" class="hover:text-[#FF7E00] transition-colors">Create Tool</a>
-          <a href="#about" id="nav-about-link" class="hover:text-[#FF7E00] transition-colors">Our Vision</a>
-        </div>
-        <div class="flex items-center space-x-4">
-          <button id="nav-login-btn" class="text-sm font-medium px-4 py-2 hover:bg-orange-50 rounded-full transition-custom">Log In</button>
-          <button id="nav-cta-btn" class="bg-[#FF7E00] text-white text-sm font-bold px-6 py-2.5 rounded-full hover:shadow-lg hover:shadow-orange-200 transition-custom transform hover:-translate-y-0.5">Start Creating</button>
-        </div>
-      </div>
-    </nav>
+        <!-- Navigation -->
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-100">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="BowerBit Logo" class="h-10 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x40/1a1a1a/888?text=Image';">
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a id="nav-explore-link" href="index.html" class="font-medium hover:text-[#FF7E00] transition-colors">Explore</a>
+                <a id="nav-home-link" href="#community" class="font-medium hover:text-[#FF7E00] transition-colors">Community</a>
+                <a id="nav-shop-link" href="shop2.html" class="font-medium hover:text-[#FF7E00] transition-colors">Shop</a>
+                <a id="nav-create-link" href="#tool" class="font-medium hover:text-[#FF7E00] transition-colors">Create Tool</a>
+                <a id="nav-community-link" href="#about" class="font-medium hover:text-[#FF7E00] transition-colors">About</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="search-btn" class="p-2 rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:search" class="text-xl"></iconify-icon>
+                </button><button id="cart-btn" class="p-2 relative rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:shopping-cart" class="text-xl"></iconify-icon>
+                    <span id="cart-badge-count" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+                </button>
+                <div class="h-6 w-px bg-orange-100 mx-2"></div>
+                <button id="login-btn" class="hidden sm:block text-sm font-bold text-gray-700 hover:text-[#FF7E00] transition-colors">Login</button>
+    <button id="join-btn" class="bg-[#FF7E00] text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-[#E67200] transition-all transform hover:scale-105 active:scale-95">Join BowerBit</button>
+</div></div>
+</nav>
 
         <!-- Header Section -->
         <header class="pt-20 pb-16 px-4">
@@ -663,204 +678,362 @@
         <!-- Category Filter Tabs -->
         <section class="max-w-7xl mx-auto px-4 mb-12">
             <div class="flex justify-center border-b border-gray-200">
-                <div class="flex space-x-8 md:space-x-12">
-                    <button class="tab-active px-4 py-4 text-sm md:text-base font-bold transition-all">All</button>
-                    <button class="text-gray-500 px-4 py-4 text-sm md:text-base font-medium hover:text-orange-500 transition-all">Scenes</button>
-                    <button class="text-gray-500 px-4 py-4 text-sm md:text-base font-medium hover:text-orange-500 transition-all">Accessories</button>
-                    <button class="text-gray-500 px-4 py-4 text-sm md:text-base font-medium hover:text-orange-500 transition-all">DIY Tutorials</button>
+                <div class="flex space-x-8 md:space-x-12" id="filter-tabs">
+                    <button data-filter="all" class="tab-active filter-btn px-4 py-4 text-sm md:text-base font-bold transition-all">All</button>
+                    <button data-filter="scenes" class="text-gray-500 filter-btn px-4 py-4 text-sm md:text-base font-medium hover:text-orange-500 transition-all">Scenes</button>
+                    <button data-filter="accessories" class="text-gray-500 filter-btn px-4 py-4 text-sm md:text-base font-medium hover:text-orange-500 transition-all">Accessories</button>
+                    <button data-filter="diy" class="text-gray-500 filter-btn px-4 py-4 text-sm md:text-base font-medium hover:text-orange-500 transition-all">DIY Tutorials</button>
                 </div>
             </div>
         </section>
 
         <!-- Content Grid -->
         <main class="max-w-7xl mx-auto px-4 pb-24">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <!-- Card 1 -->
-                <article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" style="animation-delay: 0.3s">
-                    <div class="relative aspect-[4/3] overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="Vintage Tea Setup" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/2070x400/1a1a1a/888?text=Image';">
-                        <span class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Scenes</span>
+            <div id="creation-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="scenes" style="animation-delay: 0s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="Vintage Afternoon Tea Setup" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Scenes</span>
+                    
                         <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
                             <iconify-icon icon="lucide:award" class="text-orange-500"></iconify-icon>
                             <span class="text-[10px] font-bold">TOP VISITED</span>
                         </div>
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <div class="flex items-center gap-3 mb-4">
-                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Elena" class="w-10 h-10 rounded-full border-2 border-orange-500/20" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
-                            <div>
-                                <h4 class="text-sm font-bold">Elena V.</h4>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Elena V." class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">Elena V.</h4>
+                            
                                 <div class="flex items-center gap-1">
                                     <span class="text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded font-bold uppercase">CREATOR PROGRAM</span>
                                 </div>
-                            </div>
-                        </div>
-                        <h3 class="font-display text-xl mb-2">Vintage Afternoon Tea Setup</h3>
-                        <p class="text-gray-600 text-sm mb-6 flex-grow">
-                            Hand-painted miniature porcelain sets paired with velvet tablecloths for the ultimate cozy aesthetic.
-                        </p>
-                        <div class="flex items-center justify-between mt-auto">
-                            <div class="flex items-center gap-4 text-gray-500 text-xs">
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 2.4k</span>
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 182</span>
-                            </div>
-                            <button id="shop-card-1" class="text-blue-600 font-bold text-sm hover:underline">Shop These Pieces</button>
+                            
                         </div>
                     </div>
-                </article>
-
-                <!-- Card 2 -->
-                <article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" style="animation-delay: 0.4s">
-                    <div class="relative aspect-[4/3] overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&amp;w=1964&amp;auto=format&amp;fit=crop" alt="Neo-Tokyo Ramen Shop" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/1964x400/1a1a1a/888?text=Image';">
-                        <span class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Scenes</span>
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <div class="flex items-center gap-3 mb-4">
-                            <img src="https://i.pravatar.cc/150?u=a042581f4e290267041" alt="Kenji" class="w-10 h-10 rounded-full border-2 border-blue-500/20" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
-                            <div>
-                                <h4 class="text-sm font-bold">Kenji Nakamu</h4>
-                                <span class="text-[10px] text-gray-400 font-bold uppercase">ELITE BUILDER</span>
-                            </div>
+                    <h3 class="font-display text-xl mb-2">Vintage Afternoon Tea Setup</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">Hand-painted miniature porcelain sets paired with velvet tablecloths for the ultimate cozy aesthetic.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 2.4k</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 182</span>
                         </div>
-                        <h3 class="font-display text-xl mb-2">Neo-Tokyo Ramen Shop</h3>
-                        <p class="text-gray-600 text-sm mb-6 flex-grow">
-                            Cyberpunk-inspired miniature ramen stall with functional LED neon signs and weathering effects.
-                        </p>
-                        <div class="flex items-center justify-between mt-auto">
-                            <div class="flex items-center gap-4 text-gray-500 text-xs">
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 5.1k</span>
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 420</span>
-                            </div>
-                            <button id="shop-card-2" class="text-blue-600 font-bold text-sm hover:underline">Shop These Pieces</button>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">Shop Pieces</button>
+                    </div>
+                </div>
+            </article><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="scenes" style="animation-delay: 0.1s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&amp;w=1964&amp;auto=format&amp;fit=crop" alt="Neo-Tokyo Ramen Shop" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Scenes</span>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e290267041" alt="Kenji Nakamu" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">Kenji Nakamu</h4>
+                            <span class="text-[10px] text-gray-400 font-bold uppercase">CREATOR</span>
                         </div>
                     </div>
-                </article>
-
-                <!-- Card 3 -->
-                <article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" style="animation-delay: 0.5s">
-                    <div class="relative aspect-[4/3] overflow-hidden">
-                        <img src="https://placehold.co/2036x400/1a1a1a/888?text=Image" alt="How to Make Miniature Books" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/2036x400/1a1a1a/888?text=Image';">
-                        <span class="absolute top-4 left-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">DIY Tutorials</span>
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <div class="flex items-center gap-3 mb-4">
-                            <img src="https://i.pravatar.cc/150?u=a042581f4e290267042" alt="Sarah" class="w-10 h-10 rounded-full border-2 border-emerald-500/20" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
-                            <div>
-                                <h4 class="text-sm font-bold">Sarah Papercraft</h4>
-                                <span class="text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded font-bold uppercase">CREATOR PROGRAM</span>
-                            </div>
+                    <h3 class="font-display text-xl mb-2">Neo-Tokyo Ramen Shop</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">Cyberpunk-inspired miniature ramen stall with functional LED neon signs and weathering effects.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 5.1k</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 420</span>
                         </div>
-                        <h3 class="font-display text-xl mb-2">The Art of Miniature Books</h3>
-                        <p class="text-gray-600 text-sm mb-6 flex-grow">
-                            Step-by-step guide to crafting tiny leather-bound books that actually open. Includes free printable templates.
-                        </p>
-                        <div class="flex items-center justify-between mt-auto">
-                            <div class="flex items-center gap-4 text-gray-500 text-xs">
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 1.8k</span>
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:eye" class="text-lg"></iconify-icon> 12k</span>
-                            </div>
-                            <button id="shop-card-3" class="text-blue-600 font-bold text-sm hover:underline">View Tutorial</button>
-                        </div>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">Shop Pieces</button>
                     </div>
-                </article>
-
-                <!-- Card 4 -->
-                <article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" style="animation-delay: 0.6s">
-                    <div class="relative aspect-[4/3] overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="Neon Lighting Pack" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/2070x400/1a1a1a/888?text=Image';">
-                        <span class="absolute top-4 left-4 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Accessories</span>
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <div class="flex items-center gap-3 mb-4">
-                            <img src="https://i.pravatar.cc/150?u=a042581f4e290267043" alt="GlowTech" class="w-10 h-10 rounded-full border-2 border-purple-500/20" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
-                            <div>
-                                <h4 class="text-sm font-bold">GlowTech Studio</h4>
-                                <span class="text-[10px] text-gray-400 font-bold uppercase">VERIFIED SELLER</span>
-                            </div>
-                        </div>
-                        <h3 class="font-display text-xl mb-2">Advanced Neon Lighting Pack</h3>
-                        <p class="text-gray-600 text-sm mb-6 flex-grow">
-                            USB-powered fiber optic lighting kits for night-time diorama displays. Multiple color modes included.
-                        </p>
-                        <div class="flex items-center justify-between mt-auto">
-                            <div class="flex items-center gap-4 text-gray-500 text-xs">
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 942</span>
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:shopping-cart" class="text-lg"></iconify-icon> 310</span>
-                            </div>
-                            <button id="shop-card-4" class="text-blue-600 font-bold text-sm hover:underline">Shop This Pack</button>
+                </div>
+            </article><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="diy" style="animation-delay: 0.2s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://placehold.co/600x400/1a1a1a/888?text=Image" alt="The Art of Miniature Books" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">DIY Tutorials</span>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e290267042" alt="Sarah Papercraft" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">Sarah Papercraft</h4>
+                            
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded font-bold uppercase">CREATOR PROGRAM</span>
+                                </div>
+                            
                         </div>
                     </div>
-                </article>
-
-                <!-- Card 5 -->
-                <article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" style="animation-delay: 0.7s">
-                    <div class="relative aspect-[4/3] overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1560762484-813fc97650a0?q=80&amp;w=1974&amp;auto=format&amp;fit=crop" alt="Handstitched Outfit Set" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/1974x400/1a1a1a/888?text=Image';">
-                        <span class="absolute top-4 left-4 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Accessories</span>
+                    <h3 class="font-display text-xl mb-2">The Art of Miniature Books</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">Step-by-step guide to crafting tiny leather-bound books that actually open. Includes free printable templates.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 1.8k</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:eye" class="text-lg"></iconify-icon> 12k</span>
+                        </div>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">View Tutorial</button>
+                    </div>
+                </div>
+            </article><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="accessories" style="animation-delay: 0.3s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="Advanced Neon Lighting Pack" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Accessories</span>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e290267043" alt="GlowTech Studio" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">GlowTech Studio</h4>
+                            <span class="text-[10px] text-gray-400 font-bold uppercase">CREATOR</span>
+                        </div>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">Advanced Neon Lighting Pack</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">USB-powered fiber optic lighting kits for night-time diorama displays. Multiple color modes included.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 942</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 310</span>
+                        </div>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">Shop Pieces</button>
+                    </div>
+                </div>
+            </article><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="accessories" style="animation-delay: 0.4s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1560762484-813fc97650a0?q=80&amp;w=1974&amp;auto=format&amp;fit=crop" alt="Handstitched Steampunk Outfits" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Accessories</span>
+                    
                         <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
-                            <iconify-icon icon="lucide:star" class="text-orange-500"></iconify-icon>
+                            <iconify-icon icon="lucide:flame" class="text-orange-500"></iconify-icon>
                             <span class="text-[10px] font-bold">HOT ITEM</span>
                         </div>
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <div class="flex items-center gap-3 mb-4">
-                            <img src="https://i.pravatar.cc/150?u=a042581f4e290267044" alt="TailorToy" class="w-10 h-10 rounded-full border-2 border-purple-500/20" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
-                            <div>
-                                <h4 class="text-sm font-bold">TailorToy Creations</h4>
-                                <span class="text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded font-bold uppercase">CREATOR PROGRAM</span>
-                            </div>
-                        </div>
-                        <h3 class="font-display text-xl mb-2">Handstitched Steampunk Outfits</h3>
-                        <p class="text-gray-600 text-sm mb-6 flex-grow">
-                            1/12 scale Victorian-era outfits featuring real brass buttons and weathered leather detailing.
-                        </p>
-                        <div class="flex items-center justify-between mt-auto">
-                            <div class="flex items-center gap-4 text-gray-500 text-xs">
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 3.1k</span>
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 205</span>
-                            </div>
-                            <button id="shop-card-5" class="text-blue-600 font-bold text-sm hover:underline">Shop Collection</button>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e290267044" alt="TailorToy Creations" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">TailorToy Creations</h4>
+                            
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded font-bold uppercase">CREATOR PROGRAM</span>
+                                </div>
+                            
                         </div>
                     </div>
-                </article>
-
-                <!-- Card 6 -->
-                <article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" style="animation-delay: 0.8s">
-                    <div class="relative aspect-[4/3] overflow-hidden">
-                        <img src="https://placehold.co/2030x400/1a1a1a/888?text=Image" alt="Rustic Kitchen Set" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/2030x400/1a1a1a/888?text=Image';">
-                        <span class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Scenes</span>
-                    </div>
-                    <div class="p-6 flex flex-col flex-grow">
-                        <div class="flex items-center gap-3 mb-4">
-                            <img src="https://i.pravatar.cc/150?u=a042581f4e290267045" alt="Marko" class="w-10 h-10 rounded-full border-2 border-orange-500/20" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
-                            <div>
-                                <h4 class="text-sm font-bold">Marko Builds</h4>
-                                <span class="text-[10px] text-gray-400 font-bold uppercase">COMMUNITY LEGEND</span>
-                            </div>
+                    <h3 class="font-display text-xl mb-2">Handstitched Steampunk Outfits</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">1/12 scale Victorian-era outfits featuring real brass buttons and weathered leather detailing.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 3.1k</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 205</span>
                         </div>
-                        <h3 class="font-display text-xl mb-2">Handcrafted Rustic Kitchen</h3>
-                        <p class="text-gray-600 text-sm mb-6 flex-grow">
-                            Everything made from scratch using reclaimed balsa wood and clay. Features a working miniature hearth.
-                        </p>
-                        <div class="flex items-center justify-between mt-auto">
-                            <div class="flex items-center gap-4 text-gray-500 text-xs">
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 6.2k</span>
-                                <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 512</span>
-                            </div>
-                            <button id="shop-card-6" class="text-blue-600 font-bold text-sm hover:underline">Shop These Pieces</button>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">Shop Pieces</button>
+                    </div>
+                </div>
+            </article><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="scenes" style="animation-delay: 0.5s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://placehold.co/600x400/1a1a1a/888?text=Image" alt="Handcrafted Rustic Kitchen" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Scenes</span>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e290267045" alt="Marko Builds" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">Marko Builds</h4>
+                            <span class="text-[10px] text-gray-400 font-bold uppercase">CREATOR</span>
                         </div>
                     </div>
-                </article>
-
-            </div>
+                    <h3 class="font-display text-xl mb-2">Handcrafted Rustic Kitchen</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">Everything made from scratch using reclaimed balsa wood and clay. Features a working miniature hearth.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 6.2k</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 512</span>
+                        </div>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">Shop Pieces</button>
+                    </div>
+                </div>
+            </article><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="scenes" style="animation-delay: 0s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&amp;w=2069&amp;auto=format&amp;fit=crop" alt="Cozy Winter Cabin" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Scenes</span>
+                    
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+                            <iconify-icon icon="lucide:flame" class="text-orange-500"></iconify-icon>
+                            <span class="text-[10px] font-bold">HOT ITEM</span>
+                        </div>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e290267046" alt="Frosty Designs" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">Frosty Designs</h4>
+                            
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded font-bold uppercase">CREATOR PROGRAM</span>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">Cozy Winter Cabin</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">A snowy miniature cabin with a glowing fireplace and functional tiny window lights.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 4.8k</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 320</span>
+                        </div>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">Shop Pieces</button>
+                    </div>
+                </div>
+            </article><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="accessories" style="animation-delay: 0.1s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1589118949245-7d38baf380d6?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="Futuristic Armor Set" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Accessories</span>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e290267047" alt="ArmorCore" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">ArmorCore</h4>
+                            <span class="text-[10px] text-gray-400 font-bold uppercase">CREATOR</span>
+                        </div>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">Futuristic Armor Set</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">Modular high-detail resin-printed armor with metallic finishes for 6-inch figures.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 1.2k</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 95</span>
+                        </div>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">Shop Pieces</button>
+                    </div>
+                </div>
+            </article><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="diy" style="animation-delay: 0.2s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://placehold.co/600x400/1a1a1a/888?text=Image" alt="Painting Weathering Masterclass" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">DIY Tutorials</span>
+                    
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+                            <iconify-icon icon="lucide:award" class="text-orange-500"></iconify-icon>
+                            <span class="text-[10px] font-bold">TOP VISITED</span>
+                        </div>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e290267048" alt="Artist Tom" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">Artist Tom</h4>
+                            
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded font-bold uppercase">CREATOR PROGRAM</span>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">Painting Weathering Masterclass</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">Learn the techniques of adding rust, dust, and grime to your miniature buildings.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 9.5k</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:eye" class="text-lg"></iconify-icon> 840</span>
+                        </div>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">View Tutorial</button>
+                    </div>
+                </div>
+            </article><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="scenes" style="animation-delay: 0.3s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="Enchanted Forest Grove" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Scenes</span>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e290267049" alt="WildBuilds" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">WildBuilds</h4>
+                            <span class="text-[10px] text-gray-400 font-bold uppercase">CREATOR</span>
+                        </div>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">Enchanted Forest Grove</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">Features real moss and resin-cast stream. Perfect for fantasy-themed tabletop displays.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 3.7k</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 215</span>
+                        </div>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">Shop Pieces</button>
+                    </div>
+                </div>
+            </article><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="accessories" style="animation-delay: 0.4s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://placehold.co/600x400/1a1a1a/888?text=Image" alt="Solar Panel Kit v2" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Accessories</span>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e290267050" alt="EcoMini" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">EcoMini</h4>
+                            
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded font-bold uppercase">CREATOR PROGRAM</span>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">Solar Panel Kit v2</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">Tiny working solar panels to power your LED scenes. Eco-friendly diorama solution.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 840</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:message-circle" class="text-lg"></iconify-icon> 42</span>
+                        </div>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">Shop Pieces</button>
+                    </div>
+                </div>
+            </article><article class="animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col" data-category="diy" style="animation-delay: 0.5s;">
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="Clay Sculpting 101" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">DIY Tutorials</span>
+                    
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+                            <iconify-icon icon="lucide:flame" class="text-orange-500"></iconify-icon>
+                            <span class="text-[10px] font-bold">HOT ITEM</span>
+                        </div>
+                    
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="https://i.pravatar.cc/150?u=a042581f4e290267051" alt="TinyChef" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">TinyChef</h4>
+                            <span class="text-[10px] text-gray-400 font-bold uppercase">CREATOR</span>
+                        </div>
+                    </div>
+                    <h3 class="font-display text-xl mb-2">Clay Sculpting 101</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">How to sculpt realistic food items for your miniature kitchen scenes from scratch.</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> 2.1k</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:eye" class="text-lg"></iconify-icon> 312</span>
+                        </div>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">View Tutorial</button>
+                    </div>
+                </div>
+            </article></div>
 
             <!-- Bottom Load Zone -->
             <div class="mt-20 text-center">
-                <button id="load-more-btn" class="inline-flex items-center gap-2 border-2 border-orange-500 text-orange-500 px-10 py-3.5 rounded-full font-bold hover:bg-orange-500 hover:text-white transition-all">
-                    Load More Creations
-                    <iconify-icon icon="lucide:chevron-down"></iconify-icon>
+                <button id="load-more-btn" class="inline-flex items-center gap-3 border-2 border-orange-500 text-orange-500 px-10 py-3.5 rounded-full font-bold hover:bg-orange-500 hover:text-white transition-all group">
+                    <span id="btn-text">Load More Creations</span>
+                    <iconify-icon id="btn-icon" icon="lucide:chevron-down" class="group-hover:translate-y-1 transition-transform"></iconify-icon>
+                    <iconify-icon id="btn-loader" icon="lucide:loader-2" class="animate-spin text-xl hidden"></iconify-icon>
                 </button>
                 
                 <div class="mt-16 pt-16 border-t border-gray-100 flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-700">
@@ -873,59 +1046,402 @@
         </main>
 
         <!-- Footer -->
-        <footer class="bg-white border-t border-gray-100 pt-20 pb-10">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-                    <div class="col-span-1 md:col-span-1">
-                        <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="BowerBit" class="h-8 mb-6" onerror="this.onerror=null;this.src='https://placehold.co/600x32/1a1a1a/888?text=Image';">
-                        <p class="text-gray-500 text-sm leading-relaxed">
-                            BowerBit is the world's leading ecosystem for customized toy scenarios. Setup, purchase, and share your creative world.
-                        </p>
-                        <div class="flex gap-4 mt-6">
-                            <a href="#" id="footer-social-ig" class="text-gray-400 hover:text-orange-500"><iconify-icon icon="lucide:instagram" class="text-xl"></iconify-icon></a>
-                            <a href="#" id="footer-social-tw" class="text-gray-400 hover:text-orange-500"><iconify-icon icon="lucide:twitter" class="text-xl"></iconify-icon></a>
-                            <a href="#" id="footer-social-yt" class="text-gray-400 hover:text-orange-500"><iconify-icon icon="lucide:youtube" class="text-xl"></iconify-icon></a>
+<footer class="bg-zinc-950 text-white py-20 px-6">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-12">
+        <div class="col-span-1 md:col-span-1">
+          <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="Logo" class="h-8 invert brightness-0 mb-8" onerror="this.onerror=null;this.src='https://placehold.co/600x32/1a1a1a/888?text=Image';">
+          <p class="text-zinc-400 text-sm">
+            Building the future of play, one scenario at a time. Join the revolution in toy creative ecosystems.
+          </p>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Explore</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-home-link" class="hover:text-[#FF7E00]">Home</a></li>
+            <li><a href="#" id="footer-showcase-link" class="hover:text-[#FF7E00]">Showcase</a></li>
+            <li><a href="#" id="footer-shop-link" class="hover:text-[#FF7E00]">Shop Materials</a></li>
+            <li><a href="#" id="footer-tools-link" class="hover:text-[#FF7E00]">Creator Tools</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">About</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-about-us-link" class="hover:text-[#FF7E00]">About Us</a></li>
+            <li><a href="#" id="footer-investor-link" class="hover:text-[#FF7E00]">Investor Center</a></li>
+            <li><a href="#" id="footer-partner-link" class="hover:text-[#FF7E00]">Partner Program</a></li>
+            <li><a href="#" id="footer-sell-art-link" class="hover:text-[#FF7E00]">Sell your art</a></li>
+            <li><a href="#" id="footer-jobs-link" class="hover:text-[#FF7E00]">Jobs</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Community</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-discord-link" class="hover:text-[#FF7E00]">Discord</a></li>
+            <li><a href="#" id="footer-twitter-link" class="hover:text-[#FF7E00]">Twitter</a></li>
+            <li><a href="#" id="footer-instagram-link" class="hover:text-[#FF7E00]">Instagram</a></li>
+            <li><a href="#" id="footer-events-link" class="hover:text-[#FF7E00]">Monthly Events</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Stay Inspired</h5>
+          <div class="relative">
+            <input type="email" placeholder="Your email" class="w-full bg-zinc-900 border-none rounded-full px-6 py-4 text-sm focus:ring-2 focus:ring-[#FF7E00] outline-none">
+            <button id="footer-subscribe-btn" class="absolute right-2 top-2 bg-[#FF7E00] text-white p-2 rounded-full">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-zinc-800 text-center text-zinc-600 text-xs">
+        © 2024 BowerBit. All rights reserved. Designed for the builders of tomorrow.
+      </div>
+    </footer>
+    </div>
+
+    <script>
+        const ALL_CREATIONS = [
+            {
+                category: 'scenes',
+                image: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&w=2070&auto=format&fit=crop',
+                title: 'Vintage Afternoon Tea Setup',
+                description: 'Hand-painted miniature porcelain sets paired with velvet tablecloths for the ultimate cozy aesthetic.',
+                creator: 'Elena V.',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e29026704d',
+                metrics: { likes: '2.4k', comments: '182' },
+                badge: 'TOP VISITED',
+                program: true
+            },
+            {
+                category: 'scenes',
+                image: 'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=1964&auto=format&fit=crop',
+                title: 'Neo-Tokyo Ramen Shop',
+                description: 'Cyberpunk-inspired miniature ramen stall with functional LED neon signs and weathering effects.',
+                creator: 'Kenji Nakamu',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267041',
+                metrics: { likes: '5.1k', comments: '420' },
+                badge: '',
+                program: false
+            },
+            {
+                category: 'diy',
+                image: 'https://images.unsplash.com/photo-1583512676225-87c401b97f05?q=80&w=2036&auto=format&fit=crop',
+                title: 'The Art of Miniature Books',
+                description: 'Step-by-step guide to crafting tiny leather-bound books that actually open. Includes free printable templates.',
+                creator: 'Sarah Papercraft',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267042',
+                metrics: { likes: '1.8k', comments: '12k' },
+                badge: '',
+                program: true
+            },
+            {
+                category: 'accessories',
+                image: 'https://images.unsplash.com/photo-1596464716127-f2a82984de30?q=80&w=2070&auto=format&fit=crop',
+                title: 'Advanced Neon Lighting Pack',
+                description: 'USB-powered fiber optic lighting kits for night-time diorama displays. Multiple color modes included.',
+                creator: 'GlowTech Studio',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267043',
+                metrics: { likes: '942', comments: '310' },
+                badge: '',
+                program: false
+            },
+            {
+                category: 'accessories',
+                image: 'https://images.unsplash.com/photo-1560762484-813fc97650a0?q=80&w=1974&auto=format&fit=crop',
+                title: 'Handstitched Steampunk Outfits',
+                description: '1/12 scale Victorian-era outfits featuring real brass buttons and weathered leather detailing.',
+                creator: 'TailorToy Creations',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267044',
+                metrics: { likes: '3.1k', comments: '205' },
+                badge: 'HOT ITEM',
+                program: true
+            },
+            {
+                category: 'scenes',
+                image: 'https://images.unsplash.com/photo-1549497538-301288c8533a?q=80&w=2030&auto=format&fit=crop',
+                title: 'Handcrafted Rustic Kitchen',
+                description: 'Everything made from scratch using reclaimed balsa wood and clay. Features a working miniature hearth.',
+                creator: 'Marko Builds',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267045',
+                metrics: { likes: '6.2k', comments: '512' },
+                badge: '',
+                program: false
+            },
+            // 12 Additional Creations
+            {
+                category: 'scenes',
+                image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=2069&auto=format&fit=crop',
+                title: 'Cozy Winter Cabin',
+                description: 'A snowy miniature cabin with a glowing fireplace and functional tiny window lights.',
+                creator: 'Frosty Designs',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267046',
+                metrics: { likes: '4.8k', comments: '320' },
+                badge: 'HOT ITEM',
+                program: true
+            },
+            {
+                category: 'accessories',
+                image: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6?q=80&w=2070&auto=format&fit=crop',
+                title: 'Futuristic Armor Set',
+                description: 'Modular high-detail resin-printed armor with metallic finishes for 6-inch figures.',
+                creator: 'ArmorCore',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267047',
+                metrics: { likes: '1.2k', comments: '95' },
+                badge: '',
+                program: false
+            },
+            {
+                category: 'diy',
+                image: 'https://images.unsplash.com/photo-1513364238197-e81ef9197bb6?q=80&w=2070&auto=format&fit=crop',
+                title: 'Painting Weathering Masterclass',
+                description: 'Learn the techniques of adding rust, dust, and grime to your miniature buildings.',
+                creator: 'Artist Tom',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267048',
+                metrics: { likes: '9.5k', comments: '840' },
+                badge: 'TOP VISITED',
+                program: true
+            },
+            {
+                category: 'scenes',
+                image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=2070&auto=format&fit=crop',
+                title: 'Enchanted Forest Grove',
+                description: 'Features real moss and resin-cast stream. Perfect for fantasy-themed tabletop displays.',
+                creator: 'WildBuilds',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267049',
+                metrics: { likes: '3.7k', comments: '215' },
+                badge: '',
+                program: false
+            },
+            {
+                category: 'accessories',
+                image: 'https://images.unsplash.com/photo-1512418490979-92798ccc1380?q=80&w=2070&auto=format&fit=crop',
+                title: 'Solar Panel Kit v2',
+                description: 'Tiny working solar panels to power your LED scenes. Eco-friendly diorama solution.',
+                creator: 'EcoMini',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267050',
+                metrics: { likes: '840', comments: '42' },
+                badge: '',
+                program: true
+            },
+            {
+                category: 'diy',
+                image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?q=80&w=2070&auto=format&fit=crop',
+                title: 'Clay Sculpting 101',
+                description: 'How to sculpt realistic food items for your miniature kitchen scenes from scratch.',
+                creator: 'TinyChef',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267051',
+                metrics: { likes: '2.1k', comments: '312' },
+                badge: 'HOT ITEM',
+                program: false
+            },
+            {
+                category: 'scenes',
+                image: 'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=2074&auto=format&fit=crop',
+                title: 'Modern Glass House',
+                description: 'Minimalist 1:24 scale architecture with realistic lighting and interior furniture.',
+                creator: 'ArchieM',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267052',
+                metrics: { likes: '11k', comments: '1.2k' },
+                badge: 'TOP VISITED',
+                program: true
+            },
+            {
+                category: 'accessories',
+                image: 'https://images.unsplash.com/photo-1531315630201-bb15b9765313?q=80&w=2070&auto=format&fit=crop',
+                title: 'Leather Toolbag Set',
+                description: 'Miniature handcrafted leather tools for a realistic workbench scene.',
+                creator: 'SaddleSmith',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267053',
+                metrics: { likes: '520', comments: '18' },
+                badge: '',
+                program: false
+            },
+            {
+                category: 'diy',
+                image: 'https://images.unsplash.com/photo-1527219525722-f9767a7f2884?q=80&w=2073&auto=format&fit=crop',
+                title: 'Resin Ocean Pour',
+                description: 'Advanced tutorial on creating deep-sea effects with epoxy resin for dioramas.',
+                creator: 'WaterWork',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267054',
+                metrics: { likes: '15k', comments: '2.4k' },
+                badge: 'HOT ITEM',
+                program: true
+            },
+            {
+                category: 'scenes',
+                image: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?q=80&w=2128&auto=format&fit=crop',
+                title: 'Industrial Steampunk Workshop',
+                description: 'Highly detailed metal-heavy scene with moving gears and smoke machine integration.',
+                creator: 'GearHead',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267055',
+                metrics: { likes: '7.3k', comments: '445' },
+                badge: '',
+                program: false
+            },
+            {
+                category: 'accessories',
+                image: 'https://images.unsplash.com/photo-1605146764387-0d9b0f97595d?q=80&w=2070&auto=format&fit=crop',
+                title: 'Mini Garden Tool Set',
+                description: 'A collection of 12 gardening tools made from real steel and wood handles.',
+                creator: 'GreenThumb',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267056',
+                metrics: { likes: '330', comments: '12' },
+                badge: '',
+                program: false
+            },
+            {
+                category: 'diy',
+                image: 'https://images.unsplash.com/photo-1530982255204-f9496589040c?q=80&w=2074&auto=format&fit=crop',
+                title: 'Electronic Logic for Scenery',
+                description: 'Intro to using Arduino to automate movement and light cycles in your toy setups.',
+                creator: 'LogicBuild',
+                avatar: 'https://i.pravatar.cc/150?u=a042581f4e290267057',
+                metrics: { likes: '5.6k', comments: '980' },
+                badge: '',
+                program: true
+            }
+        ];
+
+        let currentCategory = 'all';
+        let visibleCount = 6;
+        const grid = document.getElementById('creation-grid');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        function getCategoryColor(cat) {
+            switch(cat) {
+                case 'scenes': return 'bg-orange-500';
+                case 'accessories': return 'bg-purple-500';
+                case 'diy': return 'bg-emerald-500';
+                default: return 'bg-gray-500';
+            }
+        }
+
+        function getCategoryLabel(cat) {
+            switch(cat) {
+                case 'scenes': return 'Scenes';
+                case 'accessories': return 'Accessories';
+                case 'diy': return 'DIY Tutorials';
+                default: return 'Other';
+            }
+        }
+
+        function renderCard(item, index, animate = true) {
+            const delay = animate ? 0.1 * (index % 6) : 0;
+            const card = document.createElement('article');
+            card.className = `animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col`;
+            card.style.animationDelay = `${delay}s`;
+            card.dataset.category = item.category;
+            
+            card.innerHTML = `
+                <div class="relative aspect-[4/3] overflow-hidden">
+                    <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+                    <span class="absolute top-4 left-4 ${getCategoryColor(item.category)} text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">${getCategoryLabel(item.category)}</span>
+                    ${item.badge ? `
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full flex items-center gap-1 shadow-sm">
+                            <iconify-icon icon="lucide:${item.badge.includes('VISITED') ? 'award' : item.badge.includes('HOT') ? 'flame' : 'star'}" class="text-orange-500"></iconify-icon>
+                            <span class="text-[10px] font-bold">${item.badge}</span>
+                        </div>
+                    ` : ''}
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center gap-3 mb-4">
+                        <img src="${item.avatar}" alt="${item.creator}" class="w-10 h-10 rounded-full border-2 border-gray-100" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                        <div>
+                            <h4 class="text-sm font-bold">${item.creator}</h4>
+                            ${item.program ? `
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[10px] bg-blue-100 text-blue-600 px-1.5 py-0.5 rounded font-bold uppercase">CREATOR PROGRAM</span>
+                                </div>
+                            ` : `<span class="text-[10px] text-gray-400 font-bold uppercase">CREATOR</span>`}
                         </div>
                     </div>
-                    <div>
-                        <h5 class="font-bold mb-6">Explore</h5>
-                        <ul class="space-y-4 text-sm text-gray-500">
-                            <li><a href="#" id="footer-link-scenes" class="hover:text-orange-500">Trending Scenes</a></li>
-                            <li><a href="#" id="footer-link-shop" class="hover:text-orange-500">Material Shop</a></li>
-                            <li><a href="#" id="footer-link-diy" class="hover:text-orange-500">DIY Tutorials</a></li>
-                            <li><a href="#" id="footer-link-creators" class="hover:text-orange-500">Top Creators</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h5 class="font-bold mb-6">Company</h5>
-                        <ul class="space-y-4 text-sm text-gray-500">
-                            <li><a href="#" id="footer-link-about" class="hover:text-orange-500">Our Vision</a></li>
-                            <li><a href="#" id="footer-link-careers" class="hover:text-orange-500">Careers</a></li>
-                            <li><a href="#" id="footer-link-press" class="hover:text-orange-500">Press Kit</a></li>
-                            <li><a href="#" id="footer-link-contact" class="hover:text-orange-500">Contact Us</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h5 class="font-bold mb-6">Weekly Inspiration</h5>
-                        <p class="text-gray-500 text-sm mb-4">Join 5,000+ creators getting our curated toy design picks.</p>
-                        <form id="footer-newsletter-form" class="relative">
-                            <input type="email" placeholder="Your email address" class="w-full bg-gray-50 border border-gray-100 rounded-full py-3 px-5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/20">
-                            <button type="submit" id="footer-newsletter-btn" class="absolute right-1 top-1 bg-orange-500 text-white p-2 rounded-full hover:bg-orange-600">
-                                <iconify-icon icon="lucide:arrow-right"></iconify-icon>
-                            </button>
-                        </form>
+                    <h3 class="font-display text-xl mb-2">${item.title}</h3>
+                    <p class="text-gray-600 text-sm mb-6 flex-grow">${item.description}</p>
+                    <div class="flex items-center justify-between mt-auto">
+                        <div class="flex items-center gap-4 text-gray-500 text-xs">
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:heart" class="text-lg text-red-400"></iconify-icon> ${item.metrics.likes}</span>
+                            <span class="flex items-center gap-1"><iconify-icon icon="lucide:${item.category === 'diy' ? 'eye' : 'message-circle'}" class="text-lg"></iconify-icon> ${item.metrics.comments || item.metrics.views}</span>
+                        </div>
+                        <button class="text-blue-600 font-bold text-sm hover:underline">${item.category === 'diy' ? 'View Tutorial' : 'Shop Pieces'}</button>
                     </div>
                 </div>
-                <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400">
-                    <p>© 2024 BowerBit Ecosystem. All rights reserved.</p>
-                    <div class="flex gap-6 mt-4 md:mt-0">
-                        <a href="#" id="footer-legal-privacy" class="hover:text-gray-600">Privacy Policy</a>
-                        <a href="#" id="footer-legal-terms" class="hover:text-gray-600">Terms of Service</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
+            `;
+            return card;
+        }
+
+        function updateGrid(filter = 'all', count = visibleCount) {
+            grid.innerHTML = '';
+            const filteredData = filter === 'all' 
+                ? ALL_CREATIONS 
+                : ALL_CREATIONS.filter(item => item.category === filter);
+            
+            const slice = filteredData.slice(0, count);
+            
+            slice.forEach((item, index) => {
+                grid.appendChild(renderCard(item, index));
+            });
+
+            // Update Load More visibility
+            if (count >= filteredData.length) {
+                loadMoreBtn.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                loadMoreBtn.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        // Filtering Logic
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Reset count for new filter context
+                visibleCount = 6;
+                currentCategory = btn.dataset.filter;
+
+                // UI Update Tabs
+                filterBtns.forEach(b => b.classList.remove('tab-active', 'font-bold'));
+                filterBtns.forEach(b => b.classList.add('text-gray-500', 'font-medium'));
+                btn.classList.add('tab-active', 'font-bold');
+                btn.classList.remove('text-gray-500', 'font-medium');
+
+                // Trigger View Transition if supported
+                if (document.startViewTransition) {
+                    document.startViewTransition(() => updateGrid(currentCategory, visibleCount));
+                } else {
+                    updateGrid(currentCategory, visibleCount);
+                }
+            });
+        });
+
+        // Load More Logic
+        loadMoreBtn.addEventListener('click', async () => {
+            const btnText = document.getElementById('btn-text');
+            const btnIcon = document.getElementById('btn-icon');
+            const btnLoader = document.getElementById('btn-loader');
+
+            // Loading State
+            loadMoreBtn.classList.add('bg-orange-50/50');
+            btnText.textContent = 'Fetching...';
+            btnIcon.classList.add('hidden');
+            btnLoader.classList.remove('hidden');
+            loadMoreBtn.disabled = true;
+
+            // Simulate Network Delay
+            await new Promise(resolve => setTimeout(resolve, 800));
+
+            // Actually Add Items
+            visibleCount += 6;
+            updateGrid(currentCategory, visibleCount);
+
+            // Reset State
+            loadMoreBtn.classList.remove('bg-orange-50/50');
+            btnText.textContent = 'Load More Creations';
+            btnIcon.classList.remove('hidden');
+            btnLoader.classList.add('hidden');
+            loadMoreBtn.disabled = false;
+        });
+
+        // Initial Run
+        updateGrid();
+    </script>
 
 <script defer="" type="module">
           // Error tracking for preview
