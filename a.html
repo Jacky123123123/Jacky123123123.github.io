@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品页面 (a页)</title>
+    <!-- 引入Iconify（图标）和Tailwind（样式） -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.8/iconify-icon.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 p-8">
+    <h1 class="text-2xl font-bold mb-8">商品列表</h1>
+    
+    <!-- 商品卡片1 -->
+    <div class="product-card bg-white rounded-3xl p-4 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all group fade-in-up " 
+        data-category="doll-essentials"
+        data-product-id="1"         
+        data-product-name="Victorian Lace Outfit" 
+        data-product-price="45.00"> 
+        <div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-50 mb-4 cursor-pointer" onclick="openProductModal(1)">
+            <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&amp;fit=crop&amp;q=80&amp;w=600" alt="Victorian Lace Outfit" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+            <span class="absolute top-3 left-3 bg-[#FF7E00] text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Popular</span>
+            <button onclick="event.stopPropagation(); addToCartFromCard(this)" class="quick-add absolute bottom-3 right-3 bg-white text-[#FF7E00] p-3 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-[#FF7E00] hover:text-white">
+                <iconify-icon icon="lucide:plus" class="text-xl"></iconify-icon>
+            </button>
+        </div>
+        <div class="space-y-1">
+            <div class="flex items-center gap-2 mb-2">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Lila" class="w-5 h-5 rounded-full bg-orange-100" onerror="this.onerror=null;this.src='https://placehold.co/20x20/1a1a1a/888?text=Image';">
+                <span class="text-[11px] text-gray-500 font-medium">By Lila • UK Designer</span>
+            </div>
+            <h3 class="font-bold text-gray-900 group-hover:text-[#FF7E00] transition-colors cursor-pointer" onclick="openProductModal(1)">Victorian Lace Outfit</h3>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-lg font-display font-bold">$45.00</span>
+                </div>
+                <div class="flex items-center text-yellow-400 gap-1">
+                    <iconify-icon icon="material-symbols:star-rounded"></iconify-icon>
+                    <span class="text-[11px] text-gray-500 font-bold">(42)</span>
+                </div>
+            </div>
+            <div class="pt-4 flex flex-col gap-2">
+                <p class="text-[10px] flex items-center gap-1.5 text-green-600 font-bold uppercase tracking-tighter">
+                    <iconify-icon icon="lucide:check-circle" class="text-sm"></iconify-icon>
+                    In Stock • UKCA Approved
+                </p>
+                <a href="#" id="product-1-builder-link" class="block text-center py-2.5 border border-gray-200 rounded-xl text-xs font-bold text-gray-600 hover:bg-blue-50 hover:border-blue-200 hover:text-[#4A6FA5] transition-all">Scene Builder Preview</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 商品卡片2（可选，测试多商品） -->
+    <div class="product-card bg-white rounded-3xl p-4 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all group fade-in-up mt-6" 
+        data-category="doll-essentials"
+        data-product-id="2"         
+        data-product-name="Vintage Silk Dress" 
+        data-product-price="59.99"> 
+        <div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-50 mb-4 cursor-pointer" onclick="openProductModal(2)">
+            <img src="https://images.unsplash.com/photo-1601439678777-b2b3c56fa627?auto=format&amp;fit=crop&amp;q=80&amp;w=600" alt="Vintage Silk Dress" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+            <button onclick="event.stopPropagation(); addToCartFromCard(this)" class="quick-add absolute bottom-3 right-3 bg-white text-[#FF7E00] p-3 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 hover:bg-[#FF7E00] hover:text-white">
+                <iconify-icon icon="lucide:plus" class="text-xl"></iconify-icon>
+            </button>
+        </div>
+        <div class="space-y-1">
+            <div class="flex items-center gap-2 mb-2">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mia" class="w-5 h-5 rounded-full bg-orange-100" onerror="this.onerror=null;this.src='https://placehold.co/20x20/1a1a1a/888?text=Image';">
+                <span class="text-[11px] text-gray-500 font-medium">By Mia • FR Designer</span>
+            </div>
+            <h3 class="font-bold text-gray-900 group-hover:text-[#FF7E00] transition-colors cursor-pointer" onclick="openProductModal(2)">Vintage Silk Dress</h3>
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-lg font-display font-bold">$59.99</span>
+                </div>
+                <div class="flex items-center text-yellow-400 gap-1">
+                    <iconify-icon icon="material-symbols:star-rounded"></iconify-icon>
+                    <span class="text-[11px] text-gray-500 font-bold">(38)</span>
+                </div>
+            </div>
+            <div class="pt-4 flex flex-col gap-2">
+                <p class="text-[10px] flex items-center gap-1.5 text-green-600 font-bold uppercase tracking-tighter">
+                    <iconify-icon icon="lucide:check-circle" class="text-sm"></iconify-icon>
+                    In Stock • UKCA Approved
+                </p>
+                <a href="#" id="product-2-builder-link" class="block text-center py-2.5 border border-gray-200 rounded-xl text-xs font-bold text-gray-600 hover:bg-blue-50 hover:border-blue-200 hover:text-[#4A6FA5] transition-all">Scene Builder Preview</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 跳转到购物车页面的链接 -->
+    <div class="mt-8">
+        <a href="b.html" class="inline-block bg-[#FF7E00] text-white px-6 py-3 rounded-xl font-bold hover:bg-[#e67000] transition-colors">
+            <iconify-icon icon="lucide:shopping-cart" class="inline-block mr-2"></iconify-icon>
+            查看购物车 (跳转到b页)
+        </a>
+    </div>
+
+    <script>
+        // 购物车存储key（必须和b页完全一致！）
+        const CART_STORAGE_KEY = 'userCartItems';
+
+        // 模拟商品详情弹窗函数（避免报错）
+        function openProductModal(id) {
+            console.log('打开商品详情，ID：', id);
+        }
+
+        // 加入购物车核心函数
+        function addToCartFromCard(btn) {
+            try {
+                const productCard = btn.closest('.product-card');
+                if (!productCard) {
+                    alert('未找到商品信息！');
+                    return;
+                }
+
+                // 读取商品数据
+                const productId = productCard.dataset.productId;
+                const productName = productCard.dataset.productName;
+                const productPrice = parseFloat(productCard.dataset.productPrice);
+                const productImage = productCard.querySelector('img[alt]').src;
+
+                // 校验数据完整性
+                if (!productId || !productName || isNaN(productPrice)) {
+                    alert('商品信息不完整，无法加入购物车！');
+                    return;
+                }
+
+                // 读取本地购物车数据
+                let cartItems = localStorage.getItem(CART_STORAGE_KEY);
+                cartItems = cartItems ? JSON.parse(cartItems) : [];
+
+                // 检查商品是否已存在，存在则加数量，不存在则新增
+                const existingItemIndex = cartItems.findIndex(item => item.id === productId);
+                if (existingItemIndex > -1) {
+                    cartItems[existingItemIndex].quantity += 1;
+                } else {
+                    cartItems.push({
+                        id: productId,
+                        name: productName,
+                        price: productPrice,
+                        quantity: 1,
+                        image: productImage
+                    });
+                }
+
+                // 保存回localStorage
+                localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+                alert(`${productName} 已加入购物车！当前数量：${existingItemIndex > -1 ? cartItems[existingItemIndex].quantity : 1}`);
+
+            } catch (error) {
+                console.error('加入购物车失败：', error);
+                alert('加入购物车失败，请稍后重试！');
+            }
+        }
+    </script>
+</body>
+</html>

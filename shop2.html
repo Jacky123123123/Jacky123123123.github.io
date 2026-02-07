@@ -739,7 +739,7 @@
                     <iconify-icon icon="lucide:search" class="text-xl"></iconify-icon>
                 </button><button id="cart-btn" class="p-2 relative rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
                     <iconify-icon icon="lucide:shopping-cart" class="text-xl"></iconify-icon>
-                    <span id="cart-badge-count" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+                    <span id="cart-badge" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
                 </button>
                 <div class="h-6 w-px bg-orange-100 mx-2"></div>
                 <button id="login-btn" class="hidden sm:block text-sm font-bold text-gray-700 hover:text-[#FF7E00] transition-colors">Login</button>
@@ -779,13 +779,18 @@
 
     <!-- Product Grid -->
     <main class="max-w-7xl mx-auto px-6 py-16">
-      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"><div class="product-card bg-white rounded-3xl p-4 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all group fade-in-up " data-category="doll-essentials">
+      <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="product-card bg-white rounded-3xl p-4 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all group fade-in-up " 
+     data-category="doll-essentials"
+     data-product-id="1"         
+     data-product-name="Victorian Lace Outfit" 
+     data-product-price="45.00"> 
         <div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-50 mb-4 cursor-pointer" onclick="openProductModal(1)">
           <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&amp;fit=crop&amp;q=80&amp;w=600" alt="Victorian Lace Outfit" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
           <span class="absolute top-3 left-3 bg-[#FF7E00] text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Popular</span>
-          <button onclick="event.stopPropagation(); addToCart(1)" class="quick-add absolute bottom-3 right-3 bg-white text-[#FF7E00] p-3 rounded-xl shadow-lg opacity-0 translate-y-2 transition-all duration-300 hover:bg-[#FF7E00] hover:text-white">
-            <iconify-icon icon="lucide:plus" class="text-xl"></iconify-icon>
-          </button>
+<button onclick="event.stopPropagation(); addToCartFromCard(this)" class="quick-add absolute bottom-3 right-3 bg-white text-[#FF7E00] p-3 rounded-xl shadow-lg opacity-0 translate-y-2 transition-all duration-300 hover:bg-[#FF7E00] hover:text-white">
+  <iconify-icon icon="lucide:plus" class="text-xl"></iconify-icon>
+</button>
         </div>
         <div class="space-y-1">
           <div class="flex items-center gap-2 mb-2">
@@ -810,7 +815,9 @@
             </p>
             <a href="#" id="product-1-builder-link" class="block text-center py-2.5 border border-gray-200 rounded-xl text-xs font-bold text-gray-600 hover:bg-blue-50 hover:border-blue-200 hover:text-[#4A6FA5] transition-all">Scene Builder Preview</a>
           </div>
-        </div></div><div class="product-card bg-white rounded-3xl p-4 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all group fade-in-up " data-category="lighting-effects">
+        </div>
+      </div>
+        <div class="product-card bg-white rounded-3xl p-4 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-2 transition-all group fade-in-up " data-category="lighting-effects">
         <div class="relative aspect-square rounded-2xl overflow-hidden bg-gray-50 mb-4 cursor-pointer" onclick="openProductModal(2)">
           <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&amp;fit=crop&amp;q=80&amp;w=600" alt="Atmospheric LED Kit" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
           <span class="absolute top-3 left-3 bg-[#4A6FA5] text-white text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">New</span>
@@ -1169,11 +1176,37 @@
     let currentFilter = 'all';
     let loadedCount = 8;
 
-    const saveCart = () => {
-      localStorage.setItem('bowerbit_cart', JSON.stringify(cart));
-      updateCartBadge();
-      renderCart();
+const saveCart = () => {
+  // 重新构建购物车数据，确保包含所有必要字段
+  const cartToSave = cart.map(item => {
+    // 从products数组中查找完整的产品信息
+    const product = products.find(p => p.id === item.id);
+    
+    return {
+      id: item.id,
+      // 确保有title字段
+      title: item.title || product?.title || `商品${item.id}`,
+      // 确保有name字段（购物车页面使用name）
+      name: item.name || item.title || product?.title || `商品${item.id}`,
+      price: item.price || product?.price || 0,
+      quantity: item.quantity || 1,
+      img: item.img || product?.img || `https://placehold.co/250x400/1a1a1a/888?text=商品${item.id}`,
+      category: item.category || product?.category || '创意系列',
+      specs: item.specs || ['默认规格'],
+      // 保存原始产品数据以便恢复
+      productTitle: product?.title // 额外保存title字段
     };
+  });
+  
+  localStorage.setItem('bowerbit_cart', JSON.stringify(cartToSave));
+  updateCartBadge();
+  
+  console.log('购物车已保存:', cartToSave);
+  
+  // 额外验证：检查是否有title字段
+  const testCart = JSON.parse(localStorage.getItem('bowerbit_cart') || '[]');
+  console.log('验证存储数据字段:', testCart[0] ? Object.keys(testCart[0]) : '空');
+};
 
     const updateCartBadge = () => {
       const badge = document.getElementById('cart-badge');
@@ -1196,20 +1229,33 @@
       }, 2000);
     };
 
-    const addToCart = (productId, qty = 1) => {
-      const product = products.find(p => p.id === productId);
-      const existing = cart.find(item => item.id === productId);
-      
-      if (existing) {
-        existing.quantity += qty;
-      } else {
-        cart.push({ ...product, quantity: qty });
-      }
-      
-      saveCart();
-      showToast();
-    };
-
+const addToCart = (productId, qty = 1) => {
+  const product = products.find(p => p.id === productId);
+  const existing = cart.find(item => item.id === productId);
+  
+  if (existing) {
+    existing.quantity += qty;
+  } else {
+    // 确保保存所有必要字段，特别是title和name
+    cart.push({ 
+      id: product.id,
+      title: product.title, // 保存title字段
+      name: product.title,  // 同时保存name字段（购物车页面使用name）
+      price: product.price,
+      quantity: qty,
+      img: product.img,
+      category: product.category,
+      creator: product.creator, // 可选：保存创建者信息
+      specs: ['默认规格']  // 添加默认规格
+    });
+  }
+  
+  saveCart();
+  showToast();
+  
+  console.log('添加到购物车:', product.title, '数量:', qty);
+  console.log('当前购物车:', cart);
+};
     const removeFromCart = (productId) => {
       cart = cart.filter(item => item.id !== productId);
       saveCart();
@@ -1472,6 +1518,48 @@
     // if(购物车为空) { alert('购物车暂无商品'); }
 });
         </script>
-<script defer="" type="module">import '/__visual-edit-bridge/iframe-runtime.mjs?v=0.0.0';</script>
+
+        <script>// 购物车存储key（和shoppingcart.html保持一致）
+const CART_STORAGE_KEY = 'userCartItems';
+
+// 从商品卡片读取信息并加入购物车
+function addToCartFromCard(btn) {
+  // 找到商品卡片根元素
+  const productCard = btn.closest('.product-card');
+  // 读取标签上的商品信息
+  const productId = productCard.dataset.productId;
+  const productName = productCard.dataset.productName;
+  const productPrice = parseFloat(productCard.dataset.productPrice);
+  // 商品图片（可选，读取img的src）
+  const productImage = productCard.querySelector('img[alt]').src;
+
+  // 复用之前的购物车逻辑
+  let cartItems = localStorage.getItem(CART_STORAGE_KEY);
+  cartItems = cartItems ? JSON.parse(cartItems) : [];
+
+  // 检查商品是否已存在
+  const existingItemIndex = cartItems.findIndex(item => item.id === productId);
+  if (existingItemIndex > -1) {
+    cartItems[existingItemIndex].quantity += 1;
+  } else {
+    cartItems.push({
+      id: productId,
+      name: productName,
+      price: productPrice,
+      quantity: 1,
+      image: productImage
+    });
+  }
+
+  // 保存到localStorage
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+
+  // 可选：添加成功提示
+  alert(`${productName} added to cart!`);
+}
+</script>
+
+
+<!-- <script defer="" type="module">import '/__visual-edit-bridge/iframe-runtime.mjs?v=0.0.0';</script> -->
 
 </body></html>

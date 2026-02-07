@@ -884,7 +884,7 @@
             summaryEl.innerHTML = html;
             priceEl.innerText = `$${total}`;
             const cart = JSON.parse(localStorage.getItem('bowerbit_cart') || '[]');
-            globalBadge.innerText = cart.length;
+            // globalBadge.innerText = cart.length;
         }
 
         function addItem(type, item) {
