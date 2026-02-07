@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Custom Scene | BowerBit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        @import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&f[]=satoshi@700,500,400&display=swap');
+
+        :root {
+            --brand-orange: #FF7E00;
+            --brand-blue: #4A6FA5;
+            --brand-cream: #FFFBF5;
+            --text-dark: #1A1A1A;
+        }
+
+        body {
+            font-family: 'Satoshi', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--brand-cream);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cabinet Grotesk', sans-serif;
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .step-active-bg {
+            background-color: var(--brand-orange) !important;
+            color: white !important;
+        }
+        
+        .step-complete-bg {
+            background-color: var(--brand-blue) !important;
+            color: white !important;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .color-swatch-selected {
+            outline: 2px solid var(--brand-orange);
+            outline-offset: 2px;
+        }
+
+        #three-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 1rem;
+            cursor: grab;
+        }
+
+        #three-container canvas:active {
+            cursor: grabbing;
+        }
+
+        .fade-step {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-out;
+        }
+
+        .item-card:hover .add-badge {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .add-badge {
+            opacity: 0;
+            transform: translateY(4px);
+            transition: all 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex flex-col">
+        <div class="grain-overlay"></div>
+
+        <!-- Navigation Bar -->
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-100">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="BowerBit Logo" class="h-10 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x40/1a1a1a/888?text=Image';">
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                              <a id="nav-explore-link" href="index.html" class="font-medium hover:text-[#FF7E00] transition-colors">Explore</a>
+                <a id="nav-home-link" href="community2.html" class="font-medium hover:text-[#FF7E00] transition-colors">Community</a>
+                <a id="nav-shop-link" href="shop2.html" class="font-medium hover:text-[#FF7E00] transition-colors">Shop</a>
+                <a id="nav-create-link" href="#tool" class="font-medium hover:text-[#FF7E00] transition-colors">Create Tool</a>
+                <a id="nav-community-link" href="#about" class="font-medium hover:text-[#FF7E00] transition-colors">About</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="search-btn" class="p-2 rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:search" class="text-xl"></iconify-icon>
+                </button><button id="cart-btn" class="p-2 relative rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:shopping-cart" class="text-xl"></iconify-icon>
+                    <span id="cart-badge-count" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+                </button>
+                <div class="h-6 w-px bg-orange-100 mx-2"></div>
+                <button id="login-btn" class="hidden sm:block text-sm font-bold text-gray-700 hover:text-[#FF7E00] transition-colors">Login</button>
+    <button id="join-btn" class="bg-[#FF7E00] text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-[#E67200] transition-all transform hover:scale-105 active:scale-95">Join BowerBit</button>
+</div></div>
+</nav>
+
+        <!-- Main Content Section -->
+        <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 pb-24">
+            
+            <!-- Header & Stepper -->
+            <div class="mb-12 text-center">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">Create Your Custom Scene</h1>
+                <p class="text-gray-600 text-lg mb-10">Design unique toy scenarios with our 3-step builder</p>
+                
+                <div class="flex justify-center items-center gap-4 md:gap-12">
+                    <!-- Step 1 Indicator -->
+                    <div id="step-ind-1" class="flex flex-col items-center gap-2">
+                        <div class="step-node w-10 h-10 rounded-full bg-[#FF7E00] text-white flex items-center justify-center font-bold transition-colors">1</div>
+                        <span class="text-sm font-bold text-[#FF7E00]">Base Setup</span>
+                    </div>
+                    <div class="w-16 md:w-32 h-[2px] bg-gray-200"></div>
+                    <!-- Step 2 Indicator -->
+                    <div id="step-ind-2" class="flex flex-col items-center gap-2 opacity-40">
+                        <div class="step-node w-10 h-10 rounded-full bg-gray-300 text-white flex items-center justify-center font-bold transition-colors">2</div>
+                        <span class="text-sm font-bold">Characters</span>
+                    </div>
+                    <div class="w-16 md:w-32 h-[2px] bg-gray-200"></div>
+                    <!-- Step 3 Indicator -->
+                    <div id="step-ind-3" class="flex flex-col items-center gap-2 opacity-40">
+                        <div class="step-node w-10 h-10 rounded-full bg-gray-300 text-white flex items-center justify-center font-bold transition-colors">3</div>
+                        <span class="text-sm font-bold text-nowrap">Enhancements</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2-Column Builder Interface -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- LEFT COLUMN: Control Panel (35%) -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="bg-white rounded-3xl p-6 shadow-xl shadow-black/5 border border-black/5 relative overflow-hidden">
+                        
+                        <!-- STEP 1 PANEL -->
+                        <div id="panel-step-1" class="fade-step">
+                            <div class="flex items-center gap-2 mb-2">
+                                <iconify-icon icon="lucide:box" class="text-[#FF7E00]"></iconify-icon>
+                                <span class="text-xs font-black uppercase tracking-widest text-[#FF7E00]">Step 1 Foundation</span>
+                            </div>
+                            <h2 class="text-2xl font-black mb-1">Base Setup</h2>
+                            <p class="text-gray-500 text-sm mb-6">Configure your scene foundation with size, color, and optional panels.</p>
+
+                            <div class="space-y-4 mb-8">
+                                <label class="text-sm font-bold block">Select Base Size</label>
+                                <div class="grid grid-cols-1 gap-3">
+                                    <button onclick="updateSize('small', 15)" class="size-option flex items-center justify-between p-4 rounded-2xl border-2 border-transparent bg-gray-50 hover:bg-orange-50 transition-all text-left" data-size="small">
+                                        <div class="flex items-center gap-3">
+                                            <iconify-icon icon="lucide:square" class="text-xl"></iconify-icon>
+                                            <p class="font-bold">Small (12x12")</p>
+                                        </div>
+                                        <span class="font-black">$15</span>
+                                    </button>
+                                    <button onclick="updateSize('medium', 25)" class="size-option flex items-center justify-between p-4 rounded-2xl border-2 border-[#FF7E00] bg-orange-50 transition-all text-left relative" data-size="medium">
+                                        <div class="flex items-center gap-3">
+                                            <iconify-icon icon="lucide:layout-grid" class="text-xl text-[#FF7E00]"></iconify-icon>
+                                            <p class="font-bold text-[#FF7E00]">Medium (18x18")</p>
+                                        </div>
+                                        <span class="font-black text-[#FF7E00]">$25</span>
+                                    </button>
+                                    <button onclick="updateSize('large', 35)" class="size-option flex items-center justify-between p-4 rounded-2xl border-2 border-transparent bg-gray-50 hover:bg-orange-50 transition-all text-left" data-size="large">
+                                        <div class="flex items-center gap-3">
+                                            <iconify-icon icon="lucide:maximize" class="text-xl"></iconify-icon>
+                                            <p class="font-bold">Large (24x24")</p>
+                                        </div>
+                                        <span class="font-black">$35</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-2xl mb-8 border border-black/5 cursor-pointer" onclick="toggleWalls()">
+                                <div>
+                                    <p class="font-bold text-sm">Add Panels/Walls?</p>
+                                    <p class="text-xs text-gray-500">Enclose your scene (+$10)</p>
+                                </div>
+                                <div id="walls-toggle" class="w-12 h-6 bg-gray-300 rounded-full relative transition-colors duration-300">
+                                    <div id="toggle-knob" class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-300"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4 mb-8">
+                                <label class="text-sm font-bold block">Base Color</label>
+                                <div class="flex flex-wrap gap-4">
+                                    <button onclick="updateColor('#1A1A1A', 'Classic Black')" class="color-btn w-8 h-8 rounded-full bg-[#1A1A1A] border-2 border-white shadow-sm hover:scale-110 transition-transform" title="Classic Black"></button>
+                                    <button onclick="updateColor('#FFFFFF', 'Pure White')" class="color-btn w-8 h-8 rounded-full bg-white border-2 border-gray-200 shadow-sm hover:scale-110 transition-transform color-swatch-selected" title="Pure White"></button>
+                                    <button onclick="updateColor('#4A6FA5', 'Ocean Blue')" class="color-btn w-8 h-8 rounded-full bg-[#4A6FA5] border-2 border-white shadow-sm hover:scale-110 transition-transform" title="Ocean Blue"></button>
+                                    <button onclick="updateColor('#FF7E00', 'Sunset Orange')" class="color-btn w-8 h-8 rounded-full bg-[#FF7E00] border-2 border-white shadow-sm hover:scale-110 transition-transform" title="Sunset Orange"></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2 PANEL -->
+                        <div id="panel-step-2" class="fade-step hidden">
+                            <div class="flex items-center gap-2 mb-2">
+                                <iconify-icon icon="lucide:users" class="text-[#FF7E00]"></iconify-icon>
+                                <span class="text-xs font-black uppercase tracking-widest text-[#FF7E00]">Step 2 Figures</span>
+                            </div>
+                            <h2 class="text-2xl font-black mb-1">Add Characters</h2>
+                            <p class="text-gray-500 text-sm mb-6">Choose from our pre-defined collection of heroes and monsters.</p>
+
+                            <div class="grid grid-cols-2 gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                                <!-- Characters will be injected here by JS -->
+                                <div id="character-library-container" class="contents"></div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 3 PANEL -->
+                        <div id="panel-step-3" class="fade-step hidden">
+                            <div class="flex items-center gap-2 mb-2">
+                                <iconify-icon icon="lucide:sparkles" class="text-[#FF7E00]"></iconify-icon>
+                                <span class="text-xs font-black uppercase tracking-widest text-[#FF7E00]">Step 3 Details</span>
+                            </div>
+                            <h2 class="text-2xl font-black mb-1">Enhancements</h2>
+                            <p class="text-gray-500 text-sm mb-6">Add furniture, props, and special effects to complete your world.</p>
+
+                            <div class="space-y-4">
+                                <div class="bg-gray-50 rounded-2xl overflow-hidden">
+                                    <button onclick="toggleCategory('furniture')" class="w-full flex items-center justify-between p-4 font-bold text-sm border-b border-black/5">
+                                        <span>Furniture & Structures</span>
+                                        <iconify-icon icon="lucide:chevron-down" id="cat-icon-furniture"></iconify-icon>
+                                    </button>
+                                    <div id="cat-furniture" class="p-3 grid grid-cols-2 gap-2"></div>
+                                </div>
+                                <div class="bg-gray-50 rounded-2xl overflow-hidden">
+                                    <button onclick="toggleCategory('props')" class="w-full flex items-center justify-between p-4 font-bold text-sm border-b border-black/5">
+                                        <span>Props & Weapons</span>
+                                        <iconify-icon icon="lucide:chevron-down" id="cat-icon-props"></iconify-icon>
+                                    </button>
+                                    <div id="cat-props" class="p-3 grid grid-cols-2 gap-2 hidden"></div>
+                                </div>
+                                <div class="bg-gray-50 rounded-2xl overflow-hidden">
+                                    <button onclick="toggleCategory('nature')" class="w-full flex items-center justify-between p-4 font-bold text-sm border-b border-black/5">
+                                        <span>Nature & Rocks</span>
+                                        <iconify-icon icon="lucide:chevron-down" id="cat-icon-nature"></iconify-icon>
+                                    </button>
+                                    <div id="cat-nature" class="p-3 grid grid-cols-2 gap-2 hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Persistence Summary & Controls -->
+                        <div class="mt-8 pt-6 border-t border-dashed border-gray-200">
+                            <h3 class="text-xs font-black uppercase tracking-widest text-gray-400 mb-4">Scene Summary</h3>
+                            <div id="items-summary" class="space-y-2 mb-6 max-h-[120px] overflow-y-auto pr-1">
+                                <!-- Managed by updateSummary() -->
+                            </div>
+                            
+                            <div class="flex items-center justify-between mb-8">
+                                <span class="text-lg font-bold">Total Scene Cost</span>
+                                <span id="total-price" class="text-3xl font-black text-[#FF7E00]">$25</span>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button id="prev-btn" onclick="changeStep(-1)" class="hidden flex-1 bg-gray-100 text-gray-800 py-4 rounded-2xl font-black hover:bg-gray-200 transition-all flex items-center justify-center gap-2">
+                                    <iconify-icon icon="lucide:arrow-left"></iconify-icon>
+                                    Back
+                                </button>
+                                <button id="next-btn" onclick="changeStep(1)" class="flex-[2] bg-[#FF7E00] text-white py-4 rounded-2xl text-lg font-black shadow-xl shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 group">
+                                    <span id="next-btn-text">Next Step: Characters</span>
+                                    <iconify-icon icon="lucide:arrow-right" class="text-xl group-hover:translate-x-1 transition-transform"></iconify-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: 3D Preview (65%) -->
+                <div class="lg:col-span-8 sticky top-28">
+                    <div class="relative bg-[#E8E4DE] rounded-3xl overflow-hidden shadow-inner h-[600px] border-4 border-white">
+                        <div id="three-container" class="w-full h-full"></div>
+                        <div class="absolute bottom-6 left-6 flex gap-4 pointer-events-none">
+                            <div class="flex items-center gap-2 px-3 py-1.5 bg-black/50 backdrop-blur-md rounded-full text-white text-[10px] font-bold">
+                                <iconify-icon icon="lucide:mouse-pointer-2"></iconify-icon>
+                                Rotate: Drag
+                            </div>
+                            <div class="flex items-center gap-2 px-3 py-1.5 bg-black/50 backdrop-blur-md rounded-full text-white text-[10px] font-bold">
+                                <iconify-icon icon="lucide:move"></iconify-icon>
+                                Zoom: Scroll
+                            </div>
+                        </div>
+                        <div class="absolute top-6 right-6">
+                            <div class="bg-white/90 backdrop-blur shadow-lg px-4 py-2 rounded-2xl border border-black/5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+                                    <span id="live-status" class="text-xs font-bold text-gray-700 uppercase tracking-tight">Step 1 Live</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-6 left-6">
+                            <span class="text-[10px] font-black uppercase bg-[#4A6FA5] text-white px-2 py-1 rounded">3D Builder v2.0</span>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-center text-gray-400 text-sm">
+                        Our custom 3D engine ensures what you design is exactly what you get. Every panel and base is precision-milled.
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer (Simplified for brevity) -->
+    <footer class="bg-zinc-950 text-white py-20 px-6">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-12">
+        <div class="col-span-1 md:col-span-1">
+          <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="Logo" class="h-8 invert brightness-0 mb-8" onerror="this.onerror=null;this.src='https://placehold.co/600x32/1a1a1a/888?text=Image';">
+          <p class="text-zinc-400 text-sm">
+            Building the future of play, one scenario at a time. Join the revolution in toy creative ecosystems.
+          </p>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Explore</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-home-link" class="hover:text-[#FF7E00]">Home</a></li>
+            <li><a href="#" id="footer-showcase-link" class="hover:text-[#FF7E00]">Showcase</a></li>
+            <li><a href="#" id="footer-shop-link" class="hover:text-[#FF7E00]">Shop Materials</a></li>
+            <li><a href="#" id="footer-tools-link" class="hover:text-[#FF7E00]">Creator Tools</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">About</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-about-us-link" class="hover:text-[#FF7E00]">About Us</a></li>
+            <li><a href="#" id="footer-investor-link" class="hover:text-[#FF7E00]">Investor Center</a></li>
+            <li><a href="#" id="footer-partner-link" class="hover:text-[#FF7E00]">Partner Program</a></li>
+            <li><a href="#" id="footer-sell-art-link" class="hover:text-[#FF7E00]">Sell your art</a></li>
+            <li><a href="#" id="footer-jobs-link" class="hover:text-[#FF7E00]">Jobs</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Community</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-discord-link" class="hover:text-[#FF7E00]">Discord</a></li>
+            <li><a href="#" id="footer-twitter-link" class="hover:text-[#FF7E00]">Twitter</a></li>
+            <li><a href="#" id="footer-instagram-link" class="hover:text-[#FF7E00]">Instagram</a></li>
+            <li><a href="#" id="footer-events-link" class="hover:text-[#FF7E00]">Monthly Events</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Stay Inspired</h5>
+          <div class="relative">
+            <input type="email" placeholder="Your email" class="w-full bg-zinc-900 border-none rounded-full px-6 py-4 text-sm focus:ring-2 focus:ring-[#FF7E00] outline-none">
+            <button id="footer-subscribe-btn" class="absolute right-2 top-2 bg-[#FF7E00] text-white p-2 rounded-full">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-zinc-800 text-center text-zinc-600 text-xs">
+        © 2024 BowerBit. All rights reserved. Designed for the builders of tomorrow.
+      </div>
+    </footer>
+    </div>
+
+    <!-- Scene Builder Logic -->
+    <script>
+        // DATA DEFINITIONS
+        const CHARACTER_LIB = [
+            { id: 'knight', name: 'Noble Knight', price: 8, icon: 'mdi:shield-account', color: 0x4A6FA5, type: 'cylinder' },
+            { id: 'wizard', name: 'Grand Wizard', price: 12, icon: 'mdi:wizard-hat', color: 0x6B46C1, type: 'cone' },
+            { id: 'robot', name: 'Steam Bot', price: 10, icon: 'mdi:robot', color: 0x94A3B8, type: 'box' },
+            { id: 'alien', name: 'Star Voyager', price: 9, icon: 'mdi:alien', color: 0x4ADE80, type: 'sphere' },
+            { id: 'dragon', name: 'Baby Dragon', price: 15, icon: 'mdi:dragon', color: 0xEF4444, type: 'box' },
+            { id: 'archer', name: 'Forest Elf', price: 7, icon: 'mdi:bow-arrow', color: 0x2D5A27, type: 'cylinder' },
+            { id: 'ninja', name: 'Shadow Ninja', price: 9, icon: 'mdi:ninja', color: 0x1A1A1A, type: 'cylinder' },
+            { id: 'astronaut', name: 'Space Cadet', price: 11, icon: 'mdi:human-male-board', color: 0xFFFFFF, type: 'sphere' }
+        ];
+
+        const ACCESSORY_LIB = {
+            furniture: [
+                { id: 'throne', name: 'Royal Throne', price: 5, icon: 'mdi:chair-rolling', color: 0xD97706, type: 'box' },
+                { id: 'table', name: 'Grand Table', price: 4, icon: 'mdi:table-furniture', color: 0x78350F, type: 'box' }
+            ],
+            props: [
+                { id: 'sword', name: 'Excalibur', price: 3, icon: 'mdi:sword', color: 0xCBD5E1, type: 'cone' },
+                { id: 'chest', name: 'Treasure Chest', price: 6, icon: 'mdi:clippy', color: 0xCA8A04, type: 'box' }
+            ],
+            nature: [
+                { id: 'tree', name: 'Pine Tree', price: 5, icon: 'mdi:pine-tree', color: 0x166534, type: 'cone' },
+                { id: 'rock', name: 'Large Rock', price: 2, icon: 'mdi:rock', color: 0x64748B, type: 'sphere' }
+            ]
+        };
+
+        // STATE
+        let state = {
+            currentStep: 1,
+            base: {
+                size: 'medium',
+                sizePrice: 25,
+                hasWalls: false,
+                wallPrice: 10,
+                color: '#FFFFFF',
+                colorName: 'Pure White'
+            },
+            characters: [],
+            accessories: []
+        };
+
+        // THREE.JS CORE
+        let scene, camera, renderer, controls;
+        let baseMesh, wallBack, wallLeft, wallRight;
+        let placedMeshes = []; // Array of { id, mesh }
+
+        function init3D() {
+            const container = document.getElementById('three-container');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xE8E4DE);
+
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(20, 20, 20);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.maxPolarAngle = Math.PI / 2.1;
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(10, 20, 10);
+            dirLight.castShadow = true;
+            scene.add(dirLight);
+
+            // Base Setup
+            const baseGeometry = new THREE.BoxGeometry(10, 1, 10);
+            const baseMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+            baseMesh = new THREE.Mesh(baseGeometry, baseMaterial);
+            baseMesh.receiveShadow = true;
+            scene.add(baseMesh);
+
+            const wallMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+            wallBack = new THREE.Mesh(new THREE.BoxGeometry(10, 8, 0.5), wallMat);
+            wallBack.position.set(0, 4.5, -4.75);
+            wallBack.visible = false;
+            scene.add(wallBack);
+
+            wallLeft = new THREE.Mesh(new THREE.BoxGeometry(0.5, 8, 10), wallMat);
+            wallLeft.position.set(-4.75, 4.5, 0);
+            wallLeft.visible = false;
+            scene.add(wallLeft);
+
+            wallRight = new THREE.Mesh(new THREE.BoxGeometry(0.5, 8, 10), wallMat);
+            wallRight.position.set(4.75, 4.5, 0);
+            wallRight.visible = false;
+            scene.add(wallRight);
+
+            animate();
+            update3DState();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // NAVIGATION
+        function changeStep(delta) {
+            if (state.currentStep === 3 && delta > 0) {
+                openCompletionModal();
+                return;
+            }
+            const next = state.currentStep + delta;
+            if (next < 1 || next > 3) return;
+            
+            state.currentStep = next;
+            renderUI();
+        }
+
+        function renderUI() {
+            // Update Panels Visibility
+            document.querySelectorAll('.fade-step').forEach(p => p.classList.add('hidden'));
+            document.getElementById(`panel-step-${state.currentStep}`).classList.remove('hidden');
+
+            // Update Stepper Visuals
+            for (let i = 1; i <= 3; i++) {
+                const node = document.querySelector(`#step-ind-${i} .step-node`);
+                const label = document.querySelector(`#step-ind-${i} span`);
+                const container = document.getElementById(`step-ind-${i}`);
+                
+                if (i < state.currentStep) {
+                    node.classList.remove('bg-gray-300', 'bg-[#FF7E00]');
+                    node.classList.add('bg-[#4A6FA5]');
+                    node.innerHTML = '<iconify-icon icon="lucide:check"></iconify-icon>';
+                    container.style.opacity = "1";
+                    label.classList.add('text-[#4A6FA5]');
+                    label.classList.remove('text-[#FF7E00]');
+                } else if (i === state.currentStep) {
+                    node.classList.remove('bg-gray-300', 'bg-[#4A6FA5]');
+                    node.classList.add('bg-[#FF7E00]');
+                    node.innerHTML = i;
+                    container.style.opacity = "1";
+                    label.classList.add('text-[#FF7E00]');
+                    label.classList.remove('text-[#4A6FA5]');
+                } else {
+                    node.classList.remove('bg-[#FF7E00]', 'bg-[#4A6FA5]');
+                    node.classList.add('bg-gray-300');
+                    node.innerHTML = i;
+                    container.style.opacity = "0.4";
+                    label.classList.remove('text-[#FF7E00]', 'text-[#4A6FA5]');
+                }
+            }
+
+            // Update Buttons
+            document.getElementById('prev-btn').classList.toggle('hidden', state.currentStep === 1);
+            const nextBtnText = document.getElementById('next-btn-text');
+            const nextBtn = document.getElementById('next-btn');
+
+            if (state.currentStep === 1) nextBtnText.innerText = "Next Step: Characters";
+            if (state.currentStep === 2) nextBtnText.innerText = "Next Step: Enhancements";
+            if (state.currentStep === 3) {
+                nextBtnText.innerText = "Complete & Save Scene";
+                nextBtn.classList.remove('bg-[#FF7E00]');
+                nextBtn.classList.add('bg-green-600');
+            } else {
+                nextBtn.classList.add('bg-[#FF7E00]');
+                nextBtn.classList.remove('bg-green-600');
+            }
+
+            document.getElementById('live-status').innerText = `Step ${state.currentStep} Live Sync`;
+            updateSummary();
+        }
+
+        // BUILDER ACTIONS
+        function updateSize(size, price) {
+            state.base.size = size;
+            state.base.sizePrice = price;
+            document.querySelectorAll('.size-option').forEach(el => {
+                el.classList.remove('border-[#FF7E00]', 'bg-orange-50');
+                if (el.dataset.size === size) el.classList.add('border-[#FF7E00]', 'bg-orange-50');
+            });
+            update3DState();
+            updateSummary();
+        }
+
+        function toggleWalls() {
+            state.base.hasWalls = !state.base.hasWalls;
+            document.getElementById('walls-toggle').classList.toggle('bg-[#FF7E00]', state.base.hasWalls);
+            document.getElementById('toggle-knob').style.transform = state.base.hasWalls ? 'translateX(24px)' : 'translateX(0)';
+            update3DState();
+            updateSummary();
+        }
+
+        function updateColor(hex, name) {
+            state.base.color = hex;
+            state.base.colorName = name;
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                btn.classList.toggle('color-swatch-selected', btn.title === name);
+            });
+            update3DState();
+            updateSummary();
+        }
+
+        function addItem(type, item) {
+            const collection = type === 'character' ? state.characters : state.accessories;
+            const newItem = { ...item, instanceId: Date.now() + Math.random() };
+            collection.push(newItem);
+            
+            // Add 3D representation
+            let geo;
+            if (item.type === 'box') geo = new THREE.BoxGeometry(1, 1, 1);
+            else if (item.type === 'cylinder') geo = new THREE.CylinderGeometry(0.5, 0.5, 1.5);
+            else if (item.type === 'cone') geo = new THREE.ConeGeometry(0.5, 1.5);
+            else geo = new THREE.SphereGeometry(0.5);
+
+            const mat = new THREE.MeshStandardMaterial({ color: item.color });
+            const mesh = new THREE.Mesh(geo, mat);
+            
+            // Random spawn on base
+            const range = state.base.size === 'small' ? 2 : (state.base.size === 'medium' ? 3.5 : 5.5);
+            mesh.position.set((Math.random() - 0.5) * range * 2, 1, (Math.random() - 0.5) * range * 2);
+            mesh.castShadow = true;
+            scene.add(mesh);
+            
+            placedMeshes.push({ instanceId: newItem.instanceId, mesh });
+            updateSummary();
+        }
+
+        function removeItem(type, instanceId) {
+            const collection = type === 'character' ? state.characters : state.accessories;
+            const idx = collection.findIndex(i => i.instanceId === instanceId);
+            if (idx > -1) collection.splice(idx, 1);
+
+            const meshIdx = placedMeshes.findIndex(m => m.instanceId === instanceId);
+            if (meshIdx > -1) {
+                scene.remove(placedMeshes[meshIdx].mesh);
+                placedMeshes.splice(meshIdx, 1);
+            }
+            updateSummary();
+        }
+
+        function update3DState() {
+            // Base Mesh Adjustment
+            let s = 10; if (state.base.size === 'small') s = 7; if (state.base.size === 'large') s = 14;
+            baseMesh.scale.set(s/10, 1, s/10);
+            baseMesh.material.color.set(state.base.color);
+
+            const offset = (s/2) - 0.25;
+            wallBack.visible = state.base.hasWalls; wallBack.position.z = -offset; wallBack.scale.x = s/10; wallBack.material.color.set(state.base.color);
+            wallLeft.visible = state.base.hasWalls; wallLeft.position.x = -offset; wallLeft.scale.z = s/10; wallLeft.material.color.set(state.base.color);
+            wallRight.visible = state.base.hasWalls; wallRight.position.x = offset; wallRight.scale.z = s/10; wallRight.material.color.set(state.base.color);
+        }
+
+        function updateSummary() {
+            const summaryEl = document.getElementById('items-summary');
+            const priceEl = document.getElementById('total-price');
+            const globalBadge = document.getElementById('global-cart-badge');
+            
+            let total = state.base.sizePrice + (state.base.hasWalls ? state.base.wallPrice : 0);
+            let html = `
+                <div class="flex justify-between text-sm py-1">
+                    <span class="text-gray-500 italic">${state.base.size.toUpperCase()} Base (${state.base.colorName})</span>
+                    <span class="font-bold">$${state.base.sizePrice}</span>
+                </div>
+            `;
+            if (state.base.hasWalls) {
+                html += `<div class="flex justify-between text-sm py-1"><span>Enclosure Panels</span><span class="font-bold">+$10</span></div>`;
+            }
+
+            state.characters.forEach(c => {
+                total += c.price;
+                html += `
+                    <div class="flex justify-between items-center text-sm py-1 animate-in fade-in slide-in-from-left-2">
+                        <div class="flex items-center gap-2">
+                            <button onclick="removeItem('character', ${c.instanceId})" class="text-red-400 hover:text-red-600 transition-colors"><iconify-icon icon="lucide:trash-2"></iconify-icon></button>
+                            <span>${c.name}</span>
+                        </div>
+                        <span class="font-bold text-orange-600">$${c.price}</span>
+                    </div>
+                `;
+            });
+
+            state.accessories.forEach(a => {
+                total += a.price;
+                html += `
+                    <div class="flex justify-between items-center text-sm py-1 animate-in fade-in slide-in-from-left-2">
+                        <div class="flex items-center gap-2">
+                            <button onclick="removeItem('accessory', ${a.instanceId})" class="text-red-400 hover:text-red-600 transition-colors"><iconify-icon icon="lucide:trash-2"></iconify-icon></button>
+                            <span>${a.name}</span>
+                        </div>
+                        <span class="font-bold text-blue-600">$${a.price}</span>
+                    </div>
+                `;
+            });
+
+            summaryEl.innerHTML = html;
+            priceEl.innerText = `$${total}`;
+            const cart = JSON.parse(localStorage.getItem('bowerbit_cart') || '[]');
+            globalBadge.innerText = cart.length;
+        }
+
+        function toggleCategory(cat) {
+            const el = document.getElementById(`cat-${cat}`);
+            const icon = document.getElementById(`cat-icon-${cat}`);
+            const isHidden = el.classList.contains('hidden');
+            el.classList.toggle('hidden');
+            icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // LIBRARY RENDERERS
+        function renderLibraries() {
+            const charContainer = document.getElementById('character-library-container');
+            charContainer.innerHTML = CHARACTER_LIB.map(c => `
+                <button onclick="addItem('character', ${JSON.stringify(c).replace(/"/g, '&quot;')})" 
+                        class="item-card bg-white p-3 rounded-2xl border border-black/5 hover:border-[#FF7E00] hover:shadow-lg transition-all text-left relative group">
+                    <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mb-2">
+                        <iconify-icon icon="${c.icon}" class="text-3xl text-gray-400 group-hover:text-[#FF7E00]"></iconify-icon>
+                    </div>
+                    <div class="add-badge absolute top-2 right-2 bg-[#FF7E00] text-white p-1 rounded-full">
+                        <iconify-icon icon="lucide:plus"></iconify-icon>
+                    </div>
+                    <p class="font-bold text-xs truncate">${c.name}</p>
+                    <p class="text-[10px] text-gray-500 font-black">$${c.price}</p>
+                </button>
+            `).join('');
+
+            Object.keys(ACCESSORY_LIB).forEach(cat => {
+                const container = document.getElementById(`cat-${cat}`);
+                container.innerHTML = ACCESSORY_LIB[cat].map(a => `
+                    <button onclick="addItem('accessory', ${JSON.stringify(a).replace(/"/g, '&quot;')})" 
+                            class="item-card flex items-center gap-3 p-2 bg-white rounded-xl border border-black/5 hover:border-blue-500 transition-all text-left group relative">
+                        <iconify-icon icon="${a.icon}" class="text-xl text-blue-500"></iconify-icon>
+                        <div class="flex-grow">
+                            <p class="text-[10px] font-bold truncate">${a.name}</p>
+                            <p class="text-[10px] text-gray-400">$${a.price}</p>
+                        </div>
+                        <iconify-icon icon="lucide:plus-circle" class="text-blue-200 group-hover:text-blue-500"></iconify-icon>
+                    </button>
+                `).join('');
+            });
+        }
+
+        // INIT
+        document.addEventListener('DOMContentLoaded', () => {
+            init3D();
+            renderLibraries();
+            renderUI();
+
+            window.addEventListener('resize', () => {
+                const container = document.getElementById('three-container');
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        });
+    function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `fixed bottom-10 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full text-white font-bold shadow-2xl z-[100] transition-all duration-300 transform translate-y-20 opacity-0 ${type === 'success' ? 'bg-green-600' : 'bg-red-600'}`;
+            toast.innerHTML = `<div class='flex items-center gap-2'><iconify-icon icon='lucide:${type === 'success' ? 'check-circle' : 'alert-circle'}'></iconify-icon>${message}</div>`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.classList.remove('translate-y-20', 'opacity-0'); toast.classList.add('translate-y-0', 'opacity-100'); }, 100);
+            setTimeout(() => { toast.classList.add('translate-y-20', 'opacity-0'); setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        function openCompletionModal() {
+            const modal = document.getElementById('completion-modal');
+            modal.classList.remove('hidden');
+            setTimeout(() => { 
+                modal.querySelector('.modal-backdrop').classList.replace('opacity-0', 'opacity-100');
+                modal.querySelector('.modal-content').classList.replace('scale-95', 'scale-100');
+                modal.querySelector('.modal-content').classList.replace('opacity-0', 'opacity-100');
+            }, 10);
+
+            // Capture Thumbnail
+            const thumbnail = renderer.domElement.toDataURL();
+            document.getElementById('modal-thumbnail').src = thumbnail;
+
+            // Update Modal Cart List
+            const list = document.getElementById('modal-cart-list');
+            let html = `<div class='p-3 bg-orange-50 rounded-xl mb-2 flex justify-between items-center text-xs font-bold'><div class='flex items-center gap-2'><iconify-icon icon='lucide:box'></iconify-icon>${state.base.size.toUpperCase()} Base</div><span>$${state.base.sizePrice}</span></div>`;
+            state.characters.forEach(c => {
+                html += `<div class='p-3 bg-gray-50 rounded-xl mb-2 flex justify-between items-center text-xs font-bold'><div class='flex items-center gap-2'><iconify-icon icon='${c.icon}'></iconify-icon>${c.name}</div><span>$${c.price}</span></div>`;
+            });
+            state.accessories.forEach(a => {
+                html += `<div class='p-3 bg-blue-50 rounded-xl mb-2 flex justify-between items-center text-xs font-bold text-blue-800'><div class='flex items-center gap-2'><iconify-icon icon='${a.icon}'></iconify-icon>${a.name}</div><span>$${a.price}</span></div>`;
+            });
+            list.innerHTML = html;
+        }
+
+        function closeCompletionModal() {
+            const modal = document.getElementById('completion-modal');
+            modal.querySelector('.modal-backdrop').classList.replace('opacity-100', 'opacity-0');
+            modal.querySelector('.modal-content').classList.replace('scale-100', 'scale-95');
+            modal.querySelector('.modal-content').classList.replace('opacity-100', 'opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        function saveScene() {
+            const name = document.getElementById('scene-name').value || 'My Masterpiece';
+            const scenes = JSON.parse(localStorage.getItem('bowerbit_scenes') || '[]');
+            scenes.push({ name, date: new Date().toISOString(), state, thumbnail: document.getElementById('modal-thumbnail').src });
+            localStorage.setItem('bowerbit_scenes', JSON.stringify(scenes));
+            showToast('Scene saved to your collection!');
+            closeCompletionModal();
+        }
+
+        function addAllToCart() {
+            const cart = JSON.parse(localStorage.getItem('bowerbit_cart') || '[]');
+            const itemsToAdd = [
+                { name: `${state.base.size} Base`, price: state.base.sizePrice, id: 'base-' + Date.now() },
+                ...state.characters,
+                ...state.accessories
+            ];
+            cart.push(...itemsToAdd);
+            localStorage.setItem('bowerbit_cart', JSON.stringify(cart));
+            showToast(`${itemsToAdd.length} items added to cart!`);
+            updateSummary();
+        }
+
+        function shareToCommunity() {
+            const name = document.getElementById('scene-name').value || 'My Masterpiece';
+            const desc = document.getElementById('scene-desc').value || 'Check out this awesome scene I built on BowerBit!';
+            const tags = document.getElementById('scene-tags').value || 'toys, diorama';
+            const thumb = document.getElementById('modal-thumbnail').src;
+            
+            document.getElementById('share-title').innerText = name;
+            document.getElementById('share-desc').innerText = desc;
+            document.getElementById('share-tags').innerText = tags.split(',').map(t => '#' + t.trim()).join(' ');
+            document.getElementById('share-thumb').src = thumb;
+            
+            document.getElementById('completion-view').classList.add('hidden');
+            document.getElementById('share-preview').classList.remove('hidden');
+        }
+
+        function backToModal() {
+            document.getElementById('completion-view').classList.remove('hidden');
+            document.getElementById('share-preview').classList.add('hidden');
+        }
+
+        function confirmShare() {
+            showToast('Successfully published to BowerBit Community!');
+            closeCompletionModal();
+        }
+    </script>
+
+    <!-- Completion Modal -->
+    <div id="completion-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+        <div class="modal-backdrop absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 transition-opacity duration-300"></div>
+        
+        <!-- Completion View -->
+        <div id="completion-view" class="modal-content relative bg-white w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-[2.5rem] shadow-2xl flex flex-col md:flex-row scale-95 opacity-0 transition-all duration-300">
+            <button onclick="closeCompletionModal()" class="absolute top-6 right-6 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:rotate-90 transition-transform">
+                <iconify-icon icon="lucide:x" class="text-xl"></iconify-icon>
+            </button>
+
+            <!-- Left: Inputs -->
+            <div class="w-full md:w-1/2 p-10 overflow-y-auto custom-scrollbar">
+                <h2 class="text-3xl font-black mb-1">Finalize Your Scene</h2>
+                <p class="text-gray-500 mb-8 font-medium">Give your world a name and choose how you want to save it.</p>
+
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-[#FF7E00] mb-2">Scene Name</label>
+                        <input id="scene-name" type="text" placeholder="Name your masterpiece..." class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2">Description</label>
+                        <textarea id="scene-desc" rows="3" placeholder="What's the story behind this scene?" class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all text-sm"></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2">Visibility</label>
+                            <select id="scene-privacy" class="w-full bg-gray-50 p-4 rounded-2xl font-bold outline-none">
+                                <option value="public">Public</option>
+                                <option value="private">Private</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2">Tags</label>
+                            <input id="scene-tags" type="text" placeholder="fantasy, epic..." class="w-full bg-gray-50 p-4 rounded-2xl font-bold outline-none">
+                        </div>
+                    </div>
+
+                    <div class="pt-4 space-y-3">
+                        <button id="save-collection-btn" onclick="saveScene()" class="w-full bg-[#FF7E00] text-white py-4 rounded-2xl font-black shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                            <iconify-icon icon="lucide:save"></iconify-icon>
+                            Save to Collection
+                        </button>
+                        <button id="share-comm-btn" onclick="shareToCommunity()" class="w-full bg-[#4A6FA5] text-white py-4 rounded-2xl font-black shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                            <iconify-icon icon="lucide:share-2"></iconify-icon>
+                            Share to Community
+                        </button>
+                        <button id="add-cart-all-btn" onclick="addAllToCart()" class="w-full border-2 border-black/10 text-black py-4 rounded-2xl font-black hover:bg-black hover:text-white transition-all flex items-center justify-center gap-2">
+                            <iconify-icon icon="lucide:shopping-cart"></iconify-icon>
+                            Add All to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Preview -->
+            <div class="w-full md:w-1/2 bg-gray-50 p-10 flex flex-col">
+                <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-4">Final Preview</label>
+                <div class="relative rounded-3xl overflow-hidden shadow-2xl bg-white border-4 border-white mb-6 aspect-square">
+                    <img id="modal-thumbnail" src="" class="w-full h-full object-cover">
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-green-500 text-white text-[10px] font-black px-2 py-1 rounded uppercase">Ready to Print</span>
+                    </div>
+                </div>
+
+                <label class="block text-xs font-black uppercase tracking-widest text-gray-400 mb-4">Cart Items Preview</label>
+                <div id="modal-cart-list" class="flex-grow overflow-y-auto custom-scrollbar">
+                    <!-- List injected by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Share Preview Layer -->
+        <div id="share-preview" class="modal-content relative bg-[#FFFBF5] w-full max-w-2xl rounded-[2.5rem] shadow-2xl p-10 hidden scale-95 opacity-0 transition-all duration-300">
+             <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <iconify-icon icon="lucide:rocket" class="text-3xl text-[#4A6FA5]"></iconify-icon>
+                </div>
+                <h2 class="text-3xl font-black mb-1">Share with the World!</h2>
+                <p class="text-gray-500">Your masterpiece will be featured in the global community feed.</p>
+             </div>
+
+             <div class="bg-white rounded-3xl p-6 shadow-xl border border-black/5 mb-8">
+                <div class="flex gap-6 mb-6">
+                    <img id="share-thumb" src="" class="w-32 h-32 rounded-2xl object-cover shadow-md">
+                    <div>
+                        <h3 id="share-title" class="text-xl font-black">Scene Name</h3>
+                        <div class="flex items-center gap-2 mb-3">
+                            <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" class="h-4">
+                            <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Verified Creator</span>
+                        </div>
+                        <p id="share-desc" class="text-sm text-gray-500 mb-3 line-clamp-2">Description goes here...</p>
+                        <div id="share-tags" class="text-blue-500 font-bold text-xs">#tags #here</div>
+                    </div>
+                </div>
+             </div>
+
+             <div class="flex gap-4">
+                <button onclick="backToModal()" class="flex-1 bg-gray-100 text-gray-800 py-4 rounded-2xl font-black hover:bg-gray-200 transition-all">
+                    Go Back
+                </button>
+                <button onclick="confirmShare()" class="flex-[2] bg-[#4A6FA5] text-white py-4 rounded-2xl font-black shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all flex items-center justify-center gap-2">
+                    Confirm & Publish
+                </button>
+             </div>
+        </div>
+    </div>
+</body>
+</html>
+```
+
+Please reference this design and implement it into our codebase; Try to understand the structure, which part of our codebase is relevant and implement

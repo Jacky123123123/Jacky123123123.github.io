@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Custom Scene | BowerBit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.146.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        @import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&f[]=satoshi@700,500,400&display=swap');
+
+        :root {
+            --brand-orange: #FF7E00;
+            --brand-blue: #4A6FA5;
+            --brand-cream: #FFFBF5;
+            --text-dark: #1A1A1A;
+        }
+
+        body {
+            font-family: 'Satoshi', sans-serif;
+            color: var(--text-dark);
+            background-color: var(--brand-cream);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cabinet Grotesk', sans-serif;
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .color-swatch-selected {
+            outline: 2px solid var(--brand-orange);
+            outline-offset: 2px;
+        }
+
+        #three-container canvas {
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 1rem;
+            cursor: grab;
+        }
+
+        #three-container canvas:active {
+            cursor: grabbing;
+        }
+
+        .fade-step {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-out;
+        }
+
+        .item-card:hover .add-badge {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .add-badge {
+            opacity: 0;
+            transform: translateY(4px);
+            transition: all 0.2s ease;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .texture-option.selected {
+            border-color: var(--brand-orange) !important;
+            background-color: #fffaf0;
+        }
+
+        .drop-zone-active {
+            border-color: var(--brand-orange) !important;
+            background-color: rgba(255, 126, 0, 0.05) !important;
+        }
+
+        [title]:hover::after {
+            content: attr(title);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a1a;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            white-space: nowrap;
+            z-index: 10;
+            pointer-events: none;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex flex-col">
+        <div class="grain-overlay"></div>
+
+        <!-- Navigation Bar -->
+       <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-100">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="BowerBit Logo" class="h-10 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x40/1a1a1a/888?text=Image';">
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                              <a id="nav-explore-link" href="index.html" class="font-medium hover:text-[#FF7E00] transition-colors">Explore</a>
+                <a id="nav-home-link" href="community2.html" class="font-medium hover:text-[#FF7E00] transition-colors">Community</a>
+                <a id="nav-shop-link" href="shop2.html" class="font-medium hover:text-[#FF7E00] transition-colors">Shop</a>
+                <a id="nav-create-link" href="#tool" class="font-medium hover:text-[#FF7E00] transition-colors">Create Tool</a>
+                <a id="nav-community-link" href="#about" class="font-medium hover:text-[#FF7E00] transition-colors">About</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="search-btn" class="p-2 rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:search" class="text-xl"></iconify-icon>
+                </button><button id="cart-btn" class="p-2 relative rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:shopping-cart" class="text-xl"></iconify-icon>
+                    <span id="cart-badge-count" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+                </button>
+                <div class="h-6 w-px bg-orange-100 mx-2"></div>
+                <button id="login-btn" class="hidden sm:block text-sm font-bold text-gray-700 hover:text-[#FF7E00] transition-colors">Login</button>
+    <button id="join-btn" class="bg-[#FF7E00] text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-[#E67200] transition-all transform hover:scale-105 active:scale-95">Join BowerBit</button>
+</div></div>
+</nav>
+
+        <!-- Main Content Section -->
+        <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 pb-24">
+            
+            <!-- Header & Stepper -->
+            <div class="mb-12 text-center">
+                <h1 class="text-4xl md:text-5xl font-black mb-4">Create Your Custom Scene</h1>
+                <p class="text-gray-600 text-lg mb-10">Design unique toy scenarios with our 3-step builder</p>
+                
+                <div class="flex justify-center items-center gap-4 md:gap-12">
+                    <!-- Step 1 Indicator -->
+                    <div id="step-ind-1" class="flex flex-col items-center gap-2">
+                        <div class="step-node w-10 h-10 rounded-full bg-[#FF7E00] text-white flex items-center justify-center font-bold transition-colors">1</div>
+                        <span class="text-sm font-bold text-[#FF7E00]">Base Setup</span>
+                    </div>
+                    <div class="w-16 md:w-32 h-[2px] bg-gray-200"></div>
+                    <!-- Step 2 Indicator -->
+                    <div id="step-ind-2" class="flex flex-col items-center gap-2 opacity-40">
+                        <div class="step-node w-10 h-10 rounded-full bg-gray-300 text-white flex items-center justify-center font-bold transition-colors">2</div>
+                        <span class="text-sm font-bold">Characters</span>
+                    </div>
+                    <div class="w-16 md:w-32 h-[2px] bg-gray-200"></div>
+                    <!-- Step 3 Indicator -->
+                    <div id="step-ind-3" class="flex flex-col items-center gap-2 opacity-40">
+                        <div class="step-node w-10 h-10 rounded-full bg-gray-300 text-white flex items-center justify-center font-bold transition-colors">3</div>
+                        <span class="text-sm font-bold text-nowrap">Enhancements</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2-Column Builder Interface -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- LEFT COLUMN: Control Panel (35%) -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="bg-white rounded-3xl p-6 shadow-xl shadow-black/5 border border-black/5 relative overflow-hidden">
+                        
+                        <!-- STEP 1 PANEL -->
+                        <div id="panel-step-1" class="fade-step">
+                            <div class="flex items-center gap-2 mb-2">
+                                <iconify-icon icon="lucide:box" class="text-[#FF7E00] @brand-orange"></iconify-icon>
+                                <span class="text-xs font-black uppercase tracking-widest text-[#FF7E00]">Step 1 Foundation</span>
+                            </div>
+                            <h2 class="text-2xl font-black mb-1">Base Setup</h2>
+                            <p class="text-gray-500 text-sm mb-6">Configure your scene foundation with size, color, and optional panels.</p>
+
+                            <div class="space-y-4 mb-8">
+                                <label class="text-sm font-bold block">Select Base Size</label>
+                                <div class="grid grid-cols-1 gap-3">
+                                    <button id="size-small-btn" onclick="updateSize('small', 15)" class="size-option flex items-center justify-between p-4 rounded-2xl border-2 border-transparent bg-gray-50 hover:bg-orange-50 transition-all text-left" data-size="small">
+                                        <div class="flex items-center gap-3">
+                                            <iconify-icon icon="lucide:square" class="text-xl"></iconify-icon>
+                                            <p class="font-bold">Small (12x12")</p>
+                                        </div>
+                                        <span class="font-black">$15</span>
+                                    </button>
+                                    <button id="size-medium-btn" onclick="updateSize('medium', 25)" class="size-option flex items-center justify-between p-4 rounded-2xl border-2 border-[#FF7E00] bg-orange-50 transition-all text-left relative" data-size="medium">
+                                        <div class="flex items-center gap-3">
+                                            <iconify-icon icon="lucide:layout-grid" class="text-xl text-[#FF7E00]"></iconify-icon>
+                                            <p class="font-bold text-[#FF7E00]">Medium (18x18")</p>
+                                        </div>
+                                        <span class="font-black text-[#FF7E00]">$25</span>
+                                    </button>
+                                    <button id="size-large-btn" onclick="updateSize('large', 35)" class="size-option flex items-center justify-between p-4 rounded-2xl border-2 border-transparent bg-gray-50 hover:bg-orange-50 transition-all text-left" data-size="large">
+                                        <div class="flex items-center gap-3">
+                                            <iconify-icon icon="lucide:maximize" class="text-xl"></iconify-icon>
+                                            <p class="font-bold">Large (24x24")</p>
+                                        </div>
+                                        <span class="font-black">$35</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div id="wall-toggle-container" class="flex items-center justify-between p-4 bg-gray-50 rounded-2xl mb-8 border border-black/5 cursor-pointer" onclick="toggleWalls()">
+                                <div>
+                                    <p class="font-bold text-sm">Add Panels/Walls?</p>
+                                    <p class="text-xs text-gray-500">Enclose your scene (+$10)</p>
+                                </div>
+                                <div id="walls-toggle" class="w-12 h-6 bg-gray-300 rounded-full relative transition-colors duration-300">
+                                    <div id="toggle-knob" class="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-300"></div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-4 mb-8">
+                                <label class="text-sm font-bold block">Base Color</label>
+                                <div class="flex flex-wrap gap-4">
+                                    <button id="color-black-btn" onclick="updateColor('#1A1A1A', 'Classic Black')" class="color-btn w-8 h-8 rounded-full bg-[#1A1A1A] border-2 border-white shadow-sm hover:scale-110 transition-transform" title="Classic Black"></button>
+                                    <button id="color-white-btn" onclick="updateColor('#FFFFFF', 'Pure White')" class="color-btn w-8 h-8 rounded-full bg-white border-2 border-gray-200 shadow-sm hover:scale-110 transition-transform color-swatch-selected" title="Pure White"></button>
+                                    <button id="color-blue-btn" onclick="updateColor('#4A6FA5', 'Ocean Blue')" class="color-btn w-8 h-8 rounded-full bg-[#4A6FA5] border-2 border-white shadow-sm hover:scale-110 transition-transform" title="Ocean Blue"></button>
+                                    <button id="color-orange-btn" onclick="updateColor('#FF7E00', 'Sunset Orange')" class="color-btn w-8 h-8 rounded-full bg-[#FF7E00] border-2 border-white shadow-sm hover:scale-110 transition-transform" title="Sunset Orange"></button>
+                                </div>
+                            </div>
+
+                            <!-- Texture Selection Section -->
+                            <div class="space-y-4 mb-4">
+                                <div class="flex items-center justify-between">
+                                    <label class="text-sm font-bold block">Texture / Pattern</label>
+                                </div>
+                                
+                                <!-- Tabs -->
+                                <div class="flex p-1 bg-gray-100 rounded-xl">
+                                    <button onclick="switchTextureTab('library')" id="tab-library" class="flex-1 py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition-all bg-white shadow-sm text-[#FF7E00]">Library</button>
+                                    <button onclick="switchTextureTab('upload')" id="tab-upload" class="flex-1 py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition-all text-gray-500 hover:text-gray-700">Upload Custom</button>
+                                </div>
+
+                                <!-- Library Content -->
+                                <div id="texture-library-view" class="block">
+                                    <div id="texture-library-grid" class="grid grid-cols-4 gap-2 mt-4">
+                                        <!-- Injected by renderLibraries() -->
+                                    </div>
+                                    <p class="text-[10px] text-gray-400 font-medium italic mt-3">* Textures adjust automatically to fit base dimensions.</p>
+                                </div>
+
+                                <!-- Upload Content -->
+                                <div id="texture-upload-view" class="hidden">
+                                    <div id="drop-zone" class="mt-4 border-2 border-dashed border-gray-200 rounded-2xl p-6 text-center hover:border-[#FF7E00] hover:bg-orange-50/30 transition-all cursor-pointer group relative overflow-hidden">
+                                        <input type="file" id="file-input" class="hidden" accept=".jpg,.jpeg,.png,.webp">
+                                        <div id="upload-idle">
+                                            <iconify-icon icon="lucide:upload-cloud" class="text-3xl text-gray-300 group-hover:text-[#FF7E00] mb-2 transition-colors"></iconify-icon>
+                                            <p class="text-[10px] font-bold text-gray-500 group-hover:text-[#FF7E00]">Drop image here or browse</p>
+                                            <p class="text-[8px] text-gray-400 mt-1">PNG, JPG, WEBP (Max 5MB)</p>
+                                        </div>
+                                        <div id="upload-complete" class="hidden flex flex-col items-center">
+                                            <div class="relative w-20 h-20 rounded-xl overflow-hidden border-2 border-white shadow-lg mb-2">
+                                                <img id="upload-preview-img" class="w-full h-full object-cover" src="">
+                                            </div>
+                                            <p id="upload-filename" class="text-[10px] font-bold text-[#FF7E00] truncate max-w-[120px]">filename.jpg</p>
+                                            <button onclick="resetUpload(event)" class="mt-2 text-[8px] uppercase tracking-widest font-black text-red-500 hover:text-red-700 flex items-center gap-1">
+                                                <iconify-icon icon="lucide:trash-2"></iconify-icon> Remove
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div id="upload-error" class="hidden mt-2 p-2 bg-red-50 text-red-600 rounded-lg text-[10px] font-bold flex items-center gap-2">
+                                        <iconify-icon icon="lucide:alert-circle"></iconify-icon>
+                                        <span id="error-text">Error message here</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2 PANEL -->
+                        <div id="panel-step-2" class="fade-step hidden">
+                            <div class="flex items-center gap-2 mb-2">
+                                <iconify-icon icon="lucide:users" class="text-[#FF7E00]"></iconify-icon>
+                                <span class="text-xs font-black uppercase tracking-widest text-[#FF7E00]">Step 2 Figures</span>
+                            </div>
+                            <h2 class="text-2xl font-black mb-1">Add Characters</h2>
+                            <p class="text-gray-500 text-sm mb-6">Choose from our pre-defined collection of heroes and monsters.</p>
+
+                            <div class="grid grid-cols-2 gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                                <div id="character-library-container" class="contents"></div>
+                            </div>
+                        </div>
+
+                        <!-- STEP 3 PANEL -->
+                        <div id="panel-step-3" class="fade-step hidden">
+                            <div class="flex items-center gap-2 mb-2">
+                                <iconify-icon icon="lucide:sparkles" class="text-[#FF7E00]"></iconify-icon>
+                                <span class="text-xs font-black uppercase tracking-widest text-[#FF7E00]">Step 3 Details</span>
+                            </div>
+                            <h2 class="text-2xl font-black mb-1">Enhancements</h2>
+                            <p class="text-gray-500 text-sm mb-6">Add furniture, props, and special effects to complete your world.</p>
+
+                            <div class="space-y-4">
+                                <div class="bg-gray-50 rounded-2xl overflow-hidden">
+                                    <button id="cat-furniture-btn" onclick="toggleCategory('furniture')" class="w-full flex items-center justify-between p-4 font-bold text-sm border-b border-black/5">
+                                        <span>Furniture & Structures</span>
+                                        <iconify-icon icon="lucide:chevron-down" id="cat-icon-furniture"></iconify-icon>
+                                    </button>
+                                    <div id="cat-furniture" class="p-3 grid grid-cols-2 gap-2"></div>
+                                </div>
+                                <div class="bg-gray-50 rounded-2xl overflow-hidden">
+                                    <button id="cat-props-btn" onclick="toggleCategory('props')" class="w-full flex items-center justify-between p-4 font-bold text-sm border-b border-black/5">
+                                        <span>Props & Weapons</span>
+                                        <iconify-icon icon="lucide:chevron-down" id="cat-icon-props"></iconify-icon>
+                                    </button>
+                                    <div id="cat-props" class="p-3 grid grid-cols-2 gap-2 hidden"></div>
+                                </div>
+                                <div class="bg-gray-50 rounded-2xl overflow-hidden">
+                                    <button id="cat-nature-btn" onclick="toggleCategory('nature')" class="w-full flex items-center justify-between p-4 font-bold text-sm border-b border-black/5">
+                                        <span>Nature & Rocks</span>
+                                        <iconify-icon icon="lucide:chevron-down" id="cat-icon-nature"></iconify-icon>
+                                    </button>
+                                    <div id="cat-nature" class="p-3 grid grid-cols-2 gap-2 hidden"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Persistence Summary & Controls -->
+                        <div class="mt-8 pt-6 border-t border-dashed border-gray-200">
+                            <h3 class="text-xs font-black uppercase tracking-widest text-gray-400 mb-4">Scene Summary</h3>
+                            <div id="items-summary" class="space-y-2 mb-6 max-h-[120px] overflow-y-auto pr-1">
+                                <!-- Managed by updateSummary() -->
+                            </div>
+                            
+                            <div class="flex items-center justify-between mb-8">
+                                <span class="text-lg font-bold">Total Scene Cost</span>
+                                <span id="total-price" class="text-3xl font-black text-[#FF7E00]">$25</span>
+                            </div>
+
+                            <div class="flex gap-3">
+                                <button id="prev-btn" onclick="changeStep(-1)" class="hidden flex-1 bg-gray-100 text-gray-800 py-4 rounded-2xl font-black hover:bg-gray-200 transition-all flex items-center justify-center gap-2">
+                                    <iconify-icon icon="lucide:arrow-left"></iconify-icon>
+                                    Back
+                                </button>
+                                <button id="next-btn" onclick="changeStep(1)" class="flex-[2] bg-[#FF7E00] text-white py-4 rounded-2xl text-lg font-black shadow-xl shadow-orange-500/30 hover:shadow-orange-500/50 hover:-translate-y-0.5 transition-all flex items-center justify-center gap-3 group">
+                                    <span id="next-btn-text">Next Step: Characters</span>
+                                    <iconify-icon icon="lucide:arrow-right" class="text-xl group-hover:translate-x-1 transition-transform"></iconify-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: 3D Preview (65%) -->
+                <div class="lg:col-span-8 sticky top-28">
+                    <div class="relative bg-[#E8E4DE] rounded-3xl overflow-hidden shadow-inner h-[600px] border-4 border-white">
+                        <div id="three-container" class="w-full h-full"></div>
+                        <div class="absolute bottom-6 left-6 flex gap-4 pointer-events-none">
+                            <div class="flex items-center gap-2 px-3 py-1.5 bg-black/50 backdrop-blur-md rounded-full text-white text-[10px] font-bold">
+                                <iconify-icon icon="lucide:mouse-pointer-2"></iconify-icon>
+                                Rotate: Drag
+                            </div>
+                            <div class="flex items-center gap-2 px-3 py-1.5 bg-black/50 backdrop-blur-md rounded-full text-white text-[10px] font-bold">
+                                <iconify-icon icon="lucide:move"></iconify-icon>
+                                Zoom: Scroll
+                            </div>
+                        </div>
+                        <div class="absolute top-6 right-6">
+                            <div class="bg-white/90 backdrop-blur shadow-lg px-4 py-2 rounded-2xl border border-black/5">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
+                                    <span id="live-status" class="text-xs font-bold text-gray-700 uppercase tracking-tight">Step 1 Live</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute top-6 left-6">
+                            <span class="text-[10px] font-black uppercase bg-[#4A6FA5] text-white px-2 py-1 rounded">3D Builder v2.0</span>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-center text-gray-400 text-sm">
+                        Our custom 3D engine ensures what you design is exactly what you get. Every panel and base is precision-milled.
+                    </p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+<footer class="bg-zinc-950 text-white py-20 px-6">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-12">
+        <div class="col-span-1 md:col-span-1">
+          <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="Logo" class="h-8 invert brightness-0 mb-8" onerror="this.onerror=null;this.src='https://placehold.co/600x32/1a1a1a/888?text=Image';">
+          <p class="text-zinc-400 text-sm">
+            Building the future of play, one scenario at a time. Join the revolution in toy creative ecosystems.
+          </p>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Explore</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-home-link" class="hover:text-[#FF7E00]">Home</a></li>
+            <li><a href="#" id="footer-showcase-link" class="hover:text-[#FF7E00]">Showcase</a></li>
+            <li><a href="#" id="footer-shop-link" class="hover:text-[#FF7E00]">Shop Materials</a></li>
+            <li><a href="#" id="footer-tools-link" class="hover:text-[#FF7E00]">Creator Tools</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">About</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-about-us-link" class="hover:text-[#FF7E00]">About Us</a></li>
+            <li><a href="#" id="footer-investor-link" class="hover:text-[#FF7E00]">Investor Center</a></li>
+            <li><a href="#" id="footer-partner-link" class="hover:text-[#FF7E00]">Partner Program</a></li>
+            <li><a href="#" id="footer-sell-art-link" class="hover:text-[#FF7E00]">Sell your art</a></li>
+            <li><a href="#" id="footer-jobs-link" class="hover:text-[#FF7E00]">Jobs</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Community</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-discord-link" class="hover:text-[#FF7E00]">Discord</a></li>
+            <li><a href="#" id="footer-twitter-link" class="hover:text-[#FF7E00]">Twitter</a></li>
+            <li><a href="#" id="footer-instagram-link" class="hover:text-[#FF7E00]">Instagram</a></li>
+            <li><a href="#" id="footer-events-link" class="hover:text-[#FF7E00]">Monthly Events</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Stay Inspired</h5>
+          <div class="relative">
+            <input type="email" placeholder="Your email" class="w-full bg-zinc-900 border-none rounded-full px-6 py-4 text-sm focus:ring-2 focus:ring-[#FF7E00] outline-none">
+            <button id="footer-subscribe-btn" class="absolute right-2 top-2 bg-[#FF7E00] text-white p-2 rounded-full">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-zinc-800 text-center text-zinc-600 text-xs">
+        © 2024 BowerBit. All rights reserved. Designed for the builders of tomorrow.
+      </div>
+    </footer>
+    </div>
+
+    <!-- Scene Builder Logic -->
+    <script>
+        // DATA DEFINITIONS
+        const CHARACTER_LIB = [
+            { id: 'knight', name: 'Noble Knight', price: 8, icon: 'mdi:shield-account', color: 0x4A6FA5, type: 'cylinder' },
+            { id: 'wizard', name: 'Grand Wizard', price: 12, icon: 'mdi:wizard-hat', color: 0x6B46C1, type: 'cone' },
+            { id: 'robot', name: 'Steam Bot', price: 10, icon: 'mdi:robot', color: 0x94A3B8, type: 'box' },
+            { id: 'alien', name: 'Star Voyager', price: 9, icon: 'mdi:alien', color: 0x4ADE80, type: 'sphere' },
+            { id: 'dragon', name: 'Baby Dragon', price: 15, icon: 'mdi:dragon', color: 0xEF4444, type: 'box' },
+            { id: 'archer', name: 'Forest Elf', price: 7, icon: 'mdi:bow-arrow', color: 0x2D5A27, type: 'cylinder' },
+            { id: 'ninja', name: 'Shadow Ninja', price: 9, icon: 'mdi:ninja', color: 0x1A1A1A, type: 'cylinder' },
+            { id: 'astronaut', name: 'Space Cadet', price: 11, icon: 'mdi:human-male-board', color: 0xFFFFFF, type: 'sphere' }
+        ];
+
+        const TEXTURE_LIB = [
+            { id: 'matte', name: 'Smooth Matte', color: '#FFFFFF', icon: 'lucide:box', desc: 'Standard clean finish' },
+            { id: 'metal', name: 'Brushed Metal', color: '#D1D5DB', icon: 'lucide:layers', desc: 'Satin metallic texture' },
+            { id: 'marble', name: 'Marble', color: '#F3F4F6', icon: 'lucide:milestone', desc: 'Elegant stone veins' },
+            { id: 'wood', name: 'Wood Grain', color: '#92400E', icon: 'lucide:tree-pine', desc: 'Natural organic pattern' },
+            { id: 'concrete', name: 'Concrete', color: '#9CA3AF', icon: 'lucide:mountain', desc: 'Industrial raw finish' },
+            { id: 'fabric', name: 'Fabric Weave', color: '#E5E7EB', icon: 'lucide:shirt', desc: 'Soft woven textile' },
+            { id: 'leather', name: 'Leather', color: '#78350F', icon: 'lucide:scroll', desc: 'Pebbled leather skin' },
+            { id: 'polish', name: 'Metallic Polish', color: '#F9FAFB', icon: 'lucide:sparkles', desc: 'High-gloss mirror effect' }
+        ];
+
+        const ACCESSORY_LIB = {
+            furniture: [
+                { id: 'throne', name: 'Royal Throne', price: 5, icon: 'mdi:chair-rolling', color: 0xD97706, type: 'box' },
+                { id: 'table', name: 'Grand Table', price: 4, icon: 'mdi:table-furniture', color: 0x78350F, type: 'box' }
+            ],
+            props: [
+                { id: 'sword', name: 'Excalibur', price: 3, icon: 'mdi:sword', color: 0xCBD5E1, type: 'cone' },
+                { id: 'chest', name: 'Treasure Chest', price: 6, icon: 'mdi:clippy', color: 0xCA8A04, type: 'box' }
+            ],
+            nature: [
+                { id: 'tree', name: 'Pine Tree', price: 5, icon: 'mdi:pine-tree', color: 0x166534, type: 'cone' },
+                { id: 'rock', name: 'Large Rock', price: 2, icon: 'mdi:rock', color: 0x64748B, type: 'sphere' }
+            ]
+        };
+
+        // STATE
+        let state = {
+            currentStep: 1,
+            base: {
+                size: 'medium', 
+                sizePrice: 25,
+                hasWalls: false,
+                wallPrice: 10,
+                color: '#FFFFFF',
+                colorName: 'Pure White',
+                textureType: 'library', // 'library' or 'custom'
+                textureId: 'matte',
+                textureName: 'Smooth Matte',
+                customTextureUrl: null,
+                customFilename: null
+            },
+            characters: [],
+            accessories: []
+        };
+
+        // THREE.JS CORE
+        let scene, camera, renderer, controls;
+        let baseMesh, wallBack, wallLeft, wallRight;
+        const textureLoader = new THREE.TextureLoader();
+        let placedMeshes = []; // Array of { id, mesh }
+
+        function init3D() {
+            const container = document.getElementById('three-container');
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xE8E4DE);
+
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(20, 20, 20);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.shadowMap.enabled = true;
+            container.appendChild(renderer.domElement);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.maxPolarAngle = Math.PI / 2.1;
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(10, 20, 10);
+            dirLight.castShadow = true;
+            scene.add(dirLight);
+
+            // Base Setup
+            const baseGeometry = new THREE.BoxGeometry(10, 1, 10);
+            const baseMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+            baseMesh = new THREE.Mesh(baseGeometry, baseMaterial);
+            baseMesh.receiveShadow = true;
+            scene.add(baseMesh);
+
+            const wallMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+            wallBack = new THREE.Mesh(new THREE.BoxGeometry(10, 8, 0.5), wallMat);
+            wallBack.position.set(0, 4.5, -4.75);
+            wallBack.visible = false;
+            scene.add(wallBack);
+
+            wallLeft = new THREE.Mesh(new THREE.BoxGeometry(0.5, 8, 10), wallMat);
+            wallLeft.position.set(-4.75, 4.5, 0);
+            wallLeft.visible = false;
+            scene.add(wallLeft);
+
+            wallRight = new THREE.Mesh(new THREE.BoxGeometry(0.5, 8, 10), wallMat);
+            wallRight.position.set(4.75, 4.5, 0);
+            wallRight.visible = false;
+            scene.add(wallRight);
+
+            animate();
+            update3DState();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // NAVIGATION
+        function changeStep(delta) {
+            if (state.currentStep === 3 && delta > 0) {
+                openCompletionModal();
+                return;
+            }
+            const next = state.currentStep + delta;
+            if (next < 1 || next > 3) return;
+            
+            state.currentStep = next;
+            renderUI();
+        }
+
+        function renderUI() {
+            document.querySelectorAll('.fade-step').forEach(p => p.classList.add('hidden'));
+            document.getElementById(`panel-step-${state.currentStep}`).classList.remove('hidden');
+
+            for (let i = 1; i <= 3; i++) {
+                const node = document.querySelector(`#step-ind-${i} .step-node`);
+                const label = document.querySelector(`#step-ind-${i} span`);
+                const container = document.getElementById(`step-ind-${i}`);
+                
+                if (i < state.currentStep) {
+                    node.classList.remove('bg-gray-300', 'bg-[#FF7E00]');
+                    node.classList.add('bg-[#4A6FA5]');
+                    node.innerHTML = '<iconify-icon icon="lucide:check"></iconify-icon>';
+                    container.style.opacity = "1";
+                    label.classList.add('text-[#4A6FA5]');
+                    label.classList.remove('text-[#FF7E00]');
+                } else if (i === state.currentStep) {
+                    node.classList.remove('bg-gray-300', 'bg-[#4A6FA5]');
+                    node.classList.add('bg-[#FF7E00]');
+                    node.innerHTML = i;
+                    container.style.opacity = "1";
+                    label.classList.add('text-[#FF7E00]');
+                    label.classList.remove('text-[#4A6FA5]');
+                } else {
+                    node.classList.remove('bg-[#FF7E00]', 'bg-[#4A6FA5]');
+                    node.classList.add('bg-gray-300');
+                    node.innerHTML = i;
+                    container.style.opacity = "0.4";
+                    label.classList.remove('text-[#FF7E00]', 'text-[#4A6FA5]');
+                }
+            }
+
+            document.getElementById('prev-btn').classList.toggle('hidden', state.currentStep === 1);
+            const nextBtnText = document.getElementById('next-btn-text');
+            const nextBtn = document.getElementById('next-btn');
+
+            if (state.currentStep === 1) nextBtnText.innerText = "Next Step: Characters";
+            if (state.currentStep === 2) nextBtnText.innerText = "Next Step: Enhancements";
+            if (state.currentStep === 3) {
+                nextBtnText.innerText = "Complete & Save Scene";
+                nextBtn.classList.remove('bg-[#FF7E00]');
+                nextBtn.classList.add('bg-green-600');
+            } else {
+                nextBtn.classList.add('bg-[#FF7E00]');
+                nextBtn.classList.remove('bg-green-600');
+            }
+
+            document.getElementById('live-status').innerText = `Step ${state.currentStep} Live Sync`;
+            updateSummary();
+        }
+
+        // BUILDER ACTIONS
+        function updateSize(size, price) {
+            state.base.size = size;
+            state.base.sizePrice = price;
+            document.querySelectorAll('.size-option').forEach(el => {
+                el.classList.remove('border-[#FF7E00]', 'bg-orange-50');
+                if (el.dataset.size === size) el.classList.add('border-[#FF7E00]', 'bg-orange-50');
+            });
+            update3DState();
+            updateSummary();
+        }
+
+        function toggleWalls() {
+            state.base.hasWalls = !state.base.hasWalls;
+            document.getElementById('walls-toggle').classList.toggle('bg-[#FF7E00]', state.base.hasWalls);
+            document.getElementById('toggle-knob').style.transform = state.base.hasWalls ? 'translateX(24px)' : 'translateX(0)';
+            update3DState();
+            updateSummary();
+        }
+
+        function updateColor(hex, name) {
+            state.base.color = hex;
+            state.base.colorName = name;
+            document.querySelectorAll('.color-btn').forEach(btn => {
+                btn.classList.toggle('color-swatch-selected', btn.title === name);
+            });
+            update3DState();
+            updateSummary();
+        }
+
+        function switchTextureTab(tab) {
+            const isLib = tab === 'library';
+            document.getElementById('texture-library-view').classList.toggle('hidden', !isLib);
+            document.getElementById('texture-upload-view').classList.toggle('hidden', isLib);
+            
+            const libBtn = document.getElementById('tab-library');
+            const upBtn = document.getElementById('tab-upload');
+            
+            libBtn.className = isLib ? 'flex-1 py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition-all bg-white shadow-sm text-[#FF7E00]' : 'flex-1 py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition-all text-gray-500 hover:text-gray-700';
+            upBtn.className = !isLib ? 'flex-1 py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition-all bg-white shadow-sm text-[#FF7E00]' : 'flex-1 py-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition-all text-gray-500 hover:text-gray-700';
+        }
+
+        function updateTexture(id, name) {
+            state.base.textureType = 'library';
+            state.base.textureId = id;
+            state.base.textureName = name;
+            
+            document.querySelectorAll('.texture-option').forEach(el => {
+                el.classList.toggle('selected', el.getAttribute('data-tex') === id);
+            });
+
+            update3DState();
+            updateSummary();
+        }
+
+        function generateProceduralTexture(type) {
+            const canvas = document.createElement('canvas');
+            canvas.width = canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            
+            if (type === 'matte') {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, 512, 512);
+            } else if (type === 'metal') {
+                ctx.fillStyle = '#cccccc';
+                ctx.fillRect(0, 0, 512, 512);
+                ctx.strokeStyle = '#aaaaaa';
+                for(let i=0; i<512; i+=4) { ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(512, i); ctx.stroke(); }
+            } else if (type === 'marble') {
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, 512, 512);
+                ctx.strokeStyle = '#e5e5e5';
+                for(let i=0; i<10; i++) {
+                    ctx.beginPath(); ctx.moveTo(Math.random()*512, 0); ctx.bezierCurveTo(Math.random()*512, 100, Math.random()*512, 400, Math.random()*512, 512); ctx.stroke();
+                }
+            } else if (type === 'wood') {
+                ctx.fillStyle = '#5d3a1a';
+                ctx.fillRect(0, 0, 512, 512);
+                ctx.strokeStyle = '#4b2e15';
+                for(let i=0; i<512; i+=20) { ctx.beginPath(); ctx.arc(256, 256, i, 0, Math.PI*2); ctx.stroke(); }
+            } else if (type === 'concrete') {
+                ctx.fillStyle = '#888888'; ctx.fillRect(0, 0, 512, 512);
+                for(let i=0; i<1000; i++) { ctx.fillStyle = Math.random() > 0.5 ? '#777777' : '#999999'; ctx.fillRect(Math.random()*512, Math.random()*512, 2, 2); }
+            } else if (type === 'fabric') {
+                ctx.fillStyle = '#f0f0f0'; ctx.fillRect(0, 0, 512, 512); ctx.strokeStyle = '#dddddd';
+                for(let i=0; i<512; i+=10) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 512); ctx.stroke(); ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(512, i); ctx.stroke(); }
+            } else if (type === 'leather') {
+                ctx.fillStyle = '#3a2a1a'; ctx.fillRect(0, 0, 512, 512);
+                for(let i=0; i<5000; i++) { ctx.fillStyle = '#2a1a0a'; ctx.beginPath(); ctx.arc(Math.random()*512, Math.random()*512, 1.5, 0, Math.PI*2); ctx.fill(); }
+            } else if (type === 'polish') {
+                ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, 512, 512);
+                const grad = ctx.createLinearGradient(0, 0, 512, 512);
+                grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.5, '#e0e0e0'); grad.addColorStop(1, '#ffffff');
+                ctx.fillStyle = grad; ctx.fillRect(0, 0, 512, 512);
+            }
+            
+            const tex = new THREE.CanvasTexture(canvas);
+            tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+            const repeat = state.base.size === 'small' ? 2 : (state.base.size === 'medium' ? 3 : 4);
+            tex.repeat.set(repeat, repeat);
+            return tex;
+        }
+
+        function update3DState() {
+            let s = 10; if (state.base.size === 'small') s = 7; if (state.base.size === 'large') s = 14;
+            baseMesh.scale.set(s/10, 1, s/10);
+            baseMesh.material.color.set(state.base.color);
+
+            if (state.base.textureType === 'library') {
+                baseMesh.material.map = generateProceduralTexture(state.base.textureId);
+            } else if (state.base.customTextureUrl) {
+                textureLoader.load(state.base.customTextureUrl, (tex) => {
+                    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+                    const repeat = state.base.size === 'small' ? 2 : (state.base.size === 'medium' ? 3 : 4);
+                    tex.repeat.set(repeat, repeat);
+                    baseMesh.material.map = tex;
+                    baseMesh.material.needsUpdate = true;
+                });
+            }
+
+            baseMesh.material.metalness = state.base.textureId === 'metal' || state.base.textureId === 'polish' ? 0.7 : 0.1;
+            baseMesh.material.roughness = state.base.textureId === 'polish' ? 0.1 : (state.base.textureId === 'metal' ? 0.3 : 0.8);
+            baseMesh.material.needsUpdate = true;
+
+            const offset = (s/2) - 0.25;
+            wallBack.visible = state.base.hasWalls; wallBack.position.z = -offset; wallBack.scale.x = s/10; wallBack.material.color.set(state.base.color);
+            wallLeft.visible = state.base.hasWalls; wallLeft.position.x = -offset; wallLeft.scale.z = s/10; wallLeft.material.color.set(state.base.color);
+            wallRight.visible = state.base.hasWalls; wallRight.position.x = offset; wallRight.scale.z = s/10; wallRight.material.color.set(state.base.color);
+            
+            [wallBack, wallLeft, wallRight].forEach(wall => {
+                wall.material.map = baseMesh.material.map;
+                wall.material.metalness = baseMesh.material.metalness;
+                wall.material.roughness = baseMesh.material.roughness;
+                wall.material.needsUpdate = true;
+            });
+        }
+
+        // FILE UPLOAD LOGIC
+        function initUpload() {
+            const dropZone = document.getElementById('drop-zone');
+            const fileInput = document.getElementById('file-input');
+
+            dropZone.onclick = () => fileInput.click();
+
+            dropZone.ondragover = (e) => {
+                e.preventDefault();
+                dropZone.classList.add('drop-zone-active');
+            };
+
+            dropZone.ondragleave = () => dropZone.classList.remove('drop-zone-active');
+
+            dropZone.ondrop = (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('drop-zone-active');
+                if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+            };
+
+            fileInput.onchange = (e) => {
+                if (e.target.files.length) handleFile(e.target.files[0]);
+            };
+        }
+
+        function handleFile(file) {
+            const errorEl = document.getElementById('upload-error');
+            const errorText = document.getElementById('error-text');
+            errorEl.classList.add('hidden');
+
+            if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+                showUploadError('Unsupported file format. Please use JPG, PNG or WEBP.');
+                return;
+            }
+
+            if (file.size > 5 * 1024 * 1024) {
+                showUploadError('File too large. Maximum size is 5MB.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                state.base.textureType = 'custom';
+                state.base.customTextureUrl = e.target.result;
+                state.base.customFilename = file.name;
+                state.base.textureName = `Custom Texture [${file.name}]`;
+                
+                document.getElementById('upload-idle').classList.add('hidden');
+                document.getElementById('upload-complete').classList.remove('hidden');
+                document.getElementById('upload-preview-img').src = e.target.result;
+                document.getElementById('upload-filename').innerText = file.name;
+
+                update3DState();
+                updateSummary();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function showUploadError(msg) {
+            const errorEl = document.getElementById('upload-error');
+            const errorText = document.getElementById('error-text');
+            errorText.innerText = msg;
+            errorEl.classList.remove('hidden');
+        }
+
+        function resetUpload(e) {
+            e.stopPropagation();
+            state.base.textureType = 'library';
+            state.base.customTextureUrl = null;
+            state.base.customFilename = null;
+            state.base.textureId = 'matte';
+            state.base.textureName = 'Smooth Matte';
+            
+            document.getElementById('upload-idle').classList.remove('hidden');
+            document.getElementById('upload-complete').classList.add('hidden');
+            document.getElementById('file-input').value = '';
+            
+            update3DState();
+            renderLibraries(); // Refresh highlights
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const summaryEl = document.getElementById('items-summary');
+            const priceEl = document.getElementById('total-price');
+            const globalBadge = document.getElementById('global-cart-badge');
+            
+            let total = state.base.sizePrice + (state.base.hasWalls ? state.base.wallPrice : 0);
+            let html = `
+                <div class="flex justify-between text-[11px] py-1">
+                    <span class="text-gray-500 italic uppercase">${state.base.size} Base (${state.base.colorName})</span>
+                    <span class="font-black">$${state.base.sizePrice}</span>
+                </div>
+                <div class="flex justify-between text-[11px] py-1 border-b border-gray-100 mb-2 pb-1">
+                    <span class="text-[#FF7E00] font-black uppercase">${state.base.textureName}</span>
+                    <span class="font-black">Included</span>
+                </div>
+            `;
+            if (state.base.hasWalls) {
+                html += `<div class="flex justify-between text-sm py-1"><span>Enclosure Panels</span><span class="font-black">+$10</span></div>`;
+            }
+
+            state.characters.forEach(c => {
+                total += c.price;
+                html += `<div class="flex justify-between items-center text-sm py-1"><span>${c.name}</span><span class="font-bold">$${c.price}</span></div>`;
+            });
+
+            state.accessories.forEach(a => {
+                total += a.price;
+                html += `<div class="flex justify-between items-center text-sm py-1"><span>${a.name}</span><span class="font-bold">$${a.price}</span></div>`;
+            });
+
+            summaryEl.innerHTML = html;
+            priceEl.innerText = `$${total}`;
+            const cart = JSON.parse(localStorage.getItem('bowerbit_cart') || '[]');
+            globalBadge.innerText = cart.length;
+        }
+
+        function addItem(type, item) {
+            const collection = type === 'character' ? state.characters : state.accessories;
+            const newItem = { ...item, instanceId: Date.now() + Math.random() };
+            collection.push(newItem);
+            
+            let geo;
+            if (item.type === 'box') geo = new THREE.BoxGeometry(1, 1, 1);
+            else if (item.type === 'cylinder') geo = new THREE.CylinderGeometry(0.5, 0.5, 1.5);
+            else if (item.type === 'cone') geo = new THREE.ConeGeometry(0.5, 1.5);
+            else geo = new THREE.SphereGeometry(0.5);
+
+            const mat = new THREE.MeshStandardMaterial({ color: item.color });
+            const mesh = new THREE.Mesh(geo, mat);
+            const range = state.base.size === 'small' ? 2 : (state.base.size === 'medium' ? 3.5 : 5.5);
+            mesh.position.set((Math.random() - 0.5) * range * 2, 1, (Math.random() - 0.5) * range * 2);
+            mesh.castShadow = true;
+            scene.add(mesh);
+            placedMeshes.push({ instanceId: newItem.instanceId, mesh });
+            updateSummary();
+        }
+
+        function toggleCategory(cat) {
+            const el = document.getElementById(`cat-${cat}`);
+            const icon = document.getElementById(`cat-icon-${cat}`);
+            const isHidden = el.classList.contains('hidden');
+            el.classList.toggle('hidden');
+            icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        function renderLibraries() {
+            const texContainer = document.getElementById('texture-library-grid');
+            texContainer.innerHTML = TEXTURE_LIB.map(t => `
+                <button onclick="updateTexture('${t.id}', '${t.name}')" 
+                        data-tex="${t.id}"
+                        title="${t.desc}"
+                        class="texture-option group relative aspect-square rounded-lg border-2 ${state.base.textureType === 'library' && state.base.textureId === t.id ? 'selected' : 'border-transparent'} bg-gray-50 flex items-center justify-center overflow-hidden transition-all hover:scale-105 active:scale-95">
+                    <div class="w-full h-full opacity-60" style="background-color: ${t.color}"></div>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-white/40 p-1">
+                        <iconify-icon icon="${t.icon}" class="text-lg ${state.base.textureType === 'library' && state.base.textureId === t.id ? 'text-[#FF7E00]' : 'text-gray-600'}"></iconify-icon>
+                        <span class="text-[8px] font-black text-center mt-0.5 leading-none uppercase">${t.name}</span>
+                    </div>
+                </button>
+            `).join('');
+
+            const charContainer = document.getElementById('character-library-container');
+            charContainer.innerHTML = CHARACTER_LIB.map(c => `
+                <button onclick="addItem('character', ${JSON.stringify(c).replace(/"/g, '&quot;')})" 
+                        class="item-card bg-white p-3 rounded-2xl border border-black/5 hover:border-[#FF7E00] hover:shadow-lg transition-all text-left relative group">
+                    <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center mb-2">
+                        <iconify-icon icon="${c.icon}" class="text-3xl text-gray-400 group-hover:text-[#FF7E00]"></iconify-icon>
+                    </div>
+                    <div class="add-badge absolute top-2 right-2 bg-[#FF7E00] text-white p-1 rounded-full">
+                        <iconify-icon icon="lucide:plus"></iconify-icon>
+                    </div>
+                    <p class="font-bold text-xs truncate">${c.name}</p>
+                    <p class="text-[10px] text-gray-500 font-black">$${c.price}</p>
+                </button>
+            `).join('');
+
+            Object.keys(ACCESSORY_LIB).forEach(cat => {
+                const container = document.getElementById(`cat-${cat}`);
+                container.innerHTML = ACCESSORY_LIB[cat].map(a => `
+                    <button onclick="addItem('accessory', ${JSON.stringify(a).replace(/"/g, '&quot;')})" 
+                            class="item-card flex items-center gap-3 p-2 bg-white rounded-xl border border-black/5 hover:border-blue-500 transition-all text-left group relative">
+                        <iconify-icon icon="${a.icon}" class="text-xl text-blue-500"></iconify-icon>
+                        <div class="flex-grow">
+                            <p class="text-[10px] font-bold truncate">${a.name}</p>
+                            <p class="text-[10px] text-gray-400">$${a.price}</p>
+                        </div>
+                        <iconify-icon icon="lucide:plus-circle" class="text-blue-200 group-hover:text-blue-500"></iconify-icon>
+                    </button>
+                `).join('');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            init3D();
+            renderLibraries();
+            renderUI();
+            initUpload();
+            window.addEventListener('resize', () => {
+                const container = document.getElementById('three-container');
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+        });
+
+        function openCompletionModal() {
+            alert('Saving scene... Checkout is coming soon!');
+        }
+    </script>
+</body>
+</html>
+```
+
+Please reference this design and implement it into our codebase; Try to understand the structure, which part of our codebase is relevant and implement
