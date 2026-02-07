@@ -1,0 +1,668 @@
+<html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>About BowerBit | The World is Your Playground</title><script src="https://cdn.tailwindcss.com"></script><script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script><link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&amp;f[]=satoshi@400,500,700&amp;display=swap" rel="stylesheet"><meta name="view-transition" content="same-origin"><style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');:root { --primary-orange: #FF7E00; --soft-blue: #4A6FA5; --bg-cream: #FFFBF5; --text-dark: #1A1A1A; }body { font-family: 'Satoshi', sans-serif; color: var(--text-dark); background-color: var(--bg-cream); }h1, h2, h3, h4 { font-family: 'Cabinet Grotesk', sans-serif; }.grain-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; opacity: 0.05; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
+.fade-in { animation: fadeIn 1s ease-out forwards; }@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }.stagger-1 { animation-delay: 0.2s; }.stagger-2 { animation-delay: 0.4s; }.stagger-3 { animation-delay: 0.6s; }.asymmetric-box { clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%); }@view-transition { navigation: auto; }</style>
+<meta name="preview-version" content="c43585a8-b92f-489f-ab8b-5eefe1849693">
+<meta name="preview-timestamp" content="2026-02-07T13:40:24.958Z">
+
+<style>
+          /* Hide scrollbar for Chrome, Safari and Opera */
+          html::-webkit-scrollbar,
+          body::-webkit-scrollbar,
+          *::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+          }
+          /* Hide scrollbar for IE, Edge and Firefox */
+          html, body, * {
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+          }
+        </style>
+
+<script type="module">
+          (function() {
+            document.addEventListener('wheel', function(e) {
+              if (e.ctrlKey) {
+                e.preventDefault();
+              }
+            }, { passive: false });
+          })();
+        </script>
+<script type="module">
+          // SuperDesign Preview Runtime
+          // NOTE: modern-screenshot is lazy-loaded only when screenshot is requested to improve performance
+          console.log('[SuperDesign] Preview loaded for version:', 'c43585a8-b92f-489f-ab8b-5eefe1849693');
+
+          // Set up communication with parent frame if needed
+          window.__SUPERDESIGN_PREVIEW__ = {
+            versionId: 'c43585a8-b92f-489f-ab8b-5eefe1849693',
+            timestamp: '2026-02-07T13:40:24.958Z',
+            _modernScreenshotModule: null, // Lazy-loaded module cache
+            // Add methods for communication
+            sendMessage: function(type, data) {
+              if (window.parent) {
+                window.parent.postMessage({
+                  source: 'superdesign-preview',
+                  type: type,
+                  data: data,
+                  versionId: this.versionId
+                }, '*');
+              }
+            },
+            // Report ready state
+            ready: function() {
+              this.sendMessage('ready', { timestamp: Date.now() });
+            },
+            // Internal screenshot capture logic - shared by both manual and auto capture
+            _captureScreenshotInternal: async function() {
+              // Lazy-load modern-screenshot only when needed (performance optimization)
+              if (!this._modernScreenshotModule) {
+                console.log('[SuperDesign] Loading modern-screenshot library...');
+                this._modernScreenshotModule = await import('https://esm.sh/modern-screenshot@4.6.6');
+              }
+              const modernScreenshot = this._modernScreenshotModule;
+
+              if (!modernScreenshot || !modernScreenshot.domToCanvas) {
+                throw new Error('modern-screenshot library not loaded');
+              }
+              console.log('[SuperDesign] modern-screenshot library loaded successfully');
+
+              // Get current viewport dimensions and scroll position
+              const scrollX = window.scrollX || window.pageXOffset;
+              const scrollY = window.scrollY || window.pageYOffset;
+              const viewportWidth = window.innerWidth;
+              const viewportHeight = window.innerHeight;
+
+              // Get full document dimensions to ensure we capture everything
+              const documentWidth = Math.max(
+                document.documentElement.scrollWidth,
+                document.documentElement.offsetWidth,
+                document.documentElement.clientWidth,
+                document.body.scrollWidth,
+                document.body.offsetWidth
+              );
+              const documentHeight = Math.max(
+                document.documentElement.scrollHeight,
+                document.documentElement.offsetHeight,
+                document.documentElement.clientHeight,
+                document.body.scrollHeight,
+                document.body.offsetHeight
+              );
+
+              // Use device pixel ratio for high-DPI screens (Retina, 4K, etc.)
+              // Cap at 1 on mobile to avoid iOS Safari canvas memory limits (~16MB)
+              const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+              const pixelRatio = isMobile ? 1 : (window.devicePixelRatio || 1);
+
+              console.log('[SuperDesign] Viewport info:', {
+                scrollX,
+                scrollY,
+                viewportWidth,
+                viewportHeight,
+                pixelRatio
+              });
+
+              // Calculate estimated memory usage for canvas (width * height * 4 bytes per pixel)
+              const estimatedFullCanvasMemoryMB = (documentWidth * pixelRatio * documentHeight * pixelRatio * 4) / (1024 * 1024);
+              console.log('[SuperDesign] Document info:', {
+                documentWidth,
+                documentHeight,
+                estimatedFullCanvasMemoryMB: estimatedFullCanvasMemoryMB.toFixed(2) + 'MB',
+                isMobile
+              });
+
+              let dataUrl;
+
+              if (isMobile) {
+                // Mobile path: Capture viewport directly to avoid memory issues
+                // iOS Safari has ~16MB canvas memory limit, so we skip full document capture
+                console.log('[SuperDesign] Mobile device: using direct viewport capture to avoid memory limits');
+
+                // Create a wrapper div positioned to show only the current viewport
+                const wrapper = document.createElement('div');
+                wrapper.style.cssText = 'position:fixed;top:0;left:0;width:' + viewportWidth + 'px;height:' + viewportHeight + 'px;overflow:hidden;z-index:999999;pointer-events:none;';
+
+                // Clone the body and position it at negative scroll offset
+                const clone = document.body.cloneNode(true);
+                clone.style.cssText = 'position:absolute;top:' + (-scrollY) + 'px;left:' + (-scrollX) + 'px;margin:0;width:' + documentWidth + 'px;';
+
+                wrapper.appendChild(clone);
+                document.body.appendChild(wrapper);
+
+                try {
+                  // Capture only the viewport-sized wrapper
+                  const viewportCanvas = await modernScreenshot.domToCanvas(wrapper, {
+                    scale: 1,
+                    backgroundColor: '#ffffff',
+                    width: viewportWidth,
+                    height: viewportHeight,
+                  });
+
+                  console.log('[SuperDesign] Mobile viewport captured, canvas size:', {
+                    canvasWidth: viewportCanvas.width,
+                    canvasHeight: viewportCanvas.height,
+                    estimatedMemoryMB: ((viewportCanvas.width * viewportCanvas.height * 4) / (1024 * 1024)).toFixed(2) + 'MB'
+                  });
+
+                  dataUrl = viewportCanvas.toDataURL('image/png', 0.5);
+                } finally {
+                  // Always clean up the wrapper
+                  document.body.removeChild(wrapper);
+                }
+              } else {
+                // Desktop path: Capture full document then crop (higher quality, more memory available)
+                const fullCanvas = await modernScreenshot.domToCanvas(document.documentElement, {
+                  scale: pixelRatio,
+                  backgroundColor: '#ffffff',
+                  width: documentWidth,
+                  height: documentHeight,
+                });
+
+                console.log('[SuperDesign] Full page captured, canvas size:', {
+                  canvasWidth: fullCanvas.width,
+                  canvasHeight: fullCanvas.height
+                });
+                console.log('[SuperDesign] Now cropping to viewport...');
+
+                // Create a new canvas for the viewport only (scaled by pixelRatio)
+                const viewportCanvas = document.createElement('canvas');
+                viewportCanvas.width = viewportWidth * pixelRatio;
+                viewportCanvas.height = viewportHeight * pixelRatio;
+                const ctx = viewportCanvas.getContext('2d');
+
+                if (!ctx) {
+                  throw new Error('Failed to get canvas context');
+                }
+
+                // Draw only the viewport area from the full canvas
+                ctx.drawImage(
+                  fullCanvas,
+                  scrollX * pixelRatio, scrollY * pixelRatio, viewportWidth * pixelRatio, viewportHeight * pixelRatio,
+                  0, 0, viewportWidth * pixelRatio, viewportHeight * pixelRatio
+                );
+
+                console.log('[SuperDesign] Converting to dataURL, viewport canvas size:', {
+                  width: viewportCanvas.width,
+                  height: viewportCanvas.height,
+                  estimatedMemoryMB: ((viewportCanvas.width * viewportCanvas.height * 4) / (1024 * 1024)).toFixed(2) + 'MB'
+                });
+
+                dataUrl = viewportCanvas.toDataURL('image/png', 1.0);
+              }
+
+              console.log('[SuperDesign] toDataURL result:', {
+                length: dataUrl?.length || 0,
+                first50Chars: dataUrl?.substring(0, 50) || 'null/undefined',
+                isValidPrefix: dataUrl?.startsWith('data:image/png;base64,') || false
+              });
+
+              // Validate the dataUrl is a proper base64 image (iOS Safari can return garbage under memory pressure)
+              if (!dataUrl || !dataUrl.startsWith('data:image/png;base64,') || dataUrl.length < 100) {
+                throw new Error('Invalid screenshot data: toDataURL returned invalid result (length: ' + (dataUrl?.length || 0) + ', first50: ' + (dataUrl?.substring(0, 50) || 'null') + ')');
+              }
+
+              return {
+                dataUrl: dataUrl,
+                viewportWidth: viewportWidth,
+                viewportHeight: viewportHeight,
+                pixelRatio: pixelRatio
+              };
+            },
+            // Auto-capture screenshot (triggered automatically after page load in iframe)
+            autoCapture: async function() {
+              // Only run in iframe context
+              if (window === window.parent) {
+                console.log('[SuperDesign] Not in iframe, skipping auto-screenshot');
+                return;
+              }
+
+              try {
+                console.log('[SuperDesign] Auto-capture: starting...');
+                const result = await this._captureScreenshotInternal();
+
+                // Send auto-screenshot message (different type from manual capture)
+                this.sendMessage('auto-screenshot', {
+                  dataUrl: result.dataUrl,
+                  timestamp: Date.now(),
+                  viewportWidth: result.viewportWidth,
+                  viewportHeight: result.viewportHeight,
+                  pixelRatio: result.pixelRatio,
+                });
+
+                console.log('[SuperDesign] Auto-capture: sent to parent');
+              } catch (error) {
+                console.error('[SuperDesign] Auto-capture failed:', error);
+                // Silent failure - don't send error message for auto-capture
+              }
+            },
+            // Screenshot capture function (for manual requests from parent)
+            captureScreenshot: async function(requestId, autoCaptureId) {
+              try {
+                console.log('[SuperDesign] Capturing screenshot of current viewport...', { requestId, autoCaptureId });
+
+                // Store requestId and autoCaptureId for use in sendMessage
+                this._currentRequestId = requestId;
+                this._currentAutoCaptureId = autoCaptureId;
+
+                const result = await this._captureScreenshotInternal();
+
+                console.log('[SuperDesign] Screenshot captured successfully');
+
+                // Send screenshot data to parent with viewport dimensions for proper display
+                this.sendMessage('screenshot-captured', {
+                  dataUrl: result.dataUrl,
+                  timestamp: Date.now(),
+                  viewportWidth: result.viewportWidth,
+                  viewportHeight: result.viewportHeight,
+                  pixelRatio: result.pixelRatio,
+                  // Echo back requestId and autoCaptureId to identify this response
+                  requestId: this._currentRequestId,
+                  autoCaptureId: this._currentAutoCaptureId
+                });
+
+                return result.dataUrl;
+              } catch (error) {
+                console.error('[SuperDesign] Screenshot capture failed:', error);
+                this.sendMessage('screenshot-error', {
+                  error: error.message || String(error),
+                  timestamp: Date.now(),
+                  // Echo back requestId and autoCaptureId to identify this response
+                  requestId: this._currentRequestId,
+                  autoCaptureId: this._currentAutoCaptureId
+                });
+                throw error;
+              }
+            }
+          };
+
+          // Font loading helper - dynamically load Google Fonts
+          window.__SUPERDESIGN_PREVIEW__.loadedFonts = new Set();
+          window.__SUPERDESIGN_PREVIEW__.loadGoogleFont = function(fontFamily) {
+            // Skip if already loaded or is a system/custom font
+            if (!fontFamily || this.loadedFonts.has(fontFamily)) return;
+            if (fontFamily.startsWith('Custom-')) return;
+
+            const systemFonts = ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI',
+              'Roboto', 'Helvetica', 'Arial', 'sans-serif', 'Georgia', 'Times New Roman',
+              'Times', 'serif', 'Menlo', 'Monaco', 'Consolas', 'Courier New', 'monospace'];
+            if (systemFonts.some(sf => fontFamily.toLowerCase().includes(sf.toLowerCase()))) return;
+
+            // Add preconnect if not present
+            if (!document.querySelector('link[href*="fonts.googleapis.com"]')) {
+              const preconnect1 = document.createElement('link');
+              preconnect1.rel = 'preconnect';
+              preconnect1.href = 'https://fonts.googleapis.com';
+              document.head.appendChild(preconnect1);
+
+              const preconnect2 = document.createElement('link');
+              preconnect2.rel = 'preconnect';
+              preconnect2.href = 'https://fonts.gstatic.com';
+              preconnect2.crossOrigin = 'anonymous';
+              document.head.appendChild(preconnect2);
+            }
+
+            // Load the font
+            const linkId = 'google-font-' + fontFamily.replace(/\s+/g, '-').toLowerCase();
+            if (!document.getElementById(linkId)) {
+              const link = document.createElement('link');
+              link.id = linkId;
+              link.rel = 'stylesheet';
+              link.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(fontFamily) + ':wght@400;500;600;700&display=swap';
+              link.onerror = function() {
+                console.error('[SuperDesign] Failed to load Google Font:', fontFamily);
+              };
+              document.head.appendChild(link);
+            }
+
+            this.loadedFonts.add(fontFamily);
+          };
+
+          // Custom font loading helper - dynamically inject @font-face
+          window.__SUPERDESIGN_PREVIEW__.loadedCustomFonts = new Set();
+          window.__SUPERDESIGN_PREVIEW__.loadCustomFont = function(fontInfo) {
+            // fontInfo: { family: string, url: string, format: string }
+            if (!fontInfo || !fontInfo.family || !fontInfo.url) return;
+            if (this.loadedCustomFonts.has(fontInfo.family)) return;
+
+            const styleId = 'custom-font-' + fontInfo.family.replace(/[^a-zA-Z0-9]/g, '-');
+            if (document.getElementById(styleId)) return;
+
+            const style = document.createElement('style');
+            style.id = styleId;
+            style.textContent = '@font-face { ' +
+              'font-family: "' + fontInfo.family + '"; ' +
+              'src: url("' + fontInfo.url + '") format("' + (fontInfo.format || 'woff2') + '"); ' +
+              'font-weight: 100 900; ' +
+              'font-style: normal; ' +
+              'font-display: swap; ' +
+            '}';
+            document.head.appendChild(style);
+
+            this.loadedCustomFonts.add(fontInfo.family);
+          };
+
+          // Theme sync functionality - Apply CSS variables from parent
+          window.__SUPERDESIGN_PREVIEW__.applyTheme = function(payload, isDark) {
+            const root = document.documentElement;
+
+            // Apply color variables based on mode
+            const colorVars = isDark ? payload.dark : payload.light;
+            for (const [name, value] of Object.entries(colorVars)) {
+              root.style.setProperty(name, value);
+            }
+
+            // Load custom fonts first (if any)
+            if (payload.customFonts && Array.isArray(payload.customFonts)) {
+              payload.customFonts.forEach(fontInfo => {
+                this.loadCustomFont(fontInfo);
+              });
+            }
+
+            // Apply typography variables and load fonts
+            if (payload.typography) {
+              // Load Google Fonts dynamically (skip custom fonts)
+              if (payload.typography.fontSans && !payload.typography.fontSans.startsWith('Custom-')) {
+                this.loadGoogleFont(payload.typography.fontSans);
+              }
+              if (payload.typography.fontSerif && !payload.typography.fontSerif.startsWith('Custom-')) {
+                this.loadGoogleFont(payload.typography.fontSerif);
+              }
+              if (payload.typography.fontMono && !payload.typography.fontMono.startsWith('Custom-')) {
+                this.loadGoogleFont(payload.typography.fontMono);
+              }
+
+              // Set CSS variables with proper quoting for font families
+              // Extract the primary font name and format it correctly for CSS
+              // - Font names with spaces MUST be quoted: "Source Sans 3"
+              // - Simple font names can be unquoted but we quote for safety: "Inter"
+              const formatFontValue = (fontFamily) => {
+                if (!fontFamily) return fontFamily;
+                // Split by comma and take the first part (ignore fallbacks)
+                const firstFont = fontFamily.split(',')[0].trim();
+                // Remove any surrounding quotes
+                const cleanFont = firstFont.replace(/^["']|["']$/g, '');
+                // Don't quote CSS var() references
+                if (cleanFont.startsWith('var(')) {
+                  return cleanFont;
+                }
+                // Quote regular font names
+                return '"' + cleanFont + '"';
+              };
+              const fontSansValue = formatFontValue(payload.typography.fontSans);
+              const fontSerifValue = formatFontValue(payload.typography.fontSerif);
+              const fontMonoValue = formatFontValue(payload.typography.fontMono);
+
+              root.style.setProperty('--font-sans', fontSansValue);
+              root.style.setProperty('--font-serif', fontSerifValue);
+              root.style.setProperty('--font-mono', fontMonoValue);
+              root.style.setProperty('--font-size', payload.typography.fontSize);
+              root.style.setProperty('--line-height', payload.typography.lineHeight);
+              root.style.setProperty('--letter-spacing-body', payload.typography.letterSpacing);
+              root.style.setProperty('--letter-spacing-heading', payload.typography.headingLetterSpacing);
+              root.style.setProperty('--font-weight-regular', payload.typography.fontWeightRegular);
+              root.style.setProperty('--font-weight-bold', payload.typography.fontWeightBold);
+            }
+
+            // Apply effects variables
+            if (payload.effects) {
+              root.style.setProperty('--radius', payload.effects.radius);
+              root.style.setProperty('--shadow', payload.effects.shadow);
+            }
+
+            // Toggle dark class on html element
+            if (isDark) {
+              root.classList.add('dark');
+            } else {
+              root.classList.remove('dark');
+            }
+          };
+
+          // Listen for messages from parent (screenshot and theme)
+          window.addEventListener('message', function(event) {
+            // Security: You might want to check event.origin in production
+            if (event.data && event.data.type === 'request-screenshot') {
+              console.log('[SuperDesign] Received screenshot request from parent', {
+                requestId: event.data.requestId,
+                autoCaptureId: event.data.autoCaptureId
+              });
+              if (window.__SUPERDESIGN_PREVIEW__) {
+                // Pass requestId and autoCaptureId to captureScreenshot so they can be echoed back
+                window.__SUPERDESIGN_PREVIEW__.captureScreenshot(event.data.requestId, event.data.autoCaptureId);
+              }
+            }
+
+            // Handle theme update messages
+            if (event.data && event.data.type === 'superdesign-theme-update') {
+              if (window.__SUPERDESIGN_PREVIEW__ && event.data.payload) {
+                const isDark = event.data.isDark || false;
+                window.__SUPERDESIGN_PREVIEW__.applyTheme(event.data.payload, isDark);
+                // Acknowledge theme applied
+                window.__SUPERDESIGN_PREVIEW__.sendMessage('theme-applied', {
+                  timestamp: Date.now(),
+                  isDark: isDark
+                });
+              }
+            }
+
+            // Handle route navigation messages (hash-based routing for performance)
+            if (event.data && event.data.type === 'navigate-to-route') {
+              const route = event.data.route;
+              if (route) {
+                console.log('[SuperDesign] Navigating to route:', route);
+                // Update hash without triggering full page reload
+                if (route === '/') {
+                  // Remove hash for root route
+                  if (window.location.hash) {
+                    history.pushState(null, '', window.location.pathname + window.location.search);
+                    window.dispatchEvent(new HashChangeEvent('hashchange'));
+                  }
+                } else {
+                  // Set hash for non-root routes
+                  const newHash = '#' + route;
+                  if (window.location.hash !== newHash) {
+                    window.location.hash = route;
+                  }
+                }
+              }
+            }
+          });
+
+          // Notify parent when page is ready (DOMContentLoaded)
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+              window.__SUPERDESIGN_PREVIEW__.ready();
+            });
+          } else {
+            window.__SUPERDESIGN_PREVIEW__.ready();
+          }
+
+          // Notify parent when page is fully loaded AND rendered
+          // We wait for: load event -> requestAnimationFrame (paint) -> delay for React rendering
+          function onPageFullyLoaded() {
+            // Wait for next animation frame (ensures browser has painted)
+            requestAnimationFrame(function() {
+              // Wait one more frame to be safe
+              requestAnimationFrame(function() {
+                // 1.5s delay: Send loaded message for React rendering
+                setTimeout(function() {
+                  window.__SUPERDESIGN_PREVIEW__.sendMessage('loaded', { timestamp: Date.now() });
+                }, 1500);
+
+                // 3s delay: Auto-capture screenshot (only in iframe context)
+                // Used for Component version thumbnails - saves screenshot to backend
+                // Disabled for Draft previews to reduce memory usage (no thumbnails needed)
+                // Auto-capture disabled for this preview type
+              });
+            });
+          }
+
+          if (document.readyState === 'complete') {
+            onPageFullyLoaded();
+          } else {
+            window.addEventListener('load', onPageFullyLoaded);
+          }
+        </script>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.left-0{left:0px}.top-0{top:0px}.-right-2{right:-0.5rem}.-top-2{top:-0.5rem}.bottom-\[-10\%\]{bottom:-10%}.left-\[-5\%\]{left:-5%}.right-\[-5\%\]{right:-5%}.top-\[-10\%\]{top:-10%}.-bottom-10{bottom:-2.5rem}.-right-10{right:-2.5rem}.right-0{right:0px}.right-6{right:1.5rem}.top-6{top:1.5rem}.left-4{left:1rem}.top-4{top:1rem}.z-40{z-index:40}.z-0{z-index:0}.z-10{z-index:10}.order-2{order:2}.order-1{order:1}.col-span-2{grid-column:span 2 / span 2}.mx-auto{margin-left:auto;margin-right:auto}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-10{margin-top:2.5rem}.mb-12{margin-bottom:3rem}.mb-2{margin-bottom:0.5rem}.mb-16{margin-bottom:4rem}.mb-4{margin-bottom:1rem}.mb-10{margin-bottom:2.5rem}.mb-20{margin-bottom:5rem}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-square{aspect-ratio:1 / 1}.aspect-video{aspect-ratio:16 / 9}.h-8{height:2rem}.h-4{height:1rem}.h-\[500px\]{height:500px}.h-\[600px\]{height:600px}.h-12{height:3rem}.h-full{height:100%}.h-24{height:6rem}.h-3{height:0.75rem}.h-10{height:2.5rem}.h-80{height:20rem}.min-h-screen{min-height:100vh}.w-auto{width:auto}.w-full{width:100%}.w-4{width:1rem}.w-\[500px\]{width:500px}.w-\[600px\]{width:600px}.w-1\/3{width:33.333333%}.w-12{width:3rem}.w-24{width:6rem}.w-3{width:0.75rem}.w-10{width:2.5rem}.max-w-7xl{max-width:80rem}.max-w-3xl{max-width:48rem}.max-w-2xl{max-width:42rem}.max-w-\[240px\]{max-width:240px}.max-w-5xl{max-width:64rem}.max-w-lg{max-width:32rem}.max-w-xs{max-width:20rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.rotate-\[-2deg\]{--tw-rotate:-2deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-3{--tw-rotate:3deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-20{gap:5rem}.gap-8{gap:2rem}.gap-6{gap:1.5rem}.gap-12{gap:3rem}.gap-4{gap:1rem}.space-x-10 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2.5rem * var(--tw-space-x-reverse));margin-left:calc(2.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1.5rem * var(--tw-space-x-reverse));margin-left:calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-12 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(3rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(3rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.space-x-8 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2rem * var(--tw-space-x-reverse));margin-left:calc(2rem * calc(1 - var(--tw-space-x-reverse)))}.overflow-hidden{overflow:hidden}
+    .overflow-x-hidden{overflow-x:hidden}.rounded-full{border-radius:9999px}.rounded-3xl{border-radius:1.5rem}.rounded-2xl{border-radius:1rem}.rounded-\[3rem\]{border-radius:3rem}.rounded-xl{border-radius:0.75rem}.rounded-\[2rem\]{border-radius:2rem}.border{border-width:1px}.border-y{border-top-width:1px;border-bottom-width:1px}.border-b{border-bottom-width:1px}.border-b-2{border-bottom-width:2px}
+    .border-b-4{border-bottom-width:4px}.border-t{border-top-width:1px}.border-\[var\(--primary-orange\)\]{border-color:var(--primary-orange)}.border-gray-100{--tw-border-opacity:1;border-color:rgb(243 244 246 / var(--tw-border-opacity, 1))}.border-orange-100{--tw-border-opacity:1;border-color:rgb(255 237 213 / var(--tw-border-opacity, 1))}
+    .border-white\/30{border-color:rgb(255 255 255 / 0.3)}.border-b-\[var\(--primary-orange\)\]{border-bottom-color:var(--primary-orange)}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-\[var\(--primary-orange\)\]{background-color:var(--primary-orange)}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1))}
+    .bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-\[var\(--bg-cream\)\]{background-color:var(--bg-cream)}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-green-400{--tw-bg-opacity:1;background-color:rgb(74 222 128 / var(--tw-bg-opacity, 1))}.bg-red-400{--tw-bg-opacity:1;background-color:rgb(248 113 113 / var(--tw-bg-opacity, 1))}.bg-yellow-400{--tw-bg-opacity:1;background-color:rgb(250 204 21 / var(--tw-bg-opacity, 1))}.bg-orange-50{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.bg-white\/20{background-color:rgb(255 255 255 / 0.2)}.bg-gradient-to-l{background-image:linear-gradient(to left, var(--tw-gradient-stops))}.bg-\[url\(\'https\:\/\/www\.transparenttextures\.com\/patterns\/carbon-fibre\.png\'\)\]{background-image:url('https://www.transparenttextures.com/patterns/carbon-fibre.png')}
+    .bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.from-\[var\(--primary-orange\)\]{--tw-gradient-from:var(--primary-orange) var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 255 255 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-black\/60{--tw-gradient-from:rgb(0 0 0 / 0.6) var(--tw-gradient-from-position);--tw-gradient-to:rgb(0 0 0 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.object-cover{object-fit:cover}.p-12{padding:3rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.p-10{padding:2.5rem}.p-4{padding:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-4{padding-top:1rem;padding-bottom:1rem}
+    .px-4{padding-left:1rem;padding-right:1rem}.px-8{padding-left:2rem;padding-right:2rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-24{padding-top:6rem;padding-bottom:6rem}.px-10{padding-left:2.5rem;padding-right:2.5rem}.pb-1{padding-bottom:0.25rem}.pb-20{padding-bottom:5rem}.pt-32{padding-top:8rem}.pb-12{padding-bottom:3rem}.pt-24{padding-top:6rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-6xl{font-size:3.75rem;line-height:1}.text-xs{font-size:0.75rem;line-height:1rem}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-9xl{font-size:8rem;line-height:1}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-black{font-weight:900}.uppercase{text-transform:uppercase}.leading-\[0\.9\]{line-height:0.9}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-tight{letter-spacing:-0.025em}.tracking-widest{letter-spacing:0.1em}.text-\[var\(--primary-orange\)\]{color:var(--primary-orange)}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}
+    .text-\[var\(--soft-blue\)\]{color:var(--soft-blue)}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-100{--tw-text-opacity:1;color:rgb(243 244 246 / var(--tw-text-opacity, 1))}.text-gray-300{--tw-text-opacity:1;color:rgb(209 213 219 / var(--tw-text-opacity, 1))}.placeholder-white\/60::placeholder{color:rgb(255 255 255 / 0.6)}.opacity-30{opacity:0.3}.opacity-40{opacity:0.4}.opacity-20{opacity:0.2}.opacity-90{opacity:0.9}.opacity-10{opacity:0.1}.mix-blend-multiply{mix-blend-mode:multiply}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.blur-\[100px\]{--tw-blur:blur(100px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[120px\]{--tw-blur:blur(120px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-700{transition-duration:700ms}.hover\:border-orange-200:hover{--tw-border-opacity:1;border-color:rgb(254 215 170 / var(--tw-border-opacity, 1))}.hover\:bg-black:hover{--tw-bg-opacity:1;background-color:rgb(0 0 0 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-100:hover{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.hover\:bg-orange-50:hover{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.hover\:text-\[var\(--primary-orange\)\]:hover{color:var(--primary-orange)}.hover\:text-gray-900:hover{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.hover\:shadow-xl:hover{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:shadow-2xl:hover{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-white:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(255 255 255 / var(--tw-ring-opacity, 1))}.group:hover .group-hover\:translate-x-2{--tw-translate-x:0.5rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:text-orange-50{--tw-text-opacity:1;color:rgb(255 247 237 / var(--tw-text-opacity, 1))}@media (min-width: 640px){.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}}@media (min-width: 768px){.md\:flex{display:flex}.md\:hidden{display:none}.md\:h-10{height:2.5rem}.md\:translate-y-8{--tw-translate-y:2rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:gap-8{gap:2rem}.md\:space-y-0 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0px * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0px * var(--tw-space-y-reverse))}.md\:p-20{padding:5rem}.md\:p-8{padding:2rem}.md\:p-16{padding:4rem}.md\:pb-32{padding-bottom:8rem}.md\:pt-48{padding-top:12rem}.md\:text-2xl{font-size:1.5rem;line-height:2rem}.md\:text-8xl{font-size:6rem;line-height:1}.md\:text-5xl{font-size:3rem;line-height:1}.md\:text-6xl{font-size:3.75rem;line-height:1}.md\:text-xl{font-size:1.25rem;line-height:1.75rem}}@media (min-width: 1024px){.lg\:order-1{order:1}.lg\:order-2{order:2}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:px-12{padding-left:3rem;padding-right:3rem}}</style></head><body><div class="min-h-screen flex flex-col m-0 p-0"><div class="grain-overlay"></div>、
+        <!-- Navigation Bar -->
+       <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-100">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="BowerBit Logo" class="h-10 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x40/1a1a1a/888?text=Image';">
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                              <a id="nav-explore-link" href="index.html" class="font-medium hover:text-[#FF7E00] transition-colors">Explore</a>
+                <a id="nav-home-link" href="community2.html" class="font-medium hover:text-[#FF7E00] transition-colors">Community</a>
+                <a id="nav-shop-link" href="shop2.html" class="font-medium hover:text-[#FF7E00] transition-colors">Shop</a>
+                <a id="nav-create-link" href="3dcreate.html" class="font-medium hover:text-[#FF7E00] transition-colors">Create Tool</a>
+                <a id="nav-community-link" href="about.html" class="font-medium hover:text-[#FF7E00] transition-colors">About</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="search-btn" class="p-2 rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:search" class="text-xl"></iconify-icon>
+                </button><button id="cart-btn" class="p-2 relative rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:shopping-cart" class="text-xl"></iconify-icon>
+                    <span id="cart-badge-count" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+                </button>
+                <div class="h-6 w-px bg-orange-100 mx-2"></div>
+                <button id="login-btn" class="hidden sm:block text-sm font-bold text-gray-700 hover:text-[#FF7E00] transition-colors">Login</button>
+    <button id="join-btn" class="bg-[#FF7E00] text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-[#E67200] transition-all transform hover:scale-105 active:scale-95">Join BowerBit</button>
+</div></div>
+</nav>
+
+    <header class="pt-32 pb-20 md:pt-48 md:pb-32 relative"><div class="absolute inset-0 z-0 overflow-hidden"><div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-orange-100 rounded-full blur-[120px] opacity-40 animate-pulse"></div>
+    <div class="absolute bottom-[-10%] left-[-5%] w-[500px] h-[500px] bg-blue-50 rounded-full blur-[100px] opacity-30"></div></div><div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10"><div class="max-w-3xl"><span class="inline-block px-4 py-1.5 rounded-full bg-orange-100 text-[var(--primary-orange)] text-xs font-bold uppercase tracking-widest mb-6 fade-in">The Origin Story</span>
+        <h1 class="text-6xl md:text-8xl font-black text-gray-900 leading-[0.9] mb-8 fade-in stagger-1">About <br>
+            <span class="text-[var(--primary-orange)]">BowerBit</span></h1>
+            <p class="text-xl md:text-2xl text-gray-600 leading-relaxed fade-in stagger-2 font-medium">"The World is Your Playground" isn't just a tagline. It’s our design philosophy for a modular future.</p>
+<div class="mt-10 flex space-x-4 fade-in stagger-3">
+    <a id="hero-cta-shop" href="3dcreate.html" class="bg-gray-900 text-white px-8 py-4 rounded-full text-sm font-bold flex items-center space-x-2 hover:bg-black transition-all">
+        <span>Start Creating</span>
+        <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+    </a>
+</div>
+        </div></div></header><section class="py-24 bg-white"><div class="max-w-7xl mx-auto px-6 lg:px-12"><div class="grid lg:grid-cols-2 gap-20 items-center"><div class="order-2 lg:order-1"><div class="relative"><div class="aspect-square bg-blue-50 rounded-3xl overflow-hidden shadow-2xl rotate-[-2deg]"><div class="absolute inset-0 flex items-center justify-center p-12 text-center"><iconify-icon icon="lucide:toy-brick" class="text-9xl text-[var(--soft-blue)] opacity-20"></iconify-icon></div><img src="https://images.unsplash.com/photo-1594732832278-abd644401426?q=80&amp;w=1470&amp;auto=format&amp;fit=crop" alt="Product Visual" class="w-full h-full object-cover mix-blend-multiply opacity-90" onerror="this.onerror=null;this.src='https://placehold.co/1470x400/1a1a1a/888?text=Image';"></div><div class="absolute -bottom-10 -right-10 bg-[var(--primary-orange)] text-white p-8 rounded-2xl shadow-xl max-w-[240px] rotate-3"><h4 class="text-xl font-bold mb-2">Click &amp; Snap</h4><p class="text-sm opacity-90 leading-snug">Our patented modular tablet system requires zero tools. Just imagination.</p></div></div></div><div class="order-1 lg:order-2 space-y-12"><div class="space-y-4"><h2 class="text-4xl md:text-5xl font-black text-gray-900">Engineering <br>Simplicity.</h2><p class="text-lg text-gray-600">At the heart of BowerBit is our proprietary scene tablet. Designed to be the foundation of any miniature world.</p></div><div class="grid gap-8"><div class="flex items-start space-x-6 p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-orange-200 transition-colors group"><div class="w-12 h-12 shrink-0 bg-white rounded-xl shadow-sm flex items-center justify-center text-[var(--primary-orange)] font-bold text-xl group-hover:scale-110 transition-transform">01</div><div class="space-y-1"><h4 class="font-bold text-lg">Pick Your Base</h4><p class="text-sm text-gray-500">Choose from 5 sizes of tactile foundation tablets in varying environmental textures.</p></div></div><div class="flex items-start space-x-6 p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-orange-200 transition-colors group"><div class="w-12 h-12 shrink-0 bg-white rounded-xl shadow-sm flex items-center justify-center text-[var(--primary-orange)] font-bold text-xl group-hover:scale-110 transition-transform">02</div><div class="space-y-1"><h4 class="font-bold text-lg">Snap-Fit Icons</h4><p class="text-sm text-gray-500">Accessories and figures click effortlessly into the grid with satisfying feedback.</p></div></div><div class="flex items-start space-x-6 p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:border-orange-200 transition-colors group"><div class="w-12 h-12 shrink-0 bg-white rounded-xl shadow-sm flex items-center justify-center text-[var(--primary-orange)] font-bold text-xl group-hover:scale-110 transition-transform">03</div><div class="space-y-1"><h4 class="font-bold text-lg">Expand &amp; Connect</h4><p class="text-sm text-gray-500">Link multiple tablets to create sprawling dioramas or vertical structures.</p></div></div></div></div></div></div></section><section class="py-24 relative overflow-hidden bg-[var(--bg-cream)]"><div class="max-w-7xl mx-auto px-6 lg:px-12 relative z-10"><div class="bg-gray-900 text-white rounded-[3rem] p-12 md:p-20 relative overflow-hidden"><div class="absolute top-0 right-0 w-1/3 h-full opacity-20 pointer-events-none bg-gradient-to-l from-[var(--primary-orange)] to-transparent"></div><div class="max-w-2xl relative z-10"><h2 class="text-4xl md:text-6xl font-black mb-8 leading-[0.9]">The Creative <br><span class="text-[var(--primary-orange)]">Ecosystem</span></h2><p class="text-lg md:text-xl text-gray-400 leading-relaxed mb-12">BowerBit is where toy enthusiasts, parents, and pro-creators converge. We don't just sell toys; we provide the stage for your stories to unfold.</p><div class="grid sm:grid-cols-2 gap-8"><div class="space-y-2"> <iconify-icon icon="lucide:sparkles" class="text-3xl text-[var(--primary-orange)] mb-2"></iconify-icon><h4 class="text-xl font-bold">Our Mission</h4><p class="text-gray-400 text-sm">To bridge the gap between digital creation and tactile play, fostering a community that builds together.</p></div><div class="space-y-2"> <iconify-icon icon="lucide:heart" class="text-3xl text-[var(--primary-orange)] mb-2"></iconify-icon><h4 class="text-xl font-bold">Our Values</h4><p class="text-gray-400 text-sm">Open innovation, high-quality material integrity, and radical community empowerment.</p></div></div></div></div></div></section><section class="py-24"><div class="max-w-7xl mx-auto px-6 lg:px-12"><div class="flex flex-col md:flex-row items-end justify-between mb-16 gap-6"><div class="max-w-2xl"><h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">Community-Driven <br><span class="text-[var(--soft-blue)]">Production Cycle</span></h2><p class="text-lg text-gray-600">At BowerBit, you are the designer. Our community dictates our product roadmap through our unique engagement model.</p></div><a id="community-explore" href="#" class="inline-flex items-center space-x-2 text-[var(--primary-orange)] font-bold group"><span>Join the Creator Hub</span><iconify-icon icon="lucide:arrow-right" class="group-hover:translate-x-2 transition-transform"></iconify-icon></a></div><div class="grid md:grid-cols-3 gap-8"><div class="p-10 bg-white rounded-3xl border border-gray-100 shadow-sm relative group hover:shadow-xl transition-all h-full"><div class="absolute top-6 right-6 text-gray-100 text-6xl font-black select-none group-hover:text-orange-50">01</div><h4 class="text-2xl font-bold mb-4">Create &amp; Share</h4><p class="text-gray-500 leading-relaxed mb-6">Upload your custom scene designs or unique configurations to the Community Showcase.</p><iconify-icon icon="lucide:upload-cloud" class="text-4xl text-[var(--primary-orange)]"></iconify-icon></div><div class="p-10 bg-white rounded-3xl border border-gray-100 shadow-sm relative group hover:shadow-xl transition-all h-full"><div class="absolute top-6 right-6 text-gray-100 text-6xl font-black select-none group-hover:text-orange-50">02</div><h4 class="text-2xl font-bold mb-4">Gather Support</h4><p class="text-gray-500 leading-relaxed mb-6">The rule is simple: More likes and attention equals a higher chance of being picked for production.</p><iconify-icon icon="lucide:bar-chart-3" class="text-4xl text-[var(--soft-blue)]"></iconify-icon></div><div class="p-10 bg-white rounded-3xl border border-gray-100 shadow-sm relative group hover:shadow-xl transition-all h-full border-b-4 border-b-[var(--primary-orange)]"><div class="absolute top-6 right-6 text-gray-100 text-6xl font-black select-none group-hover:text-orange-50">03</div><h4 class="text-2xl font-bold mb-4">Mass Production</h4><p class="text-gray-500 leading-relaxed mb-6">Winning designs enter our manufacturing pipeline, and creators earn royalties on every sale.</p><iconify-icon icon="lucide:factory" class="text-4xl text-[var(--primary-orange)]"></iconify-icon></div></div></div></section><section class="py-24 bg-white border-y border-gray-100"><div class="max-w-7xl mx-auto px-6 lg:px-12"><div class="grid lg:grid-cols-12 gap-12 items-center"><div class="lg:col-span-7"><div class="bg-gray-100 rounded-3xl p-4 md:p-8 aspect-video overflow-hidden shadow-inner flex items-center justify-center relative"><div class="absolute top-4 left-4 flex space-x-2"><div class="w-3 h-3 rounded-full bg-red-400"></div><div class="w-3 h-3 rounded-full bg-yellow-400"></div><div class="w-3 h-3 rounded-full bg-green-400"></div></div><div class="text-center space-y-6"><div class="grid grid-cols-3 gap-4 mb-4"><div class="w-24 h-24 bg-white rounded-xl shadow-sm border border-orange-100 flex items-center justify-center animate-bounce"><iconify-icon icon="lucide:blocks" class="text-3xl text-[var(--primary-orange)]"></iconify-icon></div><div class="w-24 h-24 bg-white rounded-xl shadow-sm border border-orange-100 flex items-center justify-center"><iconify-icon icon="lucide:user" class="text-3xl text-gray-300"></iconify-icon></div><div class="w-24 h-24 bg-white rounded-xl shadow-sm border border-orange-100 flex items-center justify-center animate-pulse"><iconify-icon icon="lucide:mountain" class="text-3xl text-[var(--soft-blue)]"></iconify-icon></div></div><p class="text-sm font-mono text-gray-400">bowerbit_studio_v2.0 // live_preview</p></div></div></div><div class="lg:col-span-5 space-y-8"><div class="space-y-4"><span class="text-[var(--primary-orange)] font-bold text-sm tracking-widest uppercase">The Digital Twin</span><h2 class="text-4xl md:text-5xl font-black text-gray-900 leading-tight">3D Scene <br>Builder Logic</h2><p class="text-gray-600">Our web-based studio mirrors the physical modularity of BowerBit. Build digitally first, visualize in 3D, and export your parts list instantly.</p></div><ul class="space-y-6"><li class="flex items-center space-x-4"><div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center shrink-0"><iconify-icon icon="lucide:check" class="text-[var(--primary-orange)]"></iconify-icon></div><span class="font-medium">Real-time lighting &amp; physics simulations</span></li><li class="flex items-center space-x-4"><div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center shrink-0"><iconify-icon icon="lucide:check" class="text-[var(--primary-orange)]"></iconify-icon></div><span class="font-medium">One-click inventory shopping list generator</span>
+            </li>
+            <li class="flex items-center space-x-4">
+                <div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center shrink-0">
+                    <iconify-icon icon="lucide:check" class="text-[var(--primary-orange)]"></iconify-icon></div><span class="font-medium">Cross-device cloud saving &amp; collaborative editing</span></li></ul><a id="create-page-link" href="#" class="inline-block px-8 py-4 bg-gray-900 text-white rounded-full font-bold hover:bg-black transition-all shadow-lg">Open Studio</a>
+                </div></div></div></section><section class="py-24 bg-[var(--bg-cream)]"><div class="max-w-7xl mx-auto px-6 lg:px-12 text-center mb-16"><h2 class="text-4xl md:text-5xl font-black text-gray-900 mb-4">Design Highlights</h2><p class="text-gray-600 max-w-2xl mx-auto">Aesthetics that bridge the gap between architectural precision and playful vibrance.</p></div><div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8"><div class="group relative h-80 rounded-[2rem] overflow-hidden shadow-md hover:shadow-2xl transition-all"><img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?q=80&amp;w=1470&amp;auto=format&amp;fit=crop" alt="Minimal Design" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.onerror=null;this.src='https://placehold.co/1470x400/1a1a1a/888?text=Image';">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6"><p class="text-white font-bold">Textural Depth</p></div></div><div class="group relative h-80 rounded-[2rem] overflow-hidden shadow-md hover:shadow-2xl transition-all md:translate-y-8"><img src="https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&amp;w=1470&amp;auto=format&amp;fit=crop" alt="Color Theory" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.onerror=null;this.src='https://placehold.co/1470x400/1a1a1a/888?text=Image';"><div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6"><p class="text-white font-bold">Vibrant Palette</p></div></div><div class="group relative h-80 rounded-[2rem] overflow-hidden shadow-md hover:shadow-2xl transition-all"><img src="https://images.unsplash.com/photo-1485125639709-a60c3a500bf1?q=80&amp;w=1470&amp;auto=format&amp;fit=crop" alt="Precision" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.onerror=null;this.src='https://placehold.co/1470x400/1a1a1a/888?text=Image';"><div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6"><p class="text-white font-bold">Geometric Precision</p></div></div><div class="group relative h-80 rounded-[2rem] overflow-hidden shadow-md hover:shadow-2xl transition-all md:translate-y-8"><img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&amp;w=1471&amp;auto=format&amp;fit=crop" alt="Playfulness" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.onerror=null;this.src='https://placehold.co/1471x400/1a1a1a/888?text=Image';"><div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6"><p class="text-white font-bold">Whimsical Forms</p></div></div></div></section><section class="py-24 px-6"><div class="max-w-5xl mx-auto bg-[var(--primary-orange)] rounded-[3rem] p-8 md:p-16 text-center text-white relative overflow-hidden"><div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div><div class="relative z-10"><h2 class="text-4xl md:text-5xl font-black mb-6">Stay Inspired.</h2><p class="text-lg md:text-xl opacity-90 mb-10 max-w-2xl mx-auto">Get early access to community picks, new accessory drops, and creative scene-building tips.</p><form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"><input type="email" placeholder="your@email.com" class="flex-1 px-8 py-4 rounded-full bg-white/20 border border-white/30 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white"><button type="submit" id="newsletter-submit" class="px-10 py-4 bg-white text-[var(--primary-orange)] rounded-full font-bold hover:bg-gray-100 transition-colors shadow-lg">Subscribe</button></form></div></div></section>
+                    
+<footer class="bg-zinc-950 text-white py-20 px-6">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-12">
+        <div class="col-span-1 md:col-span-1">
+          <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="Logo" class="h-8 invert brightness-0 mb-8" onerror="this.onerror=null;this.src='https://placehold.co/600x32/1a1a1a/888?text=Image';">
+          <p class="text-zinc-400 text-sm">
+            Building the future of play, one scenario at a time. Join the revolution in toy creative ecosystems.
+          </p>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Explore</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-home-link" class="hover:text-[#FF7E00]">Home</a></li>
+            <li><a href="#" id="footer-showcase-link" class="hover:text-[#FF7E00]">Showcase</a></li>
+            <li><a href="#" id="footer-shop-link" class="hover:text-[#FF7E00]">Shop Materials</a></li>
+            <li><a href="#" id="footer-tools-link" class="hover:text-[#FF7E00]">Creator Tools</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">About</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-about-us-link" class="hover:text-[#FF7E00]">About Us</a></li>
+            <li><a href="#" id="footer-investor-link" class="hover:text-[#FF7E00]">Investor Center</a></li>
+            <li><a href="#" id="footer-partner-link" class="hover:text-[#FF7E00]">Partner Program</a></li>
+            <li><a href="#" id="footer-sell-art-link" class="hover:text-[#FF7E00]">Sell your art</a></li>
+            <li><a href="#" id="footer-jobs-link" class="hover:text-[#FF7E00]">Jobs</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Community</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-discord-link" class="hover:text-[#FF7E00]">Discord</a></li>
+            <li><a href="#" id="footer-twitter-link" class="hover:text-[#FF7E00]">Twitter</a></li>
+            <li><a href="#" id="footer-instagram-link" class="hover:text-[#FF7E00]">Instagram</a></li>
+            <li><a href="#" id="footer-events-link" class="hover:text-[#FF7E00]">Monthly Events</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Stay Inspired</h5>
+          <div class="relative">
+            <input type="email" placeholder="Your email" class="w-full bg-zinc-900 border-none rounded-full px-6 py-4 text-sm focus:ring-2 focus:ring-[#FF7E00] outline-none">
+            <button id="footer-subscribe-btn" class="absolute right-2 top-2 bg-[#FF7E00] text-white p-2 rounded-full">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-zinc-800 text-center text-zinc-600 text-xs">
+        © 2024 BowerBit. All rights reserved. Designed for the builders of tomorrow.
+      </div>
+    </footer>
+
+                </div>
+<script defer="" type="module">
+          // Error tracking for preview
+          window.addEventListener('error', function(event) {
+            if (window.__SUPERDESIGN_PREVIEW__) {
+              // Extract full stack trace from error object
+              const error = event.error;
+              let stack = null;
+              let name = 'Error';
+
+              if (error && typeof error === 'object') {
+                stack = error.stack || null;
+                name = error.name || 'Error';
+              }
+
+              window.__SUPERDESIGN_PREVIEW__.sendMessage('error', {
+                message: event.message,
+                filename: event.filename,
+                lineno: event.lineno,
+                colno: event.colno,
+                name: name,
+                stack: stack
+              });
+            }
+          });
+
+          // Track unhandled promise rejections
+          window.addEventListener('unhandledrejection', function(event) {
+            console.error('[SuperDesign Preview] Unhandled rejection:', event.reason);
+            if (window.__SUPERDESIGN_PREVIEW__) {
+              const reason = event.reason;
+              let stack = null;
+              let name = 'UnhandledRejection';
+              let message = String(reason);
+
+              // Extract stack and name if reason is an Error object
+              if (reason && typeof reason === 'object') {
+                stack = reason.stack || null;
+                name = reason.name || 'UnhandledRejection';
+                message = reason.message || String(reason);
+              }
+
+              window.__SUPERDESIGN_PREVIEW__.sendMessage('unhandled-rejection', {
+                reason: message,
+                name: name,
+                stack: stack
+              });
+            }
+          });
+        </script>
+<script defer="" type="module">import '/__visual-edit-bridge/iframe-runtime.mjs?v=0.0.0';</script>
+<script>          document.getElementById('cart-btn').addEventListener('click', function() {
+    // 跳转到购物车页面
+    window.location.href = 'shoppingcart.html';
+    // 后续可加扩展逻辑，例：
+    // if(购物车为空) { alert('购物车暂无商品'); }
+});</script>
+</body></html>
