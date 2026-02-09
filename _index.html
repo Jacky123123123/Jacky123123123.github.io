@@ -1,0 +1,1246 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BowerBit | Your Creative Toy Ecosystem</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <style>
+    @import url('https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@800,700,500&f[]=satoshi@700,500,400&display=swap');
+
+    :root {
+      --brand-orange: #FF7E00;
+      --brand-blue: #4A6FA5;
+      --brand-cream: #FFFBF5;
+      --brand-text: #1A1A1A;
+      --brand-gray: #71717A;
+    }
+
+    body {
+      font-family: 'Satoshi', sans-serif;
+      background-color: var(--brand-cream);
+      color: var(--brand-text);
+      scroll-behavior: smooth;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cabinet Grotesk', sans-serif;
+    }
+
+    .noise-bg {
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .transition-custom {
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+  </style>
+
+<meta name="preview-version" content="ce1ac352-168f-4c59-b4b2-9ae7b7307f77">
+<meta name="preview-timestamp" content="2026-02-04T18:23:02.737Z">
+
+<style>
+          /* Hide scrollbar for Chrome, Safari and Opera */
+          html::-webkit-scrollbar,
+          body::-webkit-scrollbar,
+          *::-webkit-scrollbar {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+          }
+          /* Hide scrollbar for IE, Edge and Firefox */
+          html, body, * {
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+          }
+        </style>
+
+<script type="module">
+          (function() {
+            document.addEventListener('wheel', function(e) {
+              if (e.ctrlKey) {
+                e.preventDefault();
+              }
+            }, { passive: false });
+          })();
+        </script>
+<script type="module">
+          // SuperDesign Preview Runtime
+          // NOTE: modern-screenshot is lazy-loaded only when screenshot is requested to improve performance
+          console.log('[SuperDesign] Preview loaded for version:', 'ce1ac352-168f-4c59-b4b2-9ae7b7307f77');
+
+          // Set up communication with parent frame if needed
+          window.__SUPERDESIGN_PREVIEW__ = {
+            versionId: 'ce1ac352-168f-4c59-b4b2-9ae7b7307f77',
+            timestamp: '2026-02-04T18:23:02.737Z',
+            _modernScreenshotModule: null, // Lazy-loaded module cache
+            // Add methods for communication
+            sendMessage: function(type, data) {
+              if (window.parent) {
+                window.parent.postMessage({
+                  source: 'superdesign-preview',
+                  type: type,
+                  data: data,
+                  versionId: this.versionId
+                }, '*');
+              }
+            },
+            // Report ready state
+            ready: function() {
+              this.sendMessage('ready', { timestamp: Date.now() });
+            },
+            // Internal screenshot capture logic - shared by both manual and auto capture
+            _captureScreenshotInternal: async function() {
+              // Lazy-load modern-screenshot only when needed (performance optimization)
+              if (!this._modernScreenshotModule) {
+                console.log('[SuperDesign] Loading modern-screenshot library...');
+                this._modernScreenshotModule = await import('https://esm.sh/modern-screenshot@4.6.6');
+              }
+              const modernScreenshot = this._modernScreenshotModule;
+
+              if (!modernScreenshot || !modernScreenshot.domToCanvas) {
+                throw new Error('modern-screenshot library not loaded');
+              }
+              console.log('[SuperDesign] modern-screenshot library loaded successfully');
+
+              // Get current viewport dimensions and scroll position
+              const scrollX = window.scrollX || window.pageXOffset;
+              const scrollY = window.scrollY || window.pageYOffset;
+              const viewportWidth = window.innerWidth;
+              const viewportHeight = window.innerHeight;
+
+              // Get full document dimensions to ensure we capture everything
+              const documentWidth = Math.max(
+                document.documentElement.scrollWidth,
+                document.documentElement.offsetWidth,
+                document.documentElement.clientWidth,
+                document.body.scrollWidth,
+                document.body.offsetWidth
+              );
+              const documentHeight = Math.max(
+                document.documentElement.scrollHeight,
+                document.documentElement.offsetHeight,
+                document.documentElement.clientHeight,
+                document.body.scrollHeight,
+                document.body.offsetHeight
+              );
+
+              // Use device pixel ratio for high-DPI screens (Retina, 4K, etc.)
+              // Cap at 1 on mobile to avoid iOS Safari canvas memory limits (~16MB)
+              const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+              const pixelRatio = isMobile ? 1 : (window.devicePixelRatio || 1);
+
+              console.log('[SuperDesign] Viewport info:', {
+                scrollX,
+                scrollY,
+                viewportWidth,
+                viewportHeight,
+                pixelRatio
+              });
+
+              // Calculate estimated memory usage for canvas (width * height * 4 bytes per pixel)
+              const estimatedFullCanvasMemoryMB = (documentWidth * pixelRatio * documentHeight * pixelRatio * 4) / (1024 * 1024);
+              console.log('[SuperDesign] Document info:', {
+                documentWidth,
+                documentHeight,
+                estimatedFullCanvasMemoryMB: estimatedFullCanvasMemoryMB.toFixed(2) + 'MB',
+                isMobile
+              });
+
+              let dataUrl;
+
+              if (isMobile) {
+                // Mobile path: Capture viewport directly to avoid memory issues
+                // iOS Safari has ~16MB canvas memory limit, so we skip full document capture
+                console.log('[SuperDesign] Mobile device: using direct viewport capture to avoid memory limits');
+
+                // Create a wrapper div positioned to show only the current viewport
+                const wrapper = document.createElement('div');
+                wrapper.style.cssText = 'position:fixed;top:0;left:0;width:' + viewportWidth + 'px;height:' + viewportHeight + 'px;overflow:hidden;z-index:999999;pointer-events:none;';
+
+                // Clone the body and position it at negative scroll offset
+                const clone = document.body.cloneNode(true);
+                clone.style.cssText = 'position:absolute;top:' + (-scrollY) + 'px;left:' + (-scrollX) + 'px;margin:0;width:' + documentWidth + 'px;';
+
+                wrapper.appendChild(clone);
+                document.body.appendChild(wrapper);
+
+                try {
+                  // Capture only the viewport-sized wrapper
+                  const viewportCanvas = await modernScreenshot.domToCanvas(wrapper, {
+                    scale: 1,
+                    backgroundColor: '#ffffff',
+                    width: viewportWidth,
+                    height: viewportHeight,
+                  });
+
+                  console.log('[SuperDesign] Mobile viewport captured, canvas size:', {
+                    canvasWidth: viewportCanvas.width,
+                    canvasHeight: viewportCanvas.height,
+                    estimatedMemoryMB: ((viewportCanvas.width * viewportCanvas.height * 4) / (1024 * 1024)).toFixed(2) + 'MB'
+                  });
+
+                  dataUrl = viewportCanvas.toDataURL('image/png', 0.5);
+                } finally {
+                  // Always clean up the wrapper
+                  document.body.removeChild(wrapper);
+                }
+              } else {
+                // Desktop path: Capture full document then crop (higher quality, more memory available)
+                const fullCanvas = await modernScreenshot.domToCanvas(document.documentElement, {
+                  scale: pixelRatio,
+                  backgroundColor: '#ffffff',
+                  width: documentWidth,
+                  height: documentHeight,
+                });
+
+                console.log('[SuperDesign] Full page captured, canvas size:', {
+                  canvasWidth: fullCanvas.width,
+                  canvasHeight: fullCanvas.height
+                });
+                console.log('[SuperDesign] Now cropping to viewport...');
+
+                // Create a new canvas for the viewport only (scaled by pixelRatio)
+                const viewportCanvas = document.createElement('canvas');
+                viewportCanvas.width = viewportWidth * pixelRatio;
+                viewportCanvas.height = viewportHeight * pixelRatio;
+                const ctx = viewportCanvas.getContext('2d');
+
+                if (!ctx) {
+                  throw new Error('Failed to get canvas context');
+                }
+
+                // Draw only the viewport area from the full canvas
+                ctx.drawImage(
+                  fullCanvas,
+                  scrollX * pixelRatio, scrollY * pixelRatio, viewportWidth * pixelRatio, viewportHeight * pixelRatio,
+                  0, 0, viewportWidth * pixelRatio, viewportHeight * pixelRatio
+                );
+
+                console.log('[SuperDesign] Converting to dataURL, viewport canvas size:', {
+                  width: viewportCanvas.width,
+                  height: viewportCanvas.height,
+                  estimatedMemoryMB: ((viewportCanvas.width * viewportCanvas.height * 4) / (1024 * 1024)).toFixed(2) + 'MB'
+                });
+
+                dataUrl = viewportCanvas.toDataURL('image/png', 1.0);
+              }
+
+              console.log('[SuperDesign] toDataURL result:', {
+                length: dataUrl?.length || 0,
+                first50Chars: dataUrl?.substring(0, 50) || 'null/undefined',
+                isValidPrefix: dataUrl?.startsWith('data:image/png;base64,') || false
+              });
+
+              // Validate the dataUrl is a proper base64 image (iOS Safari can return garbage under memory pressure)
+              if (!dataUrl || !dataUrl.startsWith('data:image/png;base64,') || dataUrl.length < 100) {
+                throw new Error('Invalid screenshot data: toDataURL returned invalid result (length: ' + (dataUrl?.length || 0) + ', first50: ' + (dataUrl?.substring(0, 50) || 'null') + ')');
+              }
+
+              return {
+                dataUrl: dataUrl,
+                viewportWidth: viewportWidth,
+                viewportHeight: viewportHeight,
+                pixelRatio: pixelRatio
+              };
+            },
+            // Auto-capture screenshot (triggered automatically after page load in iframe)
+            autoCapture: async function() {
+              // Only run in iframe context
+              if (window === window.parent) {
+                console.log('[SuperDesign] Not in iframe, skipping auto-screenshot');
+                return;
+              }
+
+              try {
+                console.log('[SuperDesign] Auto-capture: starting...');
+                const result = await this._captureScreenshotInternal();
+
+                // Send auto-screenshot message (different type from manual capture)
+                this.sendMessage('auto-screenshot', {
+                  dataUrl: result.dataUrl,
+                  timestamp: Date.now(),
+                  viewportWidth: result.viewportWidth,
+                  viewportHeight: result.viewportHeight,
+                  pixelRatio: result.pixelRatio,
+                });
+
+                console.log('[SuperDesign] Auto-capture: sent to parent');
+              } catch (error) {
+                console.error('[SuperDesign] Auto-capture failed:', error);
+                // Silent failure - don't send error message for auto-capture
+              }
+            },
+            // Screenshot capture function (for manual requests from parent)
+            captureScreenshot: async function(requestId, autoCaptureId) {
+              try {
+                console.log('[SuperDesign] Capturing screenshot of current viewport...', { requestId, autoCaptureId });
+
+                // Store requestId and autoCaptureId for use in sendMessage
+                this._currentRequestId = requestId;
+                this._currentAutoCaptureId = autoCaptureId;
+
+                const result = await this._captureScreenshotInternal();
+
+                console.log('[SuperDesign] Screenshot captured successfully');
+
+                // Send screenshot data to parent with viewport dimensions for proper display
+                this.sendMessage('screenshot-captured', {
+                  dataUrl: result.dataUrl,
+                  timestamp: Date.now(),
+                  viewportWidth: result.viewportWidth,
+                  viewportHeight: result.viewportHeight,
+                  pixelRatio: result.pixelRatio,
+                  // Echo back requestId and autoCaptureId to identify this response
+                  requestId: this._currentRequestId,
+                  autoCaptureId: this._currentAutoCaptureId
+                });
+
+                return result.dataUrl;
+              } catch (error) {
+                console.error('[SuperDesign] Screenshot capture failed:', error);
+                this.sendMessage('screenshot-error', {
+                  error: error.message || String(error),
+                  timestamp: Date.now(),
+                  // Echo back requestId and autoCaptureId to identify this response
+                  requestId: this._currentRequestId,
+                  autoCaptureId: this._currentAutoCaptureId
+                });
+                throw error;
+              }
+            }
+          };
+
+          // Font loading helper - dynamically load Google Fonts
+          window.__SUPERDESIGN_PREVIEW__.loadedFonts = new Set();
+          window.__SUPERDESIGN_PREVIEW__.loadGoogleFont = function(fontFamily) {
+            // Skip if already loaded or is a system/custom font
+            if (!fontFamily || this.loadedFonts.has(fontFamily)) return;
+            if (fontFamily.startsWith('Custom-')) return;
+
+            const systemFonts = ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI',
+              'Roboto', 'Helvetica', 'Arial', 'sans-serif', 'Georgia', 'Times New Roman',
+              'Times', 'serif', 'Menlo', 'Monaco', 'Consolas', 'Courier New', 'monospace'];
+            if (systemFonts.some(sf => fontFamily.toLowerCase().includes(sf.toLowerCase()))) return;
+
+            // Add preconnect if not present
+            if (!document.querySelector('link[href*="fonts.googleapis.com"]')) {
+              const preconnect1 = document.createElement('link');
+              preconnect1.rel = 'preconnect';
+              preconnect1.href = 'https://fonts.googleapis.com';
+              document.head.appendChild(preconnect1);
+
+              const preconnect2 = document.createElement('link');
+              preconnect2.rel = 'preconnect';
+              preconnect2.href = 'https://fonts.gstatic.com';
+              preconnect2.crossOrigin = 'anonymous';
+              document.head.appendChild(preconnect2);
+            }
+
+            // Load the font
+            const linkId = 'google-font-' + fontFamily.replace(/\s+/g, '-').toLowerCase();
+            if (!document.getElementById(linkId)) {
+              const link = document.createElement('link');
+              link.id = linkId;
+              link.rel = 'stylesheet';
+              link.href = 'https://fonts.googleapis.com/css2?family=' + encodeURIComponent(fontFamily) + ':wght@400;500;600;700&display=swap';
+              link.onerror = function() {
+                console.error('[SuperDesign] Failed to load Google Font:', fontFamily);
+              };
+              document.head.appendChild(link);
+            }
+
+            this.loadedFonts.add(fontFamily);
+          };
+
+          // Custom font loading helper - dynamically inject @font-face
+          window.__SUPERDESIGN_PREVIEW__.loadedCustomFonts = new Set();
+          window.__SUPERDESIGN_PREVIEW__.loadCustomFont = function(fontInfo) {
+            // fontInfo: { family: string, url: string, format: string }
+            if (!fontInfo || !fontInfo.family || !fontInfo.url) return;
+            if (this.loadedCustomFonts.has(fontInfo.family)) return;
+
+            const styleId = 'custom-font-' + fontInfo.family.replace(/[^a-zA-Z0-9]/g, '-');
+            if (document.getElementById(styleId)) return;
+
+            const style = document.createElement('style');
+            style.id = styleId;
+            style.textContent = '@font-face { ' +
+              'font-family: "' + fontInfo.family + '"; ' +
+              'src: url("' + fontInfo.url + '") format("' + (fontInfo.format || 'woff2') + '"); ' +
+              'font-weight: 100 900; ' +
+              'font-style: normal; ' +
+              'font-display: swap; ' +
+            '}';
+            document.head.appendChild(style);
+
+            this.loadedCustomFonts.add(fontInfo.family);
+          };
+
+          // Theme sync functionality - Apply CSS variables from parent
+          window.__SUPERDESIGN_PREVIEW__.applyTheme = function(payload, isDark) {
+            const root = document.documentElement;
+
+            // Apply color variables based on mode
+            const colorVars = isDark ? payload.dark : payload.light;
+            for (const [name, value] of Object.entries(colorVars)) {
+              root.style.setProperty(name, value);
+            }
+
+            // Load custom fonts first (if any)
+            if (payload.customFonts && Array.isArray(payload.customFonts)) {
+              payload.customFonts.forEach(fontInfo => {
+                this.loadCustomFont(fontInfo);
+              });
+            }
+
+            // Apply typography variables and load fonts
+            if (payload.typography) {
+              // Load Google Fonts dynamically (skip custom fonts)
+              if (payload.typography.fontSans && !payload.typography.fontSans.startsWith('Custom-')) {
+                this.loadGoogleFont(payload.typography.fontSans);
+              }
+              if (payload.typography.fontSerif && !payload.typography.fontSerif.startsWith('Custom-')) {
+                this.loadGoogleFont(payload.typography.fontSerif);
+              }
+              if (payload.typography.fontMono && !payload.typography.fontMono.startsWith('Custom-')) {
+                this.loadGoogleFont(payload.typography.fontMono);
+              }
+
+              // Set CSS variables with proper quoting for font families
+              // Extract the primary font name and format it correctly for CSS
+              // - Font names with spaces MUST be quoted: "Source Sans 3"
+              // - Simple font names can be unquoted but we quote for safety: "Inter"
+              const formatFontValue = (fontFamily) => {
+                if (!fontFamily) return fontFamily;
+                // Split by comma and take the first part (ignore fallbacks)
+                const firstFont = fontFamily.split(',')[0].trim();
+                // Remove any surrounding quotes
+                const cleanFont = firstFont.replace(/^["']|["']$/g, '');
+                // Don't quote CSS var() references
+                if (cleanFont.startsWith('var(')) {
+                  return cleanFont;
+                }
+                // Quote regular font names
+                return '"' + cleanFont + '"';
+              };
+              const fontSansValue = formatFontValue(payload.typography.fontSans);
+              const fontSerifValue = formatFontValue(payload.typography.fontSerif);
+              const fontMonoValue = formatFontValue(payload.typography.fontMono);
+
+              root.style.setProperty('--font-sans', fontSansValue);
+              root.style.setProperty('--font-serif', fontSerifValue);
+              root.style.setProperty('--font-mono', fontMonoValue);
+              root.style.setProperty('--font-size', payload.typography.fontSize);
+              root.style.setProperty('--line-height', payload.typography.lineHeight);
+              root.style.setProperty('--letter-spacing-body', payload.typography.letterSpacing);
+              root.style.setProperty('--letter-spacing-heading', payload.typography.headingLetterSpacing);
+              root.style.setProperty('--font-weight-regular', payload.typography.fontWeightRegular);
+              root.style.setProperty('--font-weight-bold', payload.typography.fontWeightBold);
+            }
+
+            // Apply effects variables
+            if (payload.effects) {
+              root.style.setProperty('--radius', payload.effects.radius);
+              root.style.setProperty('--shadow', payload.effects.shadow);
+            }
+
+            // Toggle dark class on html element
+            if (isDark) {
+              root.classList.add('dark');
+            } else {
+              root.classList.remove('dark');
+            }
+          };
+
+          // Listen for messages from parent (screenshot and theme)
+          window.addEventListener('message', function(event) {
+            // Security: You might want to check event.origin in production
+            if (event.data && event.data.type === 'request-screenshot') {
+              console.log('[SuperDesign] Received screenshot request from parent', {
+                requestId: event.data.requestId,
+                autoCaptureId: event.data.autoCaptureId
+              });
+              if (window.__SUPERDESIGN_PREVIEW__) {
+                // Pass requestId and autoCaptureId to captureScreenshot so they can be echoed back
+                window.__SUPERDESIGN_PREVIEW__.captureScreenshot(event.data.requestId, event.data.autoCaptureId);
+              }
+            }
+
+            // Handle theme update messages
+            if (event.data && event.data.type === 'superdesign-theme-update') {
+              if (window.__SUPERDESIGN_PREVIEW__ && event.data.payload) {
+                const isDark = event.data.isDark || false;
+                window.__SUPERDESIGN_PREVIEW__.applyTheme(event.data.payload, isDark);
+                // Acknowledge theme applied
+                window.__SUPERDESIGN_PREVIEW__.sendMessage('theme-applied', {
+                  timestamp: Date.now(),
+                  isDark: isDark
+                });
+              }
+            }
+
+            // Handle route navigation messages (hash-based routing for performance)
+            if (event.data && event.data.type === 'navigate-to-route') {
+              const route = event.data.route;
+              if (route) {
+                console.log('[SuperDesign] Navigating to route:', route);
+                // Update hash without triggering full page reload
+                if (route === '/') {
+                  // Remove hash for root route
+                  if (window.location.hash) {
+                    history.pushState(null, '', window.location.pathname + window.location.search);
+                    window.dispatchEvent(new HashChangeEvent('hashchange'));
+                  }
+                } else {
+                  // Set hash for non-root routes
+                  const newHash = '#' + route;
+                  if (window.location.hash !== newHash) {
+                    window.location.hash = route;
+                  }
+                }
+              }
+            }
+          });
+
+          // Notify parent when page is ready (DOMContentLoaded)
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', function() {
+              window.__SUPERDESIGN_PREVIEW__.ready();
+            });
+          } else {
+            window.__SUPERDESIGN_PREVIEW__.ready();
+          }
+
+          // Notify parent when page is fully loaded AND rendered
+          // We wait for: load event -> requestAnimationFrame (paint) -> delay for React rendering
+          function onPageFullyLoaded() {
+            // Wait for next animation frame (ensures browser has painted)
+            requestAnimationFrame(function() {
+              // Wait one more frame to be safe
+              requestAnimationFrame(function() {
+                // 1.5s delay: Send loaded message for React rendering
+                setTimeout(function() {
+                  window.__SUPERDESIGN_PREVIEW__.sendMessage('loaded', { timestamp: Date.now() });
+                }, 1500);
+
+                // 3s delay: Auto-capture screenshot (only in iframe context)
+                // Used for Component version thumbnails - saves screenshot to backend
+                // Disabled for Draft previews to reduce memory usage (no thumbnails needed)
+                // Auto-capture disabled for this preview type
+              });
+            });
+          }
+
+          if (document.readyState === 'complete') {
+            onPageFullyLoaded();
+          } else {
+            window.addEventListener('load', onPageFullyLoaded);
+          }
+        </script>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.-inset-4{inset:-1rem}.top-0{top:0px}.left-3{left:0.75rem}.top-3{top:0.75rem}.bottom-4{bottom:1rem}.right-4{right:1rem}.left-0{left:0px}.top-1\/2{top:50%}.left-10{left:2.5rem}.top-20{top:5rem}.bottom-20{bottom:5rem}.right-10{right:2.5rem}.bottom-8{bottom:2rem}.left-8{left:2rem}.right-2{right:0.5rem}.right-8{right:2rem}.top-2{top:0.5rem}.z-0{z-index:0}.z-50{z-index:50}.z-10{z-index:10}.col-span-1{grid-column:span 1 / span 1}.mx-auto{margin-left:auto;margin-right:auto}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-16{margin-bottom:4rem}.mb-20{margin-bottom:5rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-20{margin-top:5rem}.mb-1{margin-bottom:0.25rem}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.aspect-\[4\/5\]{aspect-ratio:4/5}.aspect-square{aspect-ratio:1 / 1}.aspect-video{aspect-ratio:16 / 9}.h-10{height:2.5rem}.h-20{height:5rem}.h-6{height:1.5rem}.h-64{height:16rem}.h-full{height:100%}.h-80{height:20rem}.h-96{height:24rem}.h-1{height:0.25rem}.h-16{height:4rem}.h-12{height:3rem}.h-24{height:6rem}.h-8{height:2rem}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-full{width:100%}.w-6{width:1.5rem}.w-16{width:4rem}.w-12{width:3rem}.w-24{width:6rem}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.max-w-lg{max-width:32rem}.max-w-2xl{max-width:42rem}.flex-shrink-0{flex-shrink:0}.translate-y-2{--tw-translate-y:0.5rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\/2{--tw-translate-y:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-3{--tw-rotate:3deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-12{gap:3rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.gap-3{gap:0.75rem}.gap-16{gap:4rem}.space-x-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.375rem * var(--tw-space-x-reverse));margin-left:calc(0.375rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-10 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2.5rem * var(--tw-space-x-reverse));margin-left:calc(2.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1.5rem * var(--tw-space-x-reverse));margin-left:calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-10 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-2xl{border-radius:1rem}.rounded-lg{border-radius:0.5rem}.rounded-\[40px\]{border-radius:40px}.rounded-xl{border-radius:0.75rem}.rounded-\[50px\]{border-radius:50px}.rounded-\[60px\]{border-radius:60px}.border-2{border-width:2px}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-none{border-style:none}.border-orange-100{--tw-border-opacity:1;border-color:rgb(255 237 213 / var(--tw-border-opacity, 1))}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254 / var(--tw-border-opacity, 1))}.border-orange-50{--tw-border-opacity:1;border-color:rgb(255 247 237 / var(--tw-border-opacity, 1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255 / var(--tw-border-opacity, 1))}.border-zinc-200{--tw-border-opacity:1;border-color:rgb(228 228 231 / var(--tw-border-opacity, 1))}.border-zinc-800{--tw-border-opacity:1;border-color:rgb(39 39 42 / var(--tw-border-opacity, 1))}.bg-\[\#FF7E00\]{--tw-bg-opacity:1;background-color:rgb(255 126 0 / var(--tw-bg-opacity, 1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1))}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255 / var(--tw-bg-opacity, 1))}.bg-yellow-100{--tw-bg-opacity:1;background-color:rgb(254 249 195 / var(--tw-bg-opacity, 1))}.bg-zinc-100{--tw-bg-opacity:1;background-color:rgb(244 244 245 / var(--tw-bg-opacity, 1))}.bg-\[\#4A6FA5\]{--tw-bg-opacity:1;background-color:rgb(74 111 165 / var(--tw-bg-opacity, 1))}.bg-zinc-50{--tw-bg-opacity:1;background-color:rgb(250 250 250 / var(--tw-bg-opacity, 1))}.bg-zinc-900{--tw-bg-opacity:1;background-color:rgb(24 24 27 / var(--tw-bg-opacity, 1))}.bg-\[\#FFFBF5\]{--tw-bg-opacity:1;background-color:rgb(255 251 245 / var(--tw-bg-opacity, 1))}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231 / var(--tw-bg-opacity, 1))}.bg-white\/20{background-color:rgb(255 255 255 / 0.2)}.bg-zinc-950{--tw-bg-opacity:1;background-color:rgb(9 9 11 / var(--tw-bg-opacity, 1))}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-black\/80{--tw-gradient-from:rgb(0 0 0 / 0.8) var(--tw-gradient-from-position);--tw-gradient-to:rgb(0 0 0 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-orange-100{--tw-gradient-from:#ffedd5 var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 237 213 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), transparent var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-orange-300{--tw-gradient-to:rgb(253 186 116 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fdba74 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.to-orange-100{--tw-gradient-to:#ffedd5 var(--tw-gradient-to-position)}.object-cover{object-fit:cover}.p-8{padding:2rem}.p-4{padding:1rem}.p-3{padding:0.75rem}.p-2{padding:0.5rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-20{padding-top:5rem;padding-bottom:5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-24{padding-top:6rem;padding-bottom:6rem}.px-10{padding-left:2.5rem;padding-right:2.5rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pt-12{padding-top:3rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-6xl{font-size:3.75rem;line-height:1}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[10px\]{font-size:10px}.text-5xl{font-size:3rem;line-height:1}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-8xl{font-size:6rem;line-height:1}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-black{font-weight:900}.uppercase{text-transform:uppercase}.leading-\[1\.1\]{line-height:1.1}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-widest{letter-spacing:0.1em}.tracking-wider{letter-spacing:0.05em}.text-\[\#FF7E00\]{--tw-text-opacity:1;color:rgb(255 126 0 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-zinc-600{--tw-text-opacity:1;color:rgb(82 82 91 / var(--tw-text-opacity, 1))}.text-zinc-900{--tw-text-opacity:1;color:rgb(24 24 27 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-orange-400{--tw-text-opacity:1;color:rgb(251 146 60 / var(--tw-text-opacity, 1))}.text-\[\#4A6FA5\]{--tw-text-opacity:1;color:rgb(74 111 165 / var(--tw-text-opacity, 1))}.text-zinc-500{--tw-text-opacity:1;color:rgb(113 113 122 / var(--tw-text-opacity, 1))}.text-green-500{--tw-text-opacity:1;color:rgb(34 197 94 / var(--tw-text-opacity, 1))}.text-zinc-300{--tw-text-opacity:1;color:rgb(212 212 216 / var(--tw-text-opacity, 1))}.text-zinc-400{--tw-text-opacity:1;color:rgb(161 161 170 / var(--tw-text-opacity, 1))}.text-orange-100{--tw-text-opacity:1;color:rgb(255 237 213 / var(--tw-text-opacity, 1))}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.opacity-70{opacity:0.7}.opacity-0{opacity:0}.opacity-60{opacity:0.6}.mix-blend-overlay{mix-blend-mode:overlay}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.outline-none{outline:2px solid transparent;outline-offset:2px}.brightness-0{--tw-brightness:brightness(0);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.invert{--tw-invert:invert(100%);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-700{transition-duration:700ms}.selection\:bg-orange-100 *::selection{--tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1))}.selection\:bg-orange-100::selection{--tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1))}.hover\:-translate-y-0\.5:hover{--tw-translate-y:-0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-\[1\.02\]:hover{--tw-scale-x:1.02;--tw-scale-y:1.02;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-orange-200:hover{--tw-border-opacity:1;border-color:rgb(254 215 170 / var(--tw-border-opacity, 1))}.hover\:bg-orange-50:hover{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.hover\:bg-\[\#FF7E00\]:hover{--tw-bg-opacity:1;background-color:rgb(255 126 0 / var(--tw-bg-opacity, 1))}.hover\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.hover\:bg-purple-50:hover{--tw-bg-opacity:1;background-color:rgb(250 245 255 / var(--tw-bg-opacity, 1))}.hover\:text-\[\#FF7E00\]:hover{--tw-text-opacity:1;color:rgb(255 126 0 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:shadow-lg:hover{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:shadow-xl:hover{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:shadow-2xl:hover{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:shadow-orange-200:hover{--tw-shadow-color:#fed7aa;--tw-shadow:var(--tw-shadow-colored)}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-\[\#FF7E00\]:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(255 126 0 / var(--tw-ring-opacity, 1))}.group:hover .group-hover\:translate-x-1{--tw-translate-x:0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:translate-y-0{--tw-translate-y:0px;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:opacity-100{opacity:1}.group:hover .group-hover\:shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}@media (min-width: 768px){.md\:col-span-1{grid-column:span 1 / span 1}.md\:flex{display:flex}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:text-7xl{font-size:4.5rem;line-height:1}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:block{display:block}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}}@media (min-width: 1280px){.xl\:block{display:block}.xl\:grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}}</style></head>
+<body>
+  <div class="min-h-screen relative flex flex-col selection:bg-orange-100">
+    <div class="fixed inset-0 noise-bg pointer-events-none z-0"></div>
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-orange-100">
+        <div class="max-w-7xl mx-auto px-4 md:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="BowerBit Logo" class="h-10 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/600x40/1a1a1a/888?text=Image';">
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                             <a id="nav-explore-link" 
+   href="index.html" 
+   class="font-medium text-[rgb(255_126_0/var(--tw-bg-opacity,1))] hover:underline hover:decoration-[rgb(255_126_0/var(--tw-bg-opacity,1))] transition-colors">
+  Explore
+</a>
+                <a id="nav-home-link" href="community2.html" class="font-medium hover:text-[#FF7E00] transition-colors">Community</a>
+                <a id="nav-shop-link" href="shop2.html" class="font-medium hover:text-[#FF7E00] transition-colors">Shop</a>
+                <a id="nav-create-link" href="3dcreate.html" class="font-medium hover:text-[#FF7E00] transition-colors">Create Tool</a>
+                <a id="nav-community-link" href="about.html" class="font-medium hover:text-[#FF7E00] transition-colors">About</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="search-btn" class="p-2 rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:search" class="text-xl"></iconify-icon>
+                </button><button id="cart-btn" class="p-2 relative rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
+                    <iconify-icon icon="lucide:shopping-cart" class="text-xl"></iconify-icon>
+                    <span id="cart-badge-count" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+                </button>
+                <div class="h-6 w-px bg-orange-100 mx-2"></div>
+                <button id="login-btn" class="hidden sm:block text-sm font-bold text-gray-700 hover:text-[#FF7E00] transition-colors">Login</button>
+    <button id="join-btn" class="bg-[#FF7E00] text-white px-6 py-2.5 rounded-full text-sm font-bold hover:bg-[#E67200] transition-all transform hover:scale-105 active:scale-95">Join BowerBit</button>
+</div></div>
+</nav>
+
+    <!-- Section 1: Hero / Top Posts -->
+    <section id="community" class="relative py-20 px-6 overflow-hidden">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        <div class="lg:col-span-5 space-y-8">
+          <div class="space-y-4">
+            <span class="inline-block px-4 py-1.5 bg-orange-100 text-[#FF7E00] text-xs font-bold tracking-widest uppercase rounded-full">Weekly Spotlight</span>
+            <h1 class="text-6xl md:text-7xl font-extrabold leading-[1.1] text-zinc-900">
+              Bring Your Toy <span class="text-[#FF7E00]">Scenes</span> to Life
+            </h1>
+            <p class="text-lg text-zinc-600 max-w-md">
+              Discover the most imaginative toy worlds created by our community this week. Join 50,000+ creators building custom ecosystems.
+            </p>
+          </div>
+          
+          <!-- Featured Creator Card -->
+          <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-custom hover:scale-[1.02]">
+            <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&amp;fit=crop&amp;q=80&amp;w=800" alt="Featured Build" class="w-full aspect-[4/5] object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.onerror=null;this.src='https://placehold.co/800x400/1a1a1a/888?text=Image';">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-8 text-white">
+              <div class="flex items-center space-x-3 mb-4">
+                <img src="https://i.pravatar.cc/100?u=leo" alt="Leo" class="w-10 h-10 rounded-full border-2 border-white" onerror="this.onerror=null;this.src='https://placehold.co/40x40/1a1a1a/888?text=Image';">
+                <div>
+                  <p class="text-sm font-bold">Alex Chen</p>
+                  <p class="text-xs opacity-70">Pro Creator</p>
+                </div>
+              </div>
+              <h3 class="text-2xl font-bold mb-2">Neo-Tokyo Ramen Shop</h3>
+              <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-1.5">
+                  <iconify-icon icon="lucide:heart" class="text-red-400"></iconify-icon>
+                  <span class="text-sm font-medium">2.4k</span>
+                </div>
+                <div class="flex items-center space-x-1.5">
+                  <iconify-icon icon="lucide:shopping-bag" class="text-orange-400"></iconify-icon>
+                  <span class="text-sm font-medium">12 Materials Used</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 grid grid-cols-2 gap-6">
+          <div class="space-y-6 pt-12">
+            <!-- Sub Post 1 -->
+            <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer">
+              <div class="relative h-64 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?auto=format&amp;fit=crop&amp;q=80&amp;w=500" alt="Alpine Build" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.onerror=null;this.src='https://placehold.co/500x400/1a1a1a/888?text=Image';">
+                <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold uppercase tracking-wider">Nature</span>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <div class="w-6 h-6 rounded-full bg-blue-100"></div>
+                  <span class="text-xs font-bold">Mika_Labs</span>
+                </div>
+                <iconify-icon icon="lucide:more-horizontal"></iconify-icon>
+              </div>
+            </div>
+            <!-- Sub Post 2 -->
+            <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer">
+              <div class="relative h-80 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&amp;fit=crop&amp;q=80&amp;w=500" alt="Cyber Build" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.onerror=null;this.src='https://placehold.co/500x400/1a1a1a/888?text=Image';">
+                <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold uppercase tracking-wider">Cyberpunk</span>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <div class="w-6 h-6 rounded-full bg-orange-100"></div>
+                  <span class="text-xs font-bold">CyberToy</span>
+                </div>
+                <iconify-icon icon="lucide:more-horizontal"></iconify-icon>
+              </div>
+            </div>
+          </div>
+          
+          <div class="space-y-6">
+             <!-- Sub Post 3 -->
+             <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer">
+              <div class="relative h-96 overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&amp;fit=crop&amp;q=80&amp;w=500" alt="Space Build" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.onerror=null;this.src='https://placehold.co/500x400/1a1a1a/888?text=Image';">
+                <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold uppercase tracking-wider">Sci-Fi</span>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <div class="w-6 h-6 rounded-full bg-purple-100"></div>
+                  <span class="text-xs font-bold">OrbitBuilds</span>
+                </div>
+                <iconify-icon icon="lucide:more-horizontal"></iconify-icon>
+              </div>
+            </div>
+            <!-- Sub Post 4 -->
+            <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer">
+              <div class="relative h-64 overflow-hidden">
+                <img src="https://placehold.co/500x400/1a1a1a/888?text=Image" alt="Medieval Build" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.onerror=null;this.src='https://placehold.co/500x400/1a1a1a/888?text=Image';">
+                <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold uppercase tracking-wider">Vintage</span>
+              </div>
+              <div class="p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                  <div class="w-6 h-6 rounded-full bg-yellow-100"></div>
+                  <span class="text-xs font-bold">HistoryMaker</span>
+                </div>
+                <iconify-icon icon="lucide:more-horizontal"></iconify-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Artists to Follow Section -->
+    <section class="py-24 bg-white relative z-10">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between mb-16">
+          <div class="space-y-2">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-zinc-900 tracking-tight">Artists to follow</h2>
+            <p class="text-zinc-500 font-medium">Connect with the community's leading creators and their imaginative worlds.</p>
+          </div>
+          <div class="hidden md:flex space-x-4">
+            <button id="scroll-prev-artists" class="w-12 h-12 rounded-full border border-zinc-200 flex items-center justify-center hover:bg-zinc-50 hover:border-zinc-400 transition-all active:scale-90">
+              <iconify-icon icon="lucide:chevron-left" class="text-2xl"></iconify-icon>
+            </button>
+            <button id="scroll-next-artists" class="w-12 h-12 rounded-full border border-zinc-200 flex items-center justify-center hover:bg-zinc-50 hover:border-zinc-400 transition-all active:scale-90">
+              <iconify-icon icon="lucide:chevron-right" class="text-2xl"></iconify-icon>
+            </button>
+          </div>
+        </div>
+
+        <div id="artists-slider" class="flex md:flex-nowrap flex-wrap md:overflow-x-auto gap-10 no-scrollbar scroll-smooth pb-8 -mx-2 px-2">
+          <!-- Artist Card 1 -->
+          <div class="flex-none w-full sm:w-[calc(50%-1.25rem)] lg:w-[280px] group transition-all duration-500">
+            <div class="relative mb-14">
+              <div class="aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm group-hover:shadow-2xl group-hover:shadow-orange-100 group-hover:scale-[1.03] transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1612036782180-6f0b6cd846fe?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Artwork" class="w-full h-full object-cover group-hover:brightness-110 transition-all duration-700" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              </div>
+              <div class="absolute -bottom-9 left-1/2 -translate-x-1/2 w-18 h-18 w-[72px] h-[72px] rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:scale-110 transition-all duration-500 bg-white">
+                <img src="https://i.pravatar.cc/150?u=artist1" alt="Avatar" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+              </div>
+            </div>
+            <div class="text-center space-y-1">
+              <h4 class="font-bold text-zinc-900 text-lg group-hover:text-[#FF7E00] transition-colors">Studio_Kira</h4>
+              <p class="text-zinc-500 text-sm font-medium">142 artworks</p>
+              <div class="pt-4">
+                <button onclick="toggleFollow(this)" class="w-full py-3 border-2 border-zinc-100 rounded-2xl text-sm font-bold hover:border-zinc-900 transition-all active:scale-95">Follow</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Artist Card 2 -->
+          <div class="flex-none w-full sm:w-[calc(50%-1.25rem)] lg:w-[280px] group transition-all duration-500">
+            <div class="relative mb-14">
+              <div class="aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm group-hover:shadow-2xl group-hover:shadow-blue-100 group-hover:scale-[1.03] transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1608889175123-8ee362201f81?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Artwork" class="w-full h-full object-cover group-hover:brightness-110 transition-all duration-700" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              </div>
+              <div class="absolute -bottom-9 left-1/2 -translate-x-1/2 w-[72px] h-[72px] rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:scale-110 transition-all duration-500 bg-white">
+                <img src="https://i.pravatar.cc/150?u=artist2" alt="Avatar" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+              </div>
+            </div>
+            <div class="text-center space-y-1">
+              <h4 class="font-bold text-zinc-900 text-lg group-hover:text-[#FF7E00] transition-colors">NeoBrick</h4>
+              <p class="text-zinc-500 text-sm font-medium">89 artworks</p>
+              <div class="pt-4">
+                <button onclick="toggleFollow(this)" class="w-full py-3 border-2 border-zinc-100 rounded-2xl text-sm font-bold hover:border-zinc-900 transition-all active:scale-95">Follow</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Artist Card 3 -->
+          <div class="flex-none w-full sm:w-[calc(50%-1.25rem)] lg:w-[280px] group transition-all duration-500">
+            <div class="relative mb-14">
+              <div class="aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm group-hover:shadow-2xl group-hover:shadow-purple-100 group-hover:scale-[1.03] transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1551269901-5c5e14c25df7?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Artwork" class="w-full h-full object-cover group-hover:brightness-110 transition-all duration-700" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              </div>
+              <div class="absolute -bottom-9 left-1/2 -translate-x-1/2 w-[72px] h-[72px] rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:scale-110 transition-all duration-500 bg-white">
+                <img src="https://i.pravatar.cc/150?u=artist3" alt="Avatar" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+              </div>
+            </div>
+            <div class="text-center space-y-1">
+              <h4 class="font-bold text-zinc-900 text-lg group-hover:text-[#FF7E00] transition-colors">MiniMaster</h4>
+              <p class="text-zinc-500 text-sm font-medium">215 artworks</p>
+              <div class="pt-4">
+                <button onclick="toggleFollow(this)" class="w-full py-3 border-2 border-zinc-100 rounded-2xl text-sm font-bold hover:border-zinc-900 transition-all active:scale-95">Follow</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Artist Card 4 (Popular Creator) -->
+          <div class="flex-none w-full sm:w-[calc(50%-1.25rem)] lg:w-[280px] group transition-all duration-500">
+            <div class="relative mb-14">
+              <div class="aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm group-hover:shadow-2xl group-hover:shadow-orange-200 group-hover:scale-[1.03] transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Artwork" class="w-full h-full object-cover group-hover:brightness-110 transition-all duration-700" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              </div>
+              <div class="absolute -bottom-9 left-1/2 -translate-x-1/2 w-[72px] h-[72px] rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:scale-110 transition-all duration-500 bg-white">
+                <img src="https://i.pravatar.cc/150?u=artist4" alt="Avatar" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+              </div>
+            </div>
+            <div class="text-center space-y-1">
+              <h4 class="font-bold text-zinc-900 text-lg group-hover:text-[#FF7E00] transition-colors">TokyoBuild</h4>
+              <p class="text-zinc-500 text-sm font-medium">3,024 artworks</p>
+              <div class="pt-4">
+                <button onclick="toggleFollow(this)" class="w-full py-3 border-2 border-zinc-100 rounded-2xl text-sm font-bold hover:border-zinc-900 transition-all active:scale-95">Follow</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Artist Card 5 -->
+          <div class="flex-none w-full sm:w-[calc(50%-1.25rem)] lg:w-[280px] group transition-all duration-500">
+            <div class="relative mb-14">
+              <div class="aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm group-hover:shadow-2xl group-hover:shadow-green-100 group-hover:scale-[1.03] transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Artwork" class="w-full h-full object-cover group-hover:brightness-110 transition-all duration-700" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              </div>
+              <div class="absolute -bottom-9 left-1/2 -translate-x-1/2 w-[72px] h-[72px] rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:scale-110 transition-all duration-500 bg-white">
+                <img src="https://i.pravatar.cc/150?u=artist5" alt="Avatar" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+              </div>
+            </div>
+            <div class="text-center space-y-1">
+              <h4 class="font-bold text-zinc-900 text-lg group-hover:text-[#FF7E00] transition-colors">AlpineMaker</h4>
+              <p class="text-zinc-500 text-sm font-medium">334 artworks</p>
+              <div class="pt-4">
+                <button onclick="toggleFollow(this)" class="w-full py-3 border-2 border-zinc-100 rounded-2xl text-sm font-bold hover:border-zinc-900 transition-all active:scale-95">Follow</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Artist Card 6 -->
+          <div class="flex-none w-full sm:w-[calc(50%-1.25rem)] lg:w-[280px] group transition-all duration-500">
+            <div class="relative mb-14">
+              <div class="aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm group-hover:shadow-2xl group-hover:shadow-zinc-200 group-hover:scale-[1.03] transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Artwork" class="w-full h-full object-cover group-hover:brightness-110 transition-all duration-700" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              </div>
+              <div class="absolute -bottom-9 left-1/2 -translate-x-1/2 w-[72px] h-[72px] rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:scale-110 transition-all duration-500 bg-white">
+                <img src="https://i.pravatar.cc/150?u=artist6" alt="Avatar" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+              </div>
+            </div>
+            <div class="text-center space-y-1">
+              <h4 class="font-bold text-zinc-900 text-lg group-hover:text-[#FF7E00] transition-colors">TechVibes</h4>
+              <p class="text-zinc-500 text-sm font-medium">121 artworks</p>
+              <div class="pt-4">
+                <button onclick="toggleFollow(this)" class="w-full py-3 border-2 border-zinc-100 rounded-2xl text-sm font-bold hover:border-zinc-900 transition-all active:scale-95">Follow</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Artist Card 7 -->
+          <div class="flex-none w-full sm:w-[calc(50%-1.25rem)] lg:w-[280px] group transition-all duration-500">
+            <div class="relative mb-14">
+              <div class="aspect-[4/3] rounded-[32px] overflow-hidden shadow-sm group-hover:shadow-2xl group-hover:shadow-blue-200 group-hover:scale-[1.03] transition-all duration-500">
+                <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Artwork" class="w-full h-full object-cover group-hover:brightness-110 transition-all duration-700" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              </div>
+              <div class="absolute -bottom-9 left-1/2 -translate-x-1/2 w-[72px] h-[72px] rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:scale-110 transition-all duration-500 bg-white">
+                <img src="https://i.pravatar.cc/150?u=artist7" alt="Avatar" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1a1a1a/888?text=Image';">
+              </div>
+            </div>
+            <div class="text-center space-y-1">
+              <h4 class="font-bold text-zinc-900 text-lg group-hover:text-[#FF7E00] transition-colors">OrbitArt</h4>
+              <p class="text-zinc-500 text-sm font-medium">98 artworks</p>
+              <div class="pt-4">
+                <button onclick="toggleFollow(this)" class="w-full py-3 border-2 border-zinc-100 rounded-2xl text-sm font-bold hover:border-zinc-900 transition-all active:scale-95">Follow</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Top Items -->
+    <section id="shop" class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-end justify-between mb-16">
+          <div class="space-y-4">
+            <h2 class="text-5xl font-extrabold text-zinc-900">Top Items This Week</h2>
+            <p class="text-zinc-500 max-w-lg">The most popular building materials, terrain modules, and lighting kits selected by our professional creators.</p>
+          </div>
+<a href="shop2.html" id="shop-all-link" class="flex items-center space-x-2 text-[#4A6FA5] font-bold hover:text-[#FF7E00] transition-colors group">
+    <span>Browse Full Catalog</span>
+    <iconify-icon icon="lucide:arrow-right" class="group-hover:translate-x-1 transition-transform"></iconify-icon>
+</a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+          <!-- Product Item 1 -->
+          <div class="group">
+            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+              <img src="https://images.unsplash.com/photo-1618331835717-801e976710b2?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Neon LEDs" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              <button id="add-cart-1" class="absolute bottom-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-custom transform translate-y-2 group-hover:translate-y-0 shadow-lg hover:bg-[#FF7E00] hover:text-white">
+                <iconify-icon icon="lucide:plus"></iconify-icon>
+              </button>
+            </div>
+            <h4 class="font-bold text-zinc-900">Pro Neon LED Kit (Micro)</h4>
+            <p class="text-sm text-zinc-500">$24.99</p>
+          </div>
+          <!-- Product Item 2 -->
+          <div class="group">
+            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+              <img src="https://images.unsplash.com/photo-1606103920295-9a091573f160?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Moss" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              <button id="add-cart-2" class="absolute bottom-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-custom transform translate-y-2 group-hover:translate-y-0 shadow-lg hover:bg-[#FF7E00] hover:text-white">
+                <iconify-icon icon="lucide:plus"></iconify-icon>
+              </button>
+            </div>
+            <h4 class="font-bold text-zinc-900">Static Grass Meadows Mix</h4>
+            <p class="text-sm text-zinc-500">$12.50</p>
+          </div>
+          <!-- Product Item 3 -->
+          <div class="group">
+            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+              <img src="https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              <button id="add-cart-3" class="absolute bottom-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-custom transform translate-y-2 group-hover:translate-y-0 shadow-lg hover:bg-[#FF7E00] hover:text-white">
+                <iconify-icon icon="lucide:plus"></iconify-icon>
+              </button>
+            </div>
+            <h4 class="font-bold text-zinc-900">Modular Cyber Tiles (8pc)</h4>
+            <p class="text-sm text-zinc-500">$45.00</p>
+          </div>
+          <!-- Product Item 4 -->
+          <div class="group">
+            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+              <img src="https://placehold.co/400x400/1a1a1a/888?text=Image" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              <button id="add-cart-4" class="absolute bottom-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-custom transform translate-y-2 group-hover:translate-y-0 shadow-lg hover:bg-[#FF7E00] hover:text-white">
+                <iconify-icon icon="lucide:plus"></iconify-icon>
+              </button>
+            </div>
+            <h4 class="font-bold text-zinc-900">Weathering Pigment Set</h4>
+            <p class="text-sm text-zinc-500">$18.25</p>
+          </div>
+          <!-- Product Item 5 -->
+          <div class="group">
+            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+              <img src="https://images.unsplash.com/photo-1585366119957-e9730b6d0f60?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+              <button id="add-cart-5" class="absolute bottom-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-custom transform translate-y-2 group-hover:translate-y-0 shadow-lg hover:bg-[#FF7E00] hover:text-white">
+                <iconify-icon icon="lucide:plus"></iconify-icon>
+              </button>
+            </div>
+            <h4 class="font-bold text-zinc-900">Clear Acrylic Display Cube</h4>
+            <p class="text-sm text-zinc-500">$32.00</p>
+          </div>
+          <!-- Row 2 Fillers -->
+          <div class="group hidden xl:block">
+            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+              <img src="https://placehold.co/400x400/1a1a1a/888?text=Image" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+            </div>
+            <h4 class="font-bold text-zinc-900">Industrial Pipe Fittings</h4>
+            <p class="text-sm text-zinc-500">$9.99</p>
+          </div>
+          <div class="group hidden xl:block">
+            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+              <img src="https://images.unsplash.com/photo-1601662528567-526cd06f6582?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+            </div>
+            <h4 class="font-bold text-zinc-900">Ultra-Fine Detail Brushes</h4>
+            <p class="text-sm text-zinc-500">$15.50</p>
+          </div>
+          <div class="group hidden xl:block">
+            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+              <img src="https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+            </div>
+            <h4 class="font-bold text-zinc-900">Stone Texture Paste</h4>
+            <p class="text-sm text-zinc-500">$14.00</p>
+          </div>
+          <div class="group hidden xl:block">
+            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+              <img src="https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+            </div>
+            <h4 class="font-bold text-zinc-900">Miniature Pine Forest Kit</h4>
+            <p class="text-sm text-zinc-500">$28.99</p>
+          </div>
+          <div class="group hidden xl:block">
+            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+              <img src="https://images.unsplash.com/photo-1516110833967-0b5716ca1387?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+            </div>
+            <h4 class="font-bold text-zinc-900">Micro Solar Street Lights</h4>
+            <p class="text-sm text-zinc-500">$21.50</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Create Tool Preview -->
+    <section id="tool" class="py-24 relative overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="text-center mb-20">
+          <h2 class="text-5xl font-extrabold mb-6">Create Your Own <span class="text-[#FF7E00]">Scene</span>!</h2>
+          <p class="text-zinc-500 max-w-2xl mx-auto">Experience our intuitive 3-step design workflow. Transform your imagination into a production-ready shopping list and community post.</p>
+        </div>
+
+        <div class="relative">
+          <!-- Connection Line (Desktop) -->
+          <div class="hidden lg:block absolute top-1/2 left-0 w-full h-1 bg-gradient-to-r from-orange-100 via-orange-300 to-orange-100 -translate-y-1/2 z-0"></div>
+
+          <div class="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <!-- Step 1 -->
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-2 border-orange-50 transition-custom hover:border-orange-200 group">
+              <div class="w-16 h-16 bg-[#FF7E00] text-white rounded-2xl flex items-center justify-center text-2xl font-black mb-8 group-hover:scale-110 transition-transform">
+                01
+              </div>
+              <h3 class="text-2xl font-bold mb-4">Choose Scenario</h3>
+              <p class="text-zinc-500 mb-8">Select from 12+ base themes including Urban, Forest, Space, or Medieval settings.</p>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="p-3 border rounded-2xl text-center text-xs font-bold hover:bg-orange-50 cursor-pointer border-orange-100">Forest</div>
+                <div class="p-3 border rounded-2xl text-center text-xs font-bold hover:bg-blue-50 cursor-pointer border-blue-100">Industrial</div>
+                <div class="p-3 border rounded-2xl text-center text-xs font-bold hover:bg-purple-50 cursor-pointer border-purple-100">Fantasy</div>
+                <div class="p-3 border rounded-2xl text-center text-xs font-bold bg-zinc-900 text-white">More+</div>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-2 border-orange-50 transition-custom hover:border-orange-200 group">
+              <div class="w-16 h-16 bg-[#4A6FA5] text-white rounded-2xl flex items-center justify-center text-2xl font-black mb-8 group-hover:scale-110 transition-transform">
+                02
+              </div>
+              <h3 class="text-2xl font-bold mb-4">Select Materials</h3>
+              <p class="text-zinc-500 mb-8">Our AI suggests compatible textures, lighting, and props based on your scenario.</p>
+              <div class="space-y-3">
+                <div class="flex items-center space-x-3 p-3 bg-zinc-50 rounded-xl">
+                  <iconify-icon icon="lucide:check-circle-2" class="text-green-500"></iconify-icon>
+                  <span class="text-xs font-bold">Custom Terrain Pack</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3 bg-zinc-50 rounded-xl">
+                  <iconify-icon icon="lucide:check-circle-2" class="text-green-500"></iconify-icon>
+                  <span class="text-xs font-bold">Atmospheric Lighting</span>
+                </div>
+                <div class="flex items-center space-x-3 p-3 bg-zinc-50 rounded-xl">
+                  <iconify-icon icon="lucide:circle" class="text-zinc-300"></iconify-icon>
+                  <span class="text-xs font-medium text-zinc-400">Decorative Fauna</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-white p-8 rounded-[40px] shadow-xl border-2 border-orange-50 transition-custom hover:border-orange-200 group">
+              <div class="w-16 h-16 bg-zinc-900 text-white rounded-2xl flex items-center justify-center text-2xl font-black mb-8 group-hover:scale-110 transition-transform">
+                03
+              </div>
+              <h3 class="text-2xl font-bold mb-4">Configure Layout</h3>
+              <p class="text-zinc-500 mb-8">Drag and drop to visualize your setup before purchasing the components.</p>
+              <div class="aspect-video bg-zinc-100 rounded-2xl flex items-center justify-center border-2 border-dashed border-zinc-200">
+                <iconify-icon icon="lucide:layout-template" class="text-4xl text-zinc-300"></iconify-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-20 text-center">
+          <button id="launch-tool-btn" class="bg-[#FF7E00] text-white px-10 py-5 rounded-full font-black text-xl hover:shadow-2xl hover:scale-105 transition-custom flex items-center space-x-3 mx-auto">
+            <span>Launch Creation Lab</span>
+            <iconify-icon icon="lucide:sparkles"></iconify-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Decorative Elements -->
+      <iconify-icon icon="lucide:toy-brick" class="absolute top-20 left-10 text-8xl text-orange-100 floating"></iconify-icon>
+      <iconify-icon icon="lucide:brush" class="absolute bottom-20 right-10 text-8xl text-blue-100 floating" style="animation-delay: 1s"></iconify-icon>
+    </section>
+
+    <!-- Section 4: Brand Values -->
+    <section id="about" class="py-24 bg-[#FFFBF5]">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div class="space-y-10">
+            <div class="space-y-6">
+              <h2 class="text-6xl font-extrabold leading-tight">The World is Your <span class="text-[#FF7E00]">Playground</span>.</h2>
+              <p class="text-xl text-zinc-600 leading-relaxed">
+                BowerBit is a creative ecosystem where toy enthusiasts, parents, and pro-creators converge to build breathtaking scenarios. We bridge the gap between imagination and physical reality.
+              </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="flex space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-[#FF7E00]">
+                  <iconify-icon icon="lucide:layers-3" class="text-2xl"></iconify-icon>
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1">Scenario Setup</h4>
+                  <p class="text-sm text-zinc-500">Intuitive templates for any toy brand or scale.</p>
+                </div>
+              </div>
+              <div class="flex space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-[#4A6FA5]">
+                  <iconify-icon icon="lucide:shopping-cart" class="text-2xl"></iconify-icon>
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1">Material Purchase</h4>
+                  <p class="text-sm text-zinc-500">Sourcing the world's best craft components.</p>
+                </div>
+              </div>
+              <div class="flex space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600">
+                  <iconify-icon icon="lucide:users" class="text-2xl"></iconify-icon>
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1">Community Sharing</h4>
+                  <p class="text-sm text-zinc-500">Showcase your builds and inspire others.</p>
+                </div>
+              </div>
+              <div class="flex space-x-4">
+                <div class="flex-shrink-0 w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600">
+                  <iconify-icon icon="lucide:heart" class="text-2xl"></iconify-icon>
+                </div>
+                <div>
+                  <h4 class="font-bold mb-1">For All Ages</h4>
+                  <p class="text-sm text-zinc-500">Designed for parents and serious hobbyists alike.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="absolute -inset-4 bg-orange-100 rounded-[60px] transform rotate-3 z-0"></div>
+            <div class="relative z-10 bg-zinc-900 rounded-[50px] overflow-hidden shadow-2xl aspect-video group cursor-pointer">
+              <!-- Video Placeholder -->
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-24 h-24 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white text-4xl group-hover:scale-110 transition-transform">
+                  <iconify-icon icon="lucide:play-circle"></iconify-icon>
+                </div>
+                <img src="https://images.unsplash.com/photo-1558877385-81a1c7e67d72?auto=format&amp;fit=crop&amp;q=80&amp;w=1000" alt="Brand Video Preview" class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay" onerror="this.onerror=null;this.src='https://placehold.co/1000x400/1a1a1a/888?text=Image';">
+              </div>
+              <div class="absolute bottom-8 left-8 right-8 flex items-center justify-between text-white">
+                <span class="text-xs font-bold tracking-widest uppercase">What is BowerBit?</span>
+                <span class="text-xs font-medium">02:45</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-950 text-white py-20 px-6">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-12">
+        <div class="col-span-1 md:col-span-1">
+          <img src="https://vgbujcuwptvheqijyjbe.supabase.co/storage/v1/object/public/hmac-uploads/uploads/269f8e4a-d5b2-43c5-8fb2-5915ddcc9884/1770194117371-1ad9adb1/Logo.png" alt="Logo" class="h-8 invert brightness-0 mb-8" onerror="this.onerror=null;this.src='https://placehold.co/600x32/1a1a1a/888?text=Image';">
+          <p class="text-zinc-400 text-sm">
+            Building the future of play, one scenario at a time. Join the revolution in toy creative ecosystems.
+          </p>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Explore</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-home-link" class="hover:text-[#FF7E00]">Home</a></li>
+            <li><a href="#" id="footer-showcase-link" class="hover:text-[#FF7E00]">Showcase</a></li>
+            <li><a href="#" id="footer-shop-link" class="hover:text-[#FF7E00]">Shop Materials</a></li>
+            <li><a href="#" id="footer-tools-link" class="hover:text-[#FF7E00]">Creator Tools</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">About</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="about.html" id="footer-about-us-link" class="hover:text-[#FF7E00]">About Us</a></li>
+            <li><a href="#" id="footer-investor-link" class="hover:text-[#FF7E00]">Investor Center</a></li>
+            <li><a href="#" id="footer-partner-link" class="hover:text-[#FF7E00]">Partner Program</a></li>
+            <li><a href="#" id="footer-sell-art-link" class="hover:text-[#FF7E00]">Sell your art</a></li>
+            <li><a href="#" id="footer-jobs-link" class="hover:text-[#FF7E00]">Jobs</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Community</h5>
+          <ul class="space-y-4 text-sm">
+            <li><a href="#" id="footer-discord-link" class="hover:text-[#FF7E00]">Discord</a></li>
+            <li><a href="#" id="footer-twitter-link" class="hover:text-[#FF7E00]">Twitter</a></li>
+            <li><a href="#" id="footer-instagram-link" class="hover:text-[#FF7E00]">Instagram</a></li>
+            <li><a href="#" id="footer-events-link" class="hover:text-[#FF7E00]">Monthly Events</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Stay Inspired</h5>
+          <div class="relative">
+            <input type="email" placeholder="Your email" class="w-full bg-zinc-900 border-none rounded-full px-6 py-4 text-sm focus:ring-2 focus:ring-[#FF7E00] outline-none">
+            <button id="footer-subscribe-btn" class="absolute right-2 top-2 bg-[#FF7E00] text-white p-2 rounded-full">
+              <iconify-icon icon="lucide:arrow-right"></iconify-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-zinc-800 text-center text-zinc-600 text-xs">
+        © 2024 BowerBit. All rights reserved. Designed for the builders of tomorrow.
+      </div>
+    </footer>
+  </section></div>
+    <script>
+    function toggleFollow(btn) {
+      const isFollowing = btn.innerText === 'Following';
+      if (isFollowing) {
+        btn.innerText = 'Follow';
+        btn.classList.remove('bg-zinc-900', 'text-white', 'border-zinc-900');
+        btn.classList.add('border-zinc-100');
+      } else {
+        btn.innerText = 'Following';
+        btn.classList.add('bg-zinc-900', 'text-white', 'border-zinc-900');
+        btn.classList.remove('border-zinc-100');
+      }
+    }
+
+    document.getElementById('scroll-next-artists')?.addEventListener('clifck', () => {
+      const slider = document.getElementById('artists-slider');
+      slider.scrollBy({ left: 320, behavior: 'smooth' });
+    });
+    
+    document.getElementById('scroll-prev-artists')?.addEventListener('click', () => {
+      const slider = document.getElementById('artists-slider');
+      slider.scrollBy({ left: -320, behavior: 'smooth' });
+    });
+  </script>
+
+<script defer="" type="module">
+          // Error tracking for preview
+          window.addEventListener('error', function(event) {
+            if (window.__SUPERDESIGN_PREVIEW__) {
+              // Extract full stack trace from error object
+              const error = event.error;
+              let stack = null;
+              let name = 'Error';
+
+              if (error && typeof error === 'object') {
+                stack = error.stack || null;
+                name = error.name || 'Error';
+              }
+
+              window.__SUPERDESIGN_PREVIEW__.sendMessage('error', {
+                message: event.message,
+                filename: event.filename,
+                lineno: event.lineno,
+                colno: event.colno,
+                name: name,
+                stack: stack
+              });
+            }
+          });
+
+          // Track unhandled promise rejections
+          window.addEventListener('unhandledrejection', function(event) {
+            console.error('[SuperDesign Preview] Unhandled rejection:', event.reason);
+            if (window.__SUPERDESIGN_PREVIEW__) {
+              const reason = event.reason;
+              let stack = null;
+              let name = 'UnhandledRejection';
+              let message = String(reason);
+
+              // Extract stack and name if reason is an Error object
+              if (reason && typeof reason === 'object') {
+                stack = reason.stack || null;
+                name = reason.name || 'UnhandledRejection';
+                message = reason.message || String(reason);
+              }
+
+              window.__SUPERDESIGN_PREVIEW__.sendMessage('unhandled-rejection', {
+                reason: message,
+                name: name,
+                stack: stack
+              });
+            }
+          });
+
+          document.getElementById('cart-btn').addEventListener('click', function() {
+    // 跳转到购物车页面
+    window.location.href = 'shoppingcart.html';
+    // 后续可加扩展逻辑，例：
+    // if(购物车为空) { alert('购物车暂无商品'); }
+});
+        </script>
+<script defer="" type="module">import '/__visual-edit-bridge/iframe-runtime.mjs?v=0.0.0';</script>
+
+</body></html>
