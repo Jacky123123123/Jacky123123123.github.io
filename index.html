@@ -71,6 +71,52 @@
         </style>
 
 <script type="module">
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartBadge(); 
+    updateAuthUI();
+
+    // ----- Add to cart for Top Items -----
+    document.querySelectorAll('[id^="add-cart-"]').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const card = this.closest('.group');
+            if (!card) return;
+            const titleEl = card.querySelector('h4');
+            const priceEl = card.querySelector('p.text-sm');
+            const imgEl = card.querySelector('img');
+            if (!titleEl || !priceEl || !imgEl) return;
+            const title = titleEl.textContent.trim();
+            const priceText = priceEl.textContent.trim().replace('$', '');
+            const price = parseFloat(priceText);
+            const img = imgEl.src;
+            const id = 'top-' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            const newItem = {
+                id: id,
+                title: title,
+                name: title,
+                price: price,
+                quantity: 1,
+                img: img,
+                category: 'Top Items',
+                creator: 'BowerBit',
+                specs: ['Default']
+            };
+            let cart = JSON.parse(localStorage.getItem('bowerbit_cart') || '[]');
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push(newItem);
+            }
+            localStorage.setItem('bowerbit_cart', JSON.stringify(cart));
+            if (typeof updateCartBadge === 'function') updateCartBadge();
+            if (typeof showAuthToast === 'function') showAuthToast('Item added to cart!');
+        });
+    });
+});
+
+
           (function() {
             document.addEventListener('wheel', function(e) {
               if (e.ctrlKey) {
@@ -554,6 +600,100 @@
           }
         </script>
 <style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.-inset-4{inset:-1rem}.top-0{top:0px}.left-3{left:0.75rem}.top-3{top:0.75rem}.bottom-4{bottom:1rem}.right-4{right:1rem}.left-0{left:0px}.top-1\/2{top:50%}.left-10{left:2.5rem}.top-20{top:5rem}.bottom-20{bottom:5rem}.right-10{right:2.5rem}.bottom-8{bottom:2rem}.left-8{left:2rem}.right-2{right:0.5rem}.right-8{right:2rem}.top-2{top:0.5rem}.z-0{z-index:0}.z-50{z-index:50}.z-10{z-index:10}.col-span-1{grid-column:span 1 / span 1}.mx-auto{margin-left:auto;margin-right:auto}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mb-16{margin-bottom:4rem}.mb-20{margin-bottom:5rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-20{margin-top:5rem}.mb-1{margin-bottom:0.25rem}.inline-block{display:inline-block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.aspect-\[4\/5\]{aspect-ratio:4/5}.aspect-square{aspect-ratio:1 / 1}.aspect-video{aspect-ratio:16 / 9}.h-10{height:2.5rem}.h-20{height:5rem}.h-6{height:1.5rem}.h-64{height:16rem}.h-full{height:100%}.h-80{height:20rem}.h-96{height:24rem}.h-1{height:0.25rem}.h-16{height:4rem}.h-12{height:3rem}.h-24{height:6rem}.h-8{height:2rem}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-full{width:100%}.w-6{width:1.5rem}.w-16{width:4rem}.w-12{width:3rem}.w-24{width:6rem}.max-w-7xl{max-width:80rem}.max-w-md{max-width:28rem}.max-w-lg{max-width:32rem}.max-w-2xl{max-width:42rem}.flex-shrink-0{flex-shrink:0}.translate-y-2{--tw-translate-y:0.5rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.-translate-y-1\/2{--tw-translate-y:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.rotate-3{--tw-rotate:3deg;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-12{gap:3rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.gap-3{gap:0.75rem}.gap-16{gap:4rem}.space-x-1\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.375rem * var(--tw-space-x-reverse));margin-left:calc(0.375rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-10 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(2.5rem * var(--tw-space-x-reverse));margin-left:calc(2.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-3 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.75rem * var(--tw-space-x-reverse));margin-left:calc(0.75rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-6 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1.5rem * var(--tw-space-x-reverse));margin-left:calc(1.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-10 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-2xl{border-radius:1rem}.rounded-lg{border-radius:0.5rem}.rounded-\[40px\]{border-radius:40px}.rounded-xl{border-radius:0.75rem}.rounded-\[50px\]{border-radius:50px}.rounded-\[60px\]{border-radius:60px}.border-2{border-width:2px}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-none{border-style:none}.border-orange-100{--tw-border-opacity:1;border-color:rgb(255 237 213 / var(--tw-border-opacity, 1))}.border-white{--tw-border-opacity:1;border-color:rgb(255 255 255 / var(--tw-border-opacity, 1))}.border-blue-100{--tw-border-opacity:1;border-color:rgb(219 234 254 / var(--tw-border-opacity, 1))}.border-orange-50{--tw-border-opacity:1;border-color:rgb(255 247 237 / var(--tw-border-opacity, 1))}.border-purple-100{--tw-border-opacity:1;border-color:rgb(243 232 255 / var(--tw-border-opacity, 1))}.border-zinc-200{--tw-border-opacity:1;border-color:rgb(228 228 231 / var(--tw-border-opacity, 1))}.border-zinc-800{--tw-border-opacity:1;border-color:rgb(39 39 42 / var(--tw-border-opacity, 1))}.bg-\[\#FF7E00\]{--tw-bg-opacity:1;background-color:rgb(255 126 0 / var(--tw-bg-opacity, 1))}.bg-orange-100{--tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1))}.bg-white\/80{background-color:rgb(255 255 255 / 0.8)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-white\/90{background-color:rgb(255 255 255 / 0.9)}.bg-purple-100{--tw-bg-opacity:1;background-color:rgb(243 232 255 / var(--tw-bg-opacity, 1))}.bg-yellow-100{--tw-bg-opacity:1;background-color:rgb(254 249 195 / var(--tw-bg-opacity, 1))}.bg-zinc-100{--tw-bg-opacity:1;background-color:rgb(244 244 245 / var(--tw-bg-opacity, 1))}.bg-\[\#4A6FA5\]{--tw-bg-opacity:1;background-color:rgb(74 111 165 / var(--tw-bg-opacity, 1))}.bg-zinc-50{--tw-bg-opacity:1;background-color:rgb(250 250 250 / var(--tw-bg-opacity, 1))}.bg-zinc-900{--tw-bg-opacity:1;background-color:rgb(24 24 27 / var(--tw-bg-opacity, 1))}.bg-\[\#FFFBF5\]{--tw-bg-opacity:1;background-color:rgb(255 251 245 / var(--tw-bg-opacity, 1))}.bg-green-100{--tw-bg-opacity:1;background-color:rgb(220 252 231 / var(--tw-bg-opacity, 1))}.bg-white\/20{background-color:rgb(255 255 255 / 0.2)}.bg-zinc-950{--tw-bg-opacity:1;background-color:rgb(9 9 11 / var(--tw-bg-opacity, 1))}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.from-black\/80{--tw-gradient-from:rgb(0 0 0 / 0.8) var(--tw-gradient-from-position);--tw-gradient-to:rgb(0 0 0 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-orange-100{--tw-gradient-from:#ffedd5 var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 237 213 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), transparent var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-orange-300{--tw-gradient-to:rgb(253 186 116 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #fdba74 var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.to-orange-100{--tw-gradient-to:#ffedd5 var(--tw-gradient-to-position)}.object-cover{object-fit:cover}.p-8{padding:2rem}.p-4{padding:1rem}.p-3{padding:0.75rem}.p-2{padding:0.5rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-20{padding-top:5rem;padding-bottom:5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-24{padding-top:6rem;padding-bottom:6rem}.px-10{padding-left:2.5rem;padding-right:2.5rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pt-12{padding-top:3rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-6xl{font-size:3.75rem;line-height:1}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xs{font-size:0.75rem;line-height:1rem}.text-\[10px\]{font-size:10px}.text-5xl{font-size:3rem;line-height:1}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-8xl{font-size:6rem;line-height:1}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-black{font-weight:900}.uppercase{text-transform:uppercase}.leading-\[1\.1\]{line-height:1.1}.leading-relaxed{line-height:1.625}.leading-tight{line-height:1.25}.tracking-widest{letter-spacing:0.1em}.tracking-wider{letter-spacing:0.05em}.text-\[\#FF7E00\]{--tw-text-opacity:1;color:rgb(255 126 0 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-zinc-600{--tw-text-opacity:1;color:rgb(82 82 91 / var(--tw-text-opacity, 1))}.text-zinc-900{--tw-text-opacity:1;color:rgb(24 24 27 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-orange-400{--tw-text-opacity:1;color:rgb(251 146 60 / var(--tw-text-opacity, 1))}.text-\[\#4A6FA5\]{--tw-text-opacity:1;color:rgb(74 111 165 / var(--tw-text-opacity, 1))}.text-zinc-500{--tw-text-opacity:1;color:rgb(113 113 122 / var(--tw-text-opacity, 1))}.text-green-500{--tw-text-opacity:1;color:rgb(34 197 94 / var(--tw-text-opacity, 1))}.text-zinc-300{--tw-text-opacity:1;color:rgb(212 212 216 / var(--tw-text-opacity, 1))}.text-zinc-400{--tw-text-opacity:1;color:rgb(161 161 170 / var(--tw-text-opacity, 1))}.text-orange-100{--tw-text-opacity:1;color:rgb(255 237 213 / var(--tw-text-opacity, 1))}.text-blue-100{--tw-text-opacity:1;color:rgb(219 234 254 / var(--tw-text-opacity, 1))}.text-purple-600{--tw-text-opacity:1;color:rgb(147 51 234 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.opacity-70{opacity:0.7}.opacity-0{opacity:0}.opacity-60{opacity:0.6}.mix-blend-overlay{mix-blend-mode:overlay}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.outline-none{outline:2px solid transparent;outline-offset:2px}.brightness-0{--tw-brightness:brightness(0);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.invert{--tw-invert:invert(100%);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-700{transition-duration:700ms}.selection\:bg-orange-100 *::selection{--tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1))}.selection\:bg-orange-100::selection{--tw-bg-opacity:1;background-color:rgb(255 237 213 / var(--tw-bg-opacity, 1))}.hover\:-translate-y-0\.5:hover{--tw-translate-y:-0.125rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-\[1\.02\]:hover{--tw-scale-x:1.02;--tw-scale-y:1.02;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:border-orange-200:hover{--tw-border-opacity:1;border-color:rgb(254 215 170 / var(--tw-border-opacity, 1))}.hover\:bg-orange-50:hover{--tw-bg-opacity:1;background-color:rgb(255 247 237 / var(--tw-bg-opacity, 1))}.hover\:bg-\[\#FF7E00\]:hover{--tw-bg-opacity:1;background-color:rgb(255 126 0 / var(--tw-bg-opacity, 1))}.hover\:bg-blue-50:hover{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.hover\:bg-purple-50:hover{--tw-bg-opacity:1;background-color:rgb(250 245 255 / var(--tw-bg-opacity, 1))}.hover\:text-\[\#FF7E00\]:hover{--tw-text-opacity:1;color:rgb(255 126 0 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.hover\:shadow-lg:hover{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:shadow-xl:hover{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:shadow-2xl:hover{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.hover\:shadow-orange-200:hover{--tw-shadow-color:#fed7aa;--tw-shadow:var(--tw-shadow-colored)}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-\[\#FF7E00\]:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(255 126 0 / var(--tw-ring-opacity, 1))}.group:hover .group-hover\:translate-x-1{--tw-translate-x:0.25rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:translate-y-0{--tw-translate-y:0px;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:opacity-100{opacity:1}.group:hover .group-hover\:shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}@media (min-width: 768px){.md\:col-span-1{grid-column:span 1 / span 1}.md\:flex{display:flex}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:text-7xl{font-size:4.5rem;line-height:1}}@media (min-width: 1024px){.lg\:col-span-5{grid-column:span 5 / span 5}.lg\:col-span-7{grid-column:span 7 / span 7}.lg\:block{display:block}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}}@media (min-width: 1280px){.xl\:block{display:block}.xl\:grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}}</style></head>
+
+<!-- Login Modal -->
+<div id="login-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 opacity-0 pointer-events-none modal-backdrop">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeLoginModal()"></div>
+  <div class="relative bg-white w-full max-w-md rounded-[40px] overflow-hidden shadow-2xl scale-95 opacity-0 modal-content">
+    <button onclick="closeLoginModal()" class="absolute top-6 right-6 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors">
+      <iconify-icon icon="lucide:x" class="text-xl"></iconify-icon>
+    </button>
+    <div class="p-8 md:p-10">
+      <h2 class="font-display text-3xl font-black mb-2">Welcome Back</h2>
+      <p class="text-gray-500 text-sm mb-8">Sign in to continue your creative journey</p>
+      
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="space-y-5">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Email</label>
+            <input type="email" id="login-email" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Password</label>
+            <input type="password" id="login-password" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+          <div class="text-right">
+            <a href="#" class="text-xs font-bold text-[#FF7E00] hover:underline">Forgot password?</a>
+          </div>
+        </div>
+        
+        <div class="mt-8 space-y-3">
+          <button type="submit" class="w-full bg-[#FF7E00] text-white py-4 rounded-2xl font-bold text-lg hover:shadow-xl hover:shadow-orange-200 transition-all active:scale-[0.98] flex items-center justify-center gap-3">
+            <iconify-icon icon="lucide:log-in"></iconify-icon>
+            Sign In
+          </button>
+          <p class="text-center text-xs text-gray-400">
+            Don't have an account? 
+            <button type="button" onclick="switchToRegister()" class="font-bold text-[#4A6FA5] hover:underline">Join BowerBit</button>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div id="register-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 opacity-0 pointer-events-none modal-backdrop">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeRegisterModal()"></div>
+  <div class="relative bg-white w-full max-w-md rounded-[40px] overflow-hidden shadow-2xl scale-95 opacity-0 modal-content">
+    <button onclick="closeRegisterModal()" class="absolute top-6 right-6 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors">
+      <iconify-icon icon="lucide:x" class="text-xl"></iconify-icon>
+    </button>
+    <div class="p-8 md:p-10">
+      <h2 class="font-display text-3xl font-black mb-2">Join BowerBit</h2>
+      <p class="text-gray-500 text-sm mb-8">Create an account to start building</p>
+      
+      <form id="register-form" onsubmit="handleRegister(event)">
+        <div class="space-y-5">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Display Name</label>
+            <input type="text" id="register-name" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Email</label>
+            <input type="email" id="register-email" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Password</label>
+            <input type="password" id="register-password" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Confirm Password</label>
+            <input type="password" id="register-confirm" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+        </div>
+        
+        <div class="mt-8 space-y-3">
+          <button type="submit" class="w-full bg-[#FF7E00] text-white py-4 rounded-2xl font-bold text-lg hover:shadow-xl hover:shadow-orange-200 transition-all active:scale-[0.98] flex items-center justify-center gap-3">
+            <iconify-icon icon="lucide:user-plus"></iconify-icon>
+            Create Account
+          </button>
+          <p class="text-center text-xs text-gray-400">
+            Already have an account? 
+            <button type="button" onclick="switchToLogin()" class="font-bold text-[#4A6FA5] hover:underline">Sign In</button>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Simple Toast for auth feedback (reuse existing cart toast if present, otherwise add) -->
+<div id="auth-toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] bg-gray-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 hidden opacity-0 translate-y-2 pointer-events-none transition-all duration-300">
+  <iconify-icon icon="lucide:check-circle" class="text-[#FF7E00] text-xl"></iconify-icon>
+  <span class="font-bold text-sm">Action successful</span>
+</div>
+
 <body>
   <div class="min-h-screen relative flex flex-col selection:bg-orange-100">
     <div class="fixed inset-0 noise-bg pointer-events-none z-0"></div>
@@ -580,7 +720,7 @@
                     <iconify-icon icon="lucide:search" class="text-xl"></iconify-icon>
                 </button><button id="cart-btn" class="p-2 relative rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
                     <iconify-icon icon="lucide:shopping-cart" class="text-xl"></iconify-icon>
-                    <span id="cart-badge-count" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+                   <span id="cart-badge-count" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">0</span>
                 </button>
                 <div class="h-6 w-px bg-orange-100 mx-2"></div>
                 <button id="login-btn" class="hidden sm:block text-sm font-bold text-gray-700 hover:text-[#FF7E00] transition-colors">Login</button>
@@ -631,8 +771,8 @@
         <div class="lg:col-span-7 grid grid-cols-2 gap-6">
           <div class="space-y-6 pt-12">
             <!-- Sub Post 1 -->
-            <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer">
-              <div class="relative h-64 overflow-hidden">
+            <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer" data-post-index="0">
+                            <div class="relative h-64 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?auto=format&amp;fit=crop&amp;q=80&amp;w=500" alt="Alpine Build" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.onerror=null;this.src='https://placehold.co/500x400/1a1a1a/888?text=Image';">
                 <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold uppercase tracking-wider">Nature</span>
               </div>
@@ -645,8 +785,8 @@
               </div>
             </div>
             <!-- Sub Post 2 -->
-            <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer">
-              <div class="relative h-80 overflow-hidden">
+            <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer" data-post-index="1">
+               <div class="relative h-80 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&amp;fit=crop&amp;q=80&amp;w=500" alt="Cyber Build" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.onerror=null;this.src='https://placehold.co/500x400/1a1a1a/888?text=Image';">
                 <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold uppercase tracking-wider">Cyberpunk</span>
               </div>
@@ -662,7 +802,7 @@
           
           <div class="space-y-6">
              <!-- Sub Post 3 -->
-             <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer">
+             <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer" data-post-index="2">
               <div class="relative h-96 overflow-hidden">
                 <img src="https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&amp;fit=crop&amp;q=80&amp;w=500" alt="Space Build" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.onerror=null;this.src='https://placehold.co/500x400/1a1a1a/888?text=Image';">
                 <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold uppercase tracking-wider">Sci-Fi</span>
@@ -676,7 +816,7 @@
               </div>
             </div>
             <!-- Sub Post 4 -->
-            <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer">
+            <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-custom cursor-pointer" data-post-index="3">
               <div class="relative h-64 overflow-hidden">
                 <img src="https://placehold.co/500x400/1a1a1a/888?text=Image" alt="Medieval Build" class="w-full h-full object-cover group-hover:scale-105 transition-transform" onerror="this.onerror=null;this.src='https://placehold.co/500x400/1a1a1a/888?text=Image';">
                 <span class="absolute top-3 left-3 px-2.5 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold uppercase tracking-wider">Vintage</span>
@@ -919,41 +1059,61 @@
             <p class="text-sm text-zinc-500">$32.00</p>
           </div>
           <!-- Row 2 Fillers -->
-          <div class="group hidden xl:block">
-            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
-              <img src="https://placehold.co/400x400/1a1a1a/888?text=Image" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
-            </div>
-            <h4 class="font-bold text-zinc-900">Industrial Pipe Fittings</h4>
-            <p class="text-sm text-zinc-500">$9.99</p>
-          </div>
-          <div class="group hidden xl:block">
-            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
-              <img src="https://images.unsplash.com/photo-1601662528567-526cd06f6582?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
-            </div>
-            <h4 class="font-bold text-zinc-900">Ultra-Fine Detail Brushes</h4>
-            <p class="text-sm text-zinc-500">$15.50</p>
-          </div>
-          <div class="group hidden xl:block">
-            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
-              <img src="https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
-            </div>
-            <h4 class="font-bold text-zinc-900">Stone Texture Paste</h4>
-            <p class="text-sm text-zinc-500">$14.00</p>
-          </div>
-          <div class="group hidden xl:block">
-            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
-              <img src="https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
-            </div>
-            <h4 class="font-bold text-zinc-900">Miniature Pine Forest Kit</h4>
-            <p class="text-sm text-zinc-500">$28.99</p>
-          </div>
-          <div class="group hidden xl:block">
-            <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
-              <img src="https://images.unsplash.com/photo-1516110833967-0b5716ca1387?auto=format&amp;fit=crop&amp;q=80&amp;w=400" alt="Material" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
-            </div>
-            <h4 class="font-bold text-zinc-900">Micro Solar Street Lights</h4>
-            <p class="text-sm text-zinc-500">$21.50</p>
-          </div>
+<!-- Row 2 Fillers -->
+<div class="group hidden xl:block">
+  <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+    <img src="https://placehold.co/400x400/1a1a1a/888?text=Image" alt="Industrial Pipe Fittings" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+    <button id="add-cart-6" class="absolute bottom-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-custom transform translate-y-2 group-hover:translate-y-0 shadow-lg hover:bg-[#FF7E00] hover:text-white">
+      <iconify-icon icon="lucide:plus"></iconify-icon>
+    </button>
+  </div>
+  <h4 class="font-bold text-zinc-900">Industrial Pipe Fittings</h4>
+  <p class="text-sm text-zinc-500">$9.99</p>
+</div>
+
+<div class="group hidden xl:block">
+  <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+    <img src="https://images.unsplash.com/photo-1601662528567-526cd06f6582?auto=format&fit=crop&q=80&w=400" alt="Ultra-Fine Detail Brushes" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+    <button id="add-cart-7" class="absolute bottom-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-custom transform translate-y-2 group-hover:translate-y-0 shadow-lg hover:bg-[#FF7E00] hover:text-white">
+      <iconify-icon icon="lucide:plus"></iconify-icon>
+    </button>
+  </div>
+  <h4 class="font-bold text-zinc-900">Ultra-Fine Detail Brushes</h4>
+  <p class="text-sm text-zinc-500">$15.50</p>
+</div>
+
+<div class="group hidden xl:block">
+  <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+    <img src="https://images.unsplash.com/photo-1549490349-8643362247b5?auto=format&fit=crop&q=80&w=400" alt="Stone Texture Paste" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+    <button id="add-cart-8" class="absolute bottom-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-custom transform translate-y-2 group-hover:translate-y-0 shadow-lg hover:bg-[#FF7E00] hover:text-white">
+      <iconify-icon icon="lucide:plus"></iconify-icon>
+    </button>
+  </div>
+  <h4 class="font-bold text-zinc-900">Stone Texture Paste</h4>
+  <p class="text-sm text-zinc-500">$14.00</p>
+</div>
+
+<div class="group hidden xl:block">
+  <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+    <img src="https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?auto=format&fit=crop&q=80&w=400" alt="Miniature Pine Forest Kit" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+    <button id="add-cart-9" class="absolute bottom-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-custom transform translate-y-2 group-hover:translate-y-0 shadow-lg hover:bg-[#FF7E00] hover:text-white">
+      <iconify-icon icon="lucide:plus"></iconify-icon>
+    </button>
+  </div>
+  <h4 class="font-bold text-zinc-900">Miniature Pine Forest Kit</h4>
+  <p class="text-sm text-zinc-500">$28.99</p>
+</div>
+
+<div class="group hidden xl:block">
+  <div class="aspect-square bg-zinc-100 rounded-3xl overflow-hidden relative mb-4 transition-custom group-hover:shadow-xl">
+    <img src="https://images.unsplash.com/photo-1516110833967-0b5716ca1387?auto=format&fit=crop&q=80&w=400" alt="Micro Solar Street Lights" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1a1a1a/888?text=Image';">
+    <button id="add-cart-10" class="absolute bottom-4 right-4 w-10 h-10 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-custom transform translate-y-2 group-hover:translate-y-0 shadow-lg hover:bg-[#FF7E00] hover:text-white">
+      <iconify-icon icon="lucide:plus"></iconify-icon>
+    </button>
+  </div>
+  <h4 class="font-bold text-zinc-900">Micro Solar Street Lights</h4>
+  <p class="text-sm text-zinc-500">$21.50</p>
+</div>
         </div>
       </div>
     </section>
@@ -1024,10 +1184,13 @@
         </div>
 
         <div class="mt-20 text-center">
-          <button id="launch-tool-btn" class="bg-[#FF7E00] text-white px-10 py-5 rounded-full font-black text-xl hover:shadow-2xl hover:scale-105 transition-custom flex items-center space-x-3 mx-auto">
-            <span>Launch Creation Lab</span>
-            <iconify-icon icon="lucide:sparkles"></iconify-icon>
-          </button>
+<button 
+  id="launch-tool-btn"
+  class="bg-[#FF7E00] text-white px-10 py-5 rounded-full font-black text-xl hover:shadow-2xl hover:scale-105 transition-custom flex items-center space-x-3 mx-auto"
+>
+  <span>Launch Creation Lab</span>
+  <iconify-icon icon="lucide:sparkles"></iconify-icon>
+</button>
         </div>
       </div>
 
@@ -1119,12 +1282,12 @@
         </div>
         <div>
           <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Explore</h5>
-          <ul class="space-y-4 text-sm">
-            <li><a href="#" id="footer-home-link" class="hover:text-[#FF7E00]">Home</a></li>
-            <li><a href="#" id="footer-showcase-link" class="hover:text-[#FF7E00]">Showcase</a></li>
-            <li><a href="#" id="footer-shop-link" class="hover:text-[#FF7E00]">Shop Materials</a></li>
-            <li><a href="#" id="footer-tools-link" class="hover:text-[#FF7E00]">Creator Tools</a></li>
-          </ul>
+<ul class="space-y-4 text-sm">
+  <li><a href="index.html" id="footer-home-link" class="hover:text-[#FF7E00]">Home</a></li>
+  <li><a href="community2.html" id="footer-showcase-link" class="hover:text-[#FF7E00]">Showcase</a></li>
+  <li><a href="shop2.html" id="footer-shop-link" class="hover:text-[#FF7E00]">Shop Materials</a></li>
+  <li><a href="3dcreate.html" id="footer-tools-link" class="hover:text-[#FF7E00]">Creator Tools</a></li>
+</ul>
         </div>
         <div>
           <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">About</h5>
@@ -1241,6 +1404,361 @@
     // if(购物车为空) { alert('购物车暂无商品'); }
 });
         </script>
+        <script>
+  document.getElementById("launch-tool-btn").addEventListener("click", function() {
+    window.location.href = "3dcreate.html";
+  });
+
+  (function () {
+  // 安全小函数：简单消毒（避免用户输入被注入到 innerHTML）
+  const sanitize = (str) => String(str ?? '').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+
+  // DOM refs (页面已有 #cta-share-creation 和 #creation-grid)
+  const ctaBtn = document.getElementById('cta-share-creation');
+  const grid = document.getElementById('creation-grid');
+
+  if (!ctaBtn || !grid) {
+    console.warn('Share: 找不到 #cta-share-creation 或 #creation-grid（确认页面结构）。');
+    return;
+  }
+
+  // 插入 modal（已经放在 HTML 中，上面）
+  const modal = document.getElementById('share-modal');
+  const form = document.getElementById('share-form');
+  const fld = {
+    title: document.getElementById('share-title'),
+    desc: document.getElementById('share-desc'),
+    image: document.getElementById('share-image'),
+    category: document.getElementById('share-category'),
+    creator: document.getElementById('share-creator'),
+    cancel: document.getElementById('share-cancel'),
+  };
+
+  function openModal() {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    // focus first field
+    setTimeout(() => fld.title.focus(), 50);
+  }
+  function closeModal() {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    form.reset();
+  }
+
+  // 点击主按钮打开编辑器
+  ctaBtn.addEventListener('click', openModal);
+  fld.cancel.addEventListener('click', closeModal);
+
+  // 点击遮罩也关闭（可选）
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // 提交表单：构造新对象 -> push 到 ALL_CREATIONS -> append DOM（使用页面已有 renderCard）
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // 收集并 sanitize
+    const rawTitle = fld.title.value.trim();
+    const rawDesc = fld.desc.value.trim();
+    const rawImg = fld.image.value.trim();
+    const rawCat = fld.category.value;
+    const rawCreator = fld.creator.value.trim() || 'Anonymous';
+
+    if (!rawTitle || !rawDesc) {
+      alert('请填写标题和描述。');
+      return;
+    }
+
+    // 验证 image url：简单检测
+    const imageUrl = (rawImg && /^https?:\/\//i.test(rawImg)) ? rawImg : 'https://placehold.co/600x400/1a1a1a/888?text=Image';
+
+    // 限定可接受的 category
+    const allowedCats = ['scenes','accessories','diy','other'];
+    const category = allowedCats.includes(rawCat) ? rawCat : 'other';
+
+    // 用简单随机 avatar（你可以改为用户上传或指定）
+    const avatar = `https://i.pravatar.cc/150?u=${encodeURIComponent(rawCreator + Date.now())}`;
+
+    // 造一个 newItem，与页面中 ALL_CREATIONS 的结构一致（metrics 用初始值）
+    const newItem = {
+      category: category,
+      image: imageUrl,
+      title: sanitize(rawTitle),
+      description: sanitize(rawDesc),
+      creator: sanitize(rawCreator),
+      avatar: avatar,
+      metrics: { likes: '0', comments: '0' },
+      badge: '',
+      program: false
+    };
+
+    // 将数据加入 ALL_CREATIONS（页面中定义）。注意：ALL_CREATIONS 在你的文件里已有定义并被 updateGrid/renderCard 使用。:contentReference[oaicite:2]{index=2}
+    try {
+      if (window.ALL_CREATIONS && Array.isArray(window.ALL_CREATIONS)) {
+        window.ALL_CREATIONS.push(newItem);
+      }
+    } catch (err) {
+      console.warn('无法 push 到 ALL_CREATIONS：', err);
+    }
+
+    // 使用 renderCard 创建节点并追加到 grid（renderCard 在页面里已定义）。:contentReference[oaicite:3]{index=3}
+    // 为动画延迟传入当前 children 数量作为 index
+    try {
+      const idx = grid.children.length;
+      const cardNode = (typeof window.renderCard === 'function')
+        ? window.renderCard(newItem, idx, true)
+        : createFallbackCard(newItem); // 如果 renderCard 不存在，使用后备函数
+
+      grid.appendChild(cardNode);
+
+      // 滚动到新卡片
+      cardNode.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // 关闭 modal
+      closeModal();
+    } catch (err) {
+      console.error('append new card failed', err);
+      alert('发布失败，详见控制台。');
+    }
+  });
+
+  // 如果 renderCard 不存在，提供一个最简后备渲染器（防止报错）
+  function createFallbackCard(item) {
+    const a = document.createElement('article');
+    a.className = 'animate-fade-in-up bg-white rounded-3xl overflow-hidden card-hover border border-gray-100 flex flex-col';
+    a.dataset.category = item.category;
+    a.innerHTML = `
+      <div class="relative aspect-[4/3] overflow-hidden">
+        <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+        <span class="absolute top-4 left-4 bg-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">${item.category}</span>
+      </div>
+      <div class="p-6 flex flex-col flex-grow">
+        <div class="flex items-center gap-3 mb-4">
+          <img src="${item.avatar}" class="w-10 h-10 rounded-full border-2 border-gray-100" />
+          <div>
+            <h4 class="text-sm font-bold">${item.creator}</h4>
+          </div>
+        </div>
+        <h3 class="font-display text-xl mb-2">${item.title}</h3>
+        <p class="text-gray-600 text-sm mb-6 flex-grow">${item.description}</p>
+        <div class="flex items-center justify-between mt-auto">
+          <div class="flex items-center gap-4 text-gray-500 text-xs">
+            <span>${item.metrics.likes}</span>
+            <span>${item.metrics.comments}</span>
+          </div>
+          <button class="text-blue-600 font-bold text-sm hover:underline">Shop Pieces</button>
+        </div>
+      </div>
+    `;
+    return a;
+  }
+
+})();
+
+function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem('bowerbit_cart') || '[]');
+    // 计算所有商品的总数量（考虑 quantity 字段）
+    const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    const badge = document.getElementById('cart-badge-count');
+    if (badge) {
+        badge.textContent = totalCount;
+        // 可选：如果数量为0，隐藏角标
+        badge.style.display = totalCount > 0 ? 'flex' : 'none';
+    }
+}
+
+
+
+
+// ---------- Auth Modal Logic ----------
+function openLoginModal() {
+  const modal = document.getElementById('login-modal');
+  const content = modal.querySelector('.modal-content');
+  modal.classList.remove('pointer-events-none');
+  modal.classList.add('opacity-100');
+  content.classList.remove('scale-95', 'opacity-0');
+  content.classList.add('scale-100', 'opacity-100');
+}
+
+function closeLoginModal() {
+  const modal = document.getElementById('login-modal');
+  const content = modal.querySelector('.modal-content');
+  modal.classList.add('pointer-events-none');
+  modal.classList.remove('opacity-100');
+  content.classList.add('scale-95', 'opacity-0');
+  content.classList.remove('scale-100', 'opacity-100');
+}
+
+function openRegisterModal() {
+  const modal = document.getElementById('register-modal');
+  const content = modal.querySelector('.modal-content');
+  modal.classList.remove('pointer-events-none');
+  modal.classList.add('opacity-100');
+  content.classList.remove('scale-95', 'opacity-0');
+  content.classList.add('scale-100', 'opacity-100');
+}
+
+function closeRegisterModal() {
+  const modal = document.getElementById('register-modal');
+  const content = modal.querySelector('.modal-content');
+  modal.classList.add('pointer-events-none');
+  modal.classList.remove('opacity-100');
+  content.classList.add('scale-95', 'opacity-0');
+  content.classList.remove('scale-100', 'opacity-100');
+}
+
+function switchToRegister() {
+  closeLoginModal();
+  openRegisterModal();
+}
+
+function switchToLogin() {
+  closeRegisterModal();
+  openLoginModal();
+}
+
+// Simple toast for auth messages (reuse cart toast or use auth-toast)
+function showAuthToast(message) {
+  const toast = document.getElementById('auth-toast');
+  const msgSpan = toast.querySelector('span');
+  msgSpan.textContent = message;
+  toast.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    toast.classList.remove('opacity-0', 'translate-y-2');
+    toast.classList.add('opacity-100', 'translate-y-0');
+  });
+  setTimeout(() => {
+    toast.classList.add('opacity-0', 'translate-y-2');
+    toast.classList.remove('opacity-100', 'translate-y-0');
+    setTimeout(() => toast.classList.add('hidden'), 300);
+  }, 2000);
+}
+
+// Handle registration (localStorage simulation)
+function handleRegister(e) {
+  e.preventDefault();
+  const name = document.getElementById('register-name').value.trim();
+  const email = document.getElementById('register-email').value.trim();
+  const pwd = document.getElementById('register-password').value;
+  const confirm = document.getElementById('register-confirm').value;
+
+  if (pwd !== confirm) {
+    alert('Passwords do not match!'); // simple alert, can be replaced with styled error
+    return;
+  }
+
+  // Get existing users or create new array
+  let users = JSON.parse(localStorage.getItem('bowerbit_users') || '[]');
+  if (users.find(u => u.email === email)) {
+    alert('Email already registered!');
+    return;
+  }
+
+  users.push({ name, email, password: pwd }); // In production, hash the password!
+  localStorage.setItem('bowerbit_users', JSON.stringify(users));
+
+  // Auto login after registration (optional)
+  localStorage.setItem('bowerbit_current_user', JSON.stringify({ name, email }));
+
+  closeRegisterModal();
+  showAuthToast(`Welcome, ${name}!`);
+  // Optionally update UI: change login button to user name
+  updateAuthUI();
+}
+
+// Handle login
+function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const pwd = document.getElementById('login-password').value;
+
+  let users = JSON.parse(localStorage.getItem('bowerbit_users') || '[]');
+  const user = users.find(u => u.email === email && u.password === pwd);
+
+  if (!user) {
+    alert('Invalid email or password');
+    return;
+  }
+
+  localStorage.setItem('bowerbit_current_user', JSON.stringify({ name: user.name, email: user.email }));
+  closeLoginModal();
+  showAuthToast(`Welcome back, ${user.name}!`);
+  updateAuthUI();
+}
+
+// Logout function (optional, can be triggered from a dropdown)
+function logout() {
+  localStorage.removeItem('bowerbit_current_user');
+  updateAuthUI();
+  showAuthToast('Logged out');
+}
+
+// Update UI based on login state (replace login/join buttons with user avatar/name)
+function updateAuthUI() {
+  const user = JSON.parse(localStorage.getItem('bowerbit_current_user'));
+  const loginBtn = document.getElementById('login-btn');
+  const joinBtn = document.getElementById('join-btn');
+  const nav = document.querySelector('.flex.items-center.gap-4'); // adjust if needed
+
+  if (user) {
+    // Hide login/join, show user avatar (simple for now)
+    loginBtn.classList.add('hidden');
+    joinBtn.classList.add('hidden');
+    // Check if avatar already exists
+    let avatar = nav.querySelector('.user-avatar');
+    if (!avatar) {
+      avatar = document.createElement('button');
+      avatar.className = 'user-avatar w-10 h-10 rounded-full bg-[#FF7E00] text-white font-bold flex items-center justify-center text-sm uppercase';
+      avatar.textContent = user.name.charAt(0);
+      avatar.onclick = () => {
+        // Simple dropdown with logout
+        if (confirm('Logout?')) logout();
+      };
+      nav.appendChild(avatar);
+    }
+  } else {
+    loginBtn.classList.remove('hidden');
+    joinBtn.classList.remove('hidden');
+    const avatar = nav.querySelector('.user-avatar');
+    if (avatar) avatar.remove();
+  }
+}
+
+// Initialize auth state on page load
+document.addEventListener('DOMContentLoaded', () => {
+  // ... existing init code ...
+  updateAuthUI(); // add this line
+});
+
+// Handle sub post card clicks to community with post index
+document.querySelectorAll('.group[data-post-index]').forEach(card => {
+    card.addEventListener('click', function(e) {
+        // Prevent any parent handlers or default behavior
+        e.preventDefault();
+        e.stopPropagation();
+        const index = this.dataset.postIndex;
+        if (index !== undefined) {
+            window.location.href = `community2.html?postIndex=${index}`;
+        }
+    });
+});
+
+// Attach click handlers to login/join buttons
+document.getElementById('login-btn')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  openLoginModal();
+});
+
+document.getElementById('join-btn')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  openRegisterModal();
+});
+
+
+
+</script>
 <script defer="" type="module">import '/__visual-edit-bridge/iframe-runtime.mjs?v=0.0.0';</script>
 
 </body></html>

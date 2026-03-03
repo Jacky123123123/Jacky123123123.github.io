@@ -116,6 +116,107 @@
         }
     </style>
 </head>
+
+<div id="cart-toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] bg-gray-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 hidden opacity-0 translate-y-2 pointer-events-none transition-all duration-300">
+    <iconify-icon icon="lucide:check-circle" class="text-[#FF7E00] text-xl"></iconify-icon>
+    <span class="font-bold text-sm">Items added to cart!</span>
+</div>
+
+
+<!-- Login Modal -->
+<div id="login-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 opacity-0 pointer-events-none modal-backdrop">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeLoginModal()"></div>
+  <div class="relative bg-white w-full max-w-md rounded-[40px] overflow-hidden shadow-2xl scale-95 opacity-0 modal-content">
+    <button onclick="closeLoginModal()" class="absolute top-6 right-6 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors">
+      <iconify-icon icon="lucide:x" class="text-xl"></iconify-icon>
+    </button>
+    <div class="p-8 md:p-10">
+      <h2 class="font-display text-3xl font-black mb-2">Welcome Back</h2>
+      <p class="text-gray-500 text-sm mb-8">Sign in to continue your creative journey</p>
+      
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="space-y-5">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Email</label>
+            <input type="email" id="login-email" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Password</label>
+            <input type="password" id="login-password" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+          <div class="text-right">
+            <a href="#" class="text-xs font-bold text-[#FF7E00] hover:underline">Forgot password?</a>
+          </div>
+        </div>
+        
+        <div class="mt-8 space-y-3">
+          <button type="submit" class="w-full bg-[#FF7E00] text-white py-4 rounded-2xl font-bold text-lg hover:shadow-xl hover:shadow-orange-200 transition-all active:scale-[0.98] flex items-center justify-center gap-3">
+            <iconify-icon icon="lucide:log-in"></iconify-icon>
+            Sign In
+          </button>
+          <p class="text-center text-xs text-gray-400">
+            Don't have an account? 
+            <button type="button" onclick="switchToRegister()" class="font-bold text-[#4A6FA5] hover:underline">Join BowerBit</button>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Register Modal -->
+<div id="register-modal" class="fixed inset-0 z-[70] flex items-center justify-center p-4 opacity-0 pointer-events-none modal-backdrop">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeRegisterModal()"></div>
+  <div class="relative bg-white w-full max-w-md rounded-[40px] overflow-hidden shadow-2xl scale-95 opacity-0 modal-content">
+    <button onclick="closeRegisterModal()" class="absolute top-6 right-6 z-10 w-10 h-10 bg-white shadow-lg rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors">
+      <iconify-icon icon="lucide:x" class="text-xl"></iconify-icon>
+    </button>
+    <div class="p-8 md:p-10">
+      <h2 class="font-display text-3xl font-black mb-2">Join BowerBit</h2>
+      <p class="text-gray-500 text-sm mb-8">Create an account to start building</p>
+      
+      <form id="register-form" onsubmit="handleRegister(event)">
+        <div class="space-y-5">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Display Name</label>
+            <input type="text" id="register-name" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Email</label>
+            <input type="email" id="register-email" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Password</label>
+            <input type="password" id="register-password" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-widest text-gray-400 mb-2">Confirm Password</label>
+            <input type="password" id="register-confirm" required class="w-full bg-gray-50 border-2 border-transparent focus:border-[#FF7E00] focus:bg-white p-4 rounded-2xl outline-none transition-all font-bold">
+          </div>
+        </div>
+        
+        <div class="mt-8 space-y-3">
+          <button type="submit" class="w-full bg-[#FF7E00] text-white py-4 rounded-2xl font-bold text-lg hover:shadow-xl hover:shadow-orange-200 transition-all active:scale-[0.98] flex items-center justify-center gap-3">
+            <iconify-icon icon="lucide:user-plus"></iconify-icon>
+            Create Account
+          </button>
+          <p class="text-center text-xs text-gray-400">
+            Already have an account? 
+            <button type="button" onclick="switchToLogin()" class="font-bold text-[#4A6FA5] hover:underline">Sign In</button>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Simple Toast for auth feedback (reuse existing cart toast if present, otherwise add) -->
+<div id="auth-toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] bg-gray-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 hidden opacity-0 translate-y-2 pointer-events-none transition-all duration-300">
+  <iconify-icon icon="lucide:check-circle" class="text-[#FF7E00] text-xl"></iconify-icon>
+  <span class="font-bold text-sm">Action successful</span>
+</div>
+
+
 <body>
     <div class="min-h-screen flex flex-col">
         <div class="grain-overlay"></div>
@@ -138,7 +239,7 @@
                     <iconify-icon icon="lucide:search" class="text-xl"></iconify-icon>
                 </button><button id="cart-btn" class="p-2 relative rounded-full hover:bg-orange-50 text-gray-600 transition-colors">
                     <iconify-icon icon="lucide:shopping-cart" class="text-xl"></iconify-icon>
-                    <span id="cart-badge-count" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">3</span>
+                    <span id="cart-badge-count" class="absolute top-0 right-0 h-4 w-4 bg-[#FF7E00] text-white text-[10px] flex items-center justify-center rounded-full font-bold">0</span>
                 </button>
                 <div class="h-6 w-px bg-orange-100 mx-2"></div>
                 <button id="login-btn" class="hidden sm:block text-sm font-bold text-gray-700 hover:text-[#FF7E00] transition-colors">Login</button>
@@ -403,12 +504,12 @@
         </div>
         <div>
           <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">Explore</h5>
-          <ul class="space-y-4 text-sm">
-            <li><a href="#" id="footer-home-link" class="hover:text-[#FF7E00]">Home</a></li>
-            <li><a href="#" id="footer-showcase-link" class="hover:text-[#FF7E00]">Showcase</a></li>
-            <li><a href="#" id="footer-shop-link" class="hover:text-[#FF7E00]">Shop Materials</a></li>
-            <li><a href="#" id="footer-tools-link" class="hover:text-[#FF7E00]">Creator Tools</a></li>
-          </ul>
+<ul class="space-y-4 text-sm">
+  <li><a href="index.html" id="footer-home-link" class="hover:text-[#FF7E00]">Home</a></li>
+  <li><a href="community2.html" id="footer-showcase-link" class="hover:text-[#FF7E00]">Showcase</a></li>
+  <li><a href="shop2.html" id="footer-shop-link" class="hover:text-[#FF7E00]">Shop Materials</a></li>
+  <li><a href="3dcreate.html" id="footer-tools-link" class="hover:text-[#FF7E00]">Creator Tools</a></li>
+</ul>
         </div>
         <div>
           <h5 class="font-bold mb-6 uppercase text-xs tracking-widest text-zinc-500">About</h5>
@@ -967,6 +1068,7 @@
             renderLibraries();
             renderUI();
             initUpload();
+            updateCartBadge(); 
             window.addEventListener('resize', () => {
                 const container = document.getElementById('three-container');
                 camera.aspect = container.clientWidth / container.clientHeight;
@@ -1017,18 +1119,57 @@
             closeCompletionModal();
         }
 
-        function addAllToCart() {
-            const cart = JSON.parse(localStorage.getItem('bowerbit_cart') || '[]');
-            const itemsToAdd = [
-                { name: `${state.base.size} Base`, price: state.base.sizePrice, id: 'base-' + Date.now() },
-                ...state.characters,
-                ...state.accessories
-            ];
-            cart.push(...itemsToAdd);
-            localStorage.setItem('bowerbit_cart', JSON.stringify(cart));
-            showToast(`${itemsToAdd.length} items added to cart!`);
-            updateSummary();
-        }
+function addAllToCart() {
+
+    const cart = JSON.parse(localStorage.getItem('bowerbit_cart') || '[]');
+    const defaultImage = 'https://placehold.co/200x200/1a1a1a/888?text=Product'; 
+
+
+    const baseItem = {
+        id: 'base-' + Date.now(),
+        name: `${state.base.size} Base`,
+        title: `${state.base.size} Base`,       
+        price: state.base.sizePrice,
+        quantity: 1,
+        img: defaultImage,
+        creator: 'BowerBit',
+
+        type: 'base',
+        color: state.base.color,
+        texture: state.base.textureName,
+    };
+
+
+    const characterItems = state.characters.map(char => ({
+        ...char,                                 
+        title: char.name,                        
+        quantity: 1,
+        img: defaultImage,
+        creator: 'BowerBit',
+    }));
+
+
+    const accessoryItems = state.accessories.map(acc => ({
+        ...acc,
+        title: acc.name,
+        quantity: 1,
+        img: defaultImage,
+        creator: 'BowerBit',
+    }));
+
+ 
+    const itemsToAdd = [baseItem, ...characterItems, ...accessoryItems];
+
+
+    cart.push(...itemsToAdd);
+    localStorage.setItem('bowerbit_cart', JSON.stringify(cart));
+
+
+    showToast(`${itemsToAdd.length} items added to cart!`);
+    updateSummary(); 
+        updateCartBadge();
+
+}
 
         function shareToCommunity() {
             const name = document.getElementById('scene-name').value || 'My Masterpiece';
@@ -1167,10 +1308,218 @@
     </div>
 </body>
 <script>          document.getElementById('cart-btn').addEventListener('click', function() {
-    // 跳转到购物车页面
+
     window.location.href = 'shoppingcart.html';
-    // 后续可加扩展逻辑，例：
-    // if(购物车为空) { alert('购物车暂无商品'); }
+
 });</script>
+
+<script>
+    function updateCartBadge() {
+    const cart = JSON.parse(localStorage.getItem('bowerbit_cart') || '[]');
+    // 计算所有商品的总数量（考虑 quantity 字段）
+    const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    const badge = document.getElementById('cart-badge-count');
+    if (badge) {
+        badge.textContent = totalCount;
+        // 可选：如果数量为0，隐藏角标
+        badge.style.display = totalCount > 0 ? 'flex' : 'none';
+    }
+}
+
+function showToast(message) {
+    const toast = document.getElementById('cart-toast');
+    const msgSpan = toast.querySelector('span');
+    if (msgSpan) msgSpan.textContent = message;
+
+    // 显示 Toast
+    toast.classList.remove('hidden');
+    // 使用 requestAnimationFrame 确保过渡生效
+    requestAnimationFrame(() => {
+        toast.classList.remove('opacity-0', 'translate-y-2');
+        toast.classList.add('opacity-100', 'translate-y-0');
+    });
+
+    // 2 秒后隐藏
+    setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        // 等待过渡结束后再隐藏元素（避免闪烁）
+        setTimeout(() => toast.classList.add('hidden'), 300);
+    }, 2000);
+}
+
+// ---------- Auth Modal Logic ----------
+function openLoginModal() {
+  const modal = document.getElementById('login-modal');
+  const content = modal.querySelector('.modal-content');
+  modal.classList.remove('pointer-events-none');
+  modal.classList.add('opacity-100');
+  content.classList.remove('scale-95', 'opacity-0');
+  content.classList.add('scale-100', 'opacity-100');
+}
+
+function closeLoginModal() {
+  const modal = document.getElementById('login-modal');
+  const content = modal.querySelector('.modal-content');
+  modal.classList.add('pointer-events-none');
+  modal.classList.remove('opacity-100');
+  content.classList.add('scale-95', 'opacity-0');
+  content.classList.remove('scale-100', 'opacity-100');
+}
+
+function openRegisterModal() {
+  const modal = document.getElementById('register-modal');
+  const content = modal.querySelector('.modal-content');
+  modal.classList.remove('pointer-events-none');
+  modal.classList.add('opacity-100');
+  content.classList.remove('scale-95', 'opacity-0');
+  content.classList.add('scale-100', 'opacity-100');
+}
+
+function closeRegisterModal() {
+  const modal = document.getElementById('register-modal');
+  const content = modal.querySelector('.modal-content');
+  modal.classList.add('pointer-events-none');
+  modal.classList.remove('opacity-100');
+  content.classList.add('scale-95', 'opacity-0');
+  content.classList.remove('scale-100', 'opacity-100');
+}
+
+function switchToRegister() {
+  closeLoginModal();
+  openRegisterModal();
+}
+
+function switchToLogin() {
+  closeRegisterModal();
+  openLoginModal();
+}
+
+// Simple toast for auth messages (reuse cart toast or use auth-toast)
+function showAuthToast(message) {
+  const toast = document.getElementById('auth-toast');
+  const msgSpan = toast.querySelector('span');
+  msgSpan.textContent = message;
+  toast.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    toast.classList.remove('opacity-0', 'translate-y-2');
+    toast.classList.add('opacity-100', 'translate-y-0');
+  });
+  setTimeout(() => {
+    toast.classList.add('opacity-0', 'translate-y-2');
+    toast.classList.remove('opacity-100', 'translate-y-0');
+    setTimeout(() => toast.classList.add('hidden'), 300);
+  }, 2000);
+}
+
+// Handle registration (localStorage simulation)
+function handleRegister(e) {
+  e.preventDefault();
+  const name = document.getElementById('register-name').value.trim();
+  const email = document.getElementById('register-email').value.trim();
+  const pwd = document.getElementById('register-password').value;
+  const confirm = document.getElementById('register-confirm').value;
+
+  if (pwd !== confirm) {
+    alert('Passwords do not match!'); // simple alert, can be replaced with styled error
+    return;
+  }
+
+  // Get existing users or create new array
+  let users = JSON.parse(localStorage.getItem('bowerbit_users') || '[]');
+  if (users.find(u => u.email === email)) {
+    alert('Email already registered!');
+    return;
+  }
+
+  users.push({ name, email, password: pwd }); // In production, hash the password!
+  localStorage.setItem('bowerbit_users', JSON.stringify(users));
+
+  // Auto login after registration (optional)
+  localStorage.setItem('bowerbit_current_user', JSON.stringify({ name, email }));
+
+  closeRegisterModal();
+  showAuthToast(`Welcome, ${name}!`);
+  // Optionally update UI: change login button to user name
+  updateAuthUI();
+}
+
+// Handle login
+function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim();
+  const pwd = document.getElementById('login-password').value;
+
+  let users = JSON.parse(localStorage.getItem('bowerbit_users') || '[]');
+  const user = users.find(u => u.email === email && u.password === pwd);
+
+  if (!user) {
+    alert('Invalid email or password');
+    return;
+  }
+
+  localStorage.setItem('bowerbit_current_user', JSON.stringify({ name: user.name, email: user.email }));
+  closeLoginModal();
+  showAuthToast(`Welcome back, ${user.name}!`);
+  updateAuthUI();
+}
+
+// Logout function (optional, can be triggered from a dropdown)
+function logout() {
+  localStorage.removeItem('bowerbit_current_user');
+  updateAuthUI();
+  showAuthToast('Logged out');
+}
+
+// Update UI based on login state (replace login/join buttons with user avatar/name)
+function updateAuthUI() {
+  const user = JSON.parse(localStorage.getItem('bowerbit_current_user'));
+  const loginBtn = document.getElementById('login-btn');
+  const joinBtn = document.getElementById('join-btn');
+  const nav = document.querySelector('.flex.items-center.gap-4'); // adjust if needed
+
+  if (user) {
+    // Hide login/join, show user avatar (simple for now)
+    loginBtn.classList.add('hidden');
+    joinBtn.classList.add('hidden');
+    // Check if avatar already exists
+    let avatar = nav.querySelector('.user-avatar');
+    if (!avatar) {
+      avatar = document.createElement('button');
+      avatar.className = 'user-avatar w-10 h-10 rounded-full bg-[#FF7E00] text-white font-bold flex items-center justify-center text-sm uppercase';
+      avatar.textContent = user.name.charAt(0);
+      avatar.onclick = () => {
+        // Simple dropdown with logout
+        if (confirm('Logout?')) logout();
+      };
+      nav.appendChild(avatar);
+    }
+  } else {
+    loginBtn.classList.remove('hidden');
+    joinBtn.classList.remove('hidden');
+    const avatar = nav.querySelector('.user-avatar');
+    if (avatar) avatar.remove();
+  }
+}
+
+// Initialize auth state on page load
+document.addEventListener('DOMContentLoaded', () => {
+  // ... existing init code ...
+  updateAuthUI(); // add this line
+});
+
+// Attach click handlers to login/join buttons
+document.getElementById('login-btn')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  openLoginModal();
+});
+
+document.getElementById('join-btn')?.addEventListener('click', (e) => {
+  e.preventDefault();
+  openRegisterModal();
+});
+
+
+</script>
 </html>
 ```
